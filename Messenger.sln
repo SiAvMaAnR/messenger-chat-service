@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Domain", "Messeng
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Test", "Messenger.Test\Messenger.Test.csproj", "{998DC504-0526-43F4-B998-2630F88DFC7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.SignalR", "Messenger.SignalR\Messenger.SignalR.csproj", "{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,5 +105,17 @@ Global
 		{998DC504-0526-43F4-B998-2630F88DFC7E}.Release|x64.Build.0 = Release|Any CPU
 		{998DC504-0526-43F4-B998-2630F88DFC7E}.Release|x86.ActiveCfg = Release|Any CPU
 		{998DC504-0526-43F4-B998-2630F88DFC7E}.Release|x86.Build.0 = Release|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Debug|x64.Build.0 = Debug|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Debug|x86.Build.0 = Debug|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Release|x64.ActiveCfg = Release|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Release|x64.Build.0 = Release|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Release|x86.ActiveCfg = Release|Any CPU
+		{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

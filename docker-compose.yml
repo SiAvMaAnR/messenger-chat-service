@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql-server-messenger
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: SecretPassword161
+      MSSQL_PID: Express
+      MSSQL_USER: user
+      MSSQL_PASSWORD: password
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./.meta/db/data:/var/opt/mssql-server/data
+      - ./.meta/db/log:/var/opt/mssql-server/log
+      - ./.meta/db/secrets:/var/opt/mssql-server/secrets

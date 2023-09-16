@@ -1,7 +1,11 @@
-appsettings.*.json
-**/bin/*
-**/obj/*
 .vs/*
 .vscode/*
 .config/*
+
+appsettings.*.json
+**/bin/*
+**/obj/*
+
+.meta/*
+
 # **/Uploads/*
