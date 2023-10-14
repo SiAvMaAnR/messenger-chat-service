@@ -1,6 +1,6 @@
-using CSN.Domain.Exceptions.Common;
+using MessengerX.Domain.Exceptions.Common;
 
-namespace CSN.Domain.Exceptions.ApiExceptions;
+namespace MessengerX.Domain.Exceptions.ApiExceptions;
 
 public class ForbiddenException : BaseException
 {

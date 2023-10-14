@@ -1,7 +1,12 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using CSN.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Shared.Enums;
 
-namespace CSN.Domain.Entities.Administrators;
+namespace MessengerX.Domain.Entities.Administrators;
 
 [Table("Administrators")]
-public partial class Administrator : Account { }
+public partial class Administrator : Account
+{
+    public Administrator()
+        : base(AccountRole.Admin) { }
+}

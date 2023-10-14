@@ -1,5 +1,5 @@
-using CSN.Domain.Interfaces.Repository;
+using MessengerX.Domain.Interfaces.Repository;
 
-namespace CSN.Domain.Entities.Administrators;
+namespace MessengerX.Domain.Entities.Administrators;
 
 public interface IAdministratorRepository : IAsyncRepository<Administrator> { }

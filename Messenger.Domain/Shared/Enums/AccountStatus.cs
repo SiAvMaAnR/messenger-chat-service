@@ -1,4 +1,4 @@
-namespace CSN.Domain.Shared.Enums;
+namespace MessengerX.Domain.Shared.Enums;
 
 public enum AccountStatus
 {

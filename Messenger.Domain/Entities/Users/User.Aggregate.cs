@@ -1,4 +1,4 @@
-namespace CSN.Domain.Entities.Users;
+namespace MessengerX.Domain.Entities.Users;
 
 public partial class User : IAggregateRoot
 {
