@@ -1,6 +1,6 @@
-using CSN.Domain.Interfaces.Repository;
+using MessengerX.Domain.Interfaces.Repository;
 
-namespace CSN.Domain.Entities.Users;
+namespace MessengerX.Domain.Entities.Users;
 
 public interface IUserRepository : IAsyncRepository<User>
 {

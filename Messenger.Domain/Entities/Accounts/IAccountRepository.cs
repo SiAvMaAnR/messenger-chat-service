@@ -1,6 +1,6 @@
-using CSN.Domain.Interfaces.Repository;
+using MessengerX.Domain.Interfaces.Repository;
 
-namespace CSN.Domain.Entities.Accounts;
+namespace MessengerX.Domain.Entities.Accounts;
 
 public interface IAccountRepository : IAsyncRepository<Account>
 {

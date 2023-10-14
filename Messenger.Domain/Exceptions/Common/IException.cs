@@ -1,4 +1,4 @@
-namespace CSN.Domain.Exceptions.Common;
+namespace MessengerX.Domain.Exceptions.Common;
 
 public interface IException
 {

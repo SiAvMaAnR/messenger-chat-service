@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
-using CSN.Domain.Entities;
+using MessengerX.Domain.Entities;
 
-namespace CSN.Domain.Interfaces.Repository;
+namespace MessengerX.Domain.Interfaces.Repository;
 
 public interface IAsyncRepository<TEntity>
     where TEntity : BaseEntity

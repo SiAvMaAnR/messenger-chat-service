@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CSN.Domain.Entities;
+namespace MessengerX.Domain.Entities;
 
 public abstract class BaseEntity
 {
