@@ -1,3 +1,7 @@
+using MessengerX.Application.Services.AccountService;
+using MessengerX.Application.Services.UserService;
+using MessengerX.Application.Services.UserService.Models;
+using MessengerX.WebApi.Controllers.Models.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessengerX.WebApi.Controllers;
@@ -15,8 +19,8 @@ public class UserController : ControllerBase
         _accountService = accountService;
     }
 
-    [HttpPost("Registration")]
-    public async Task<IActionResult> Registration([FromBody] RegistrationUser request)
+    [HttpPost("registration")]
+    public async Task<IActionResult> Registration([FromBody] RegistrationRequest request)
     {
         var response = await _userService.RegistrationAsync(
             new RegistrationUserRequest()
@@ -24,15 +28,14 @@ public class UserController : ControllerBase
                 Login = request.Login,
                 Email = request.Email,
                 Password = request.Password,
-                Description = request.Description,
             }
         );
 
         return Ok(new { response.IsSuccess });
     }
 
-    [HttpPost("Confirm")]
-    public async Task<IActionResult> Confirmation([FromBody] ConfirmationUser request)
+    [HttpPost("confirm")]
+    public async Task<IActionResult> Confirmation([FromBody] ConfirmationRequest request)
     {
         var confirmResponse = await _userService.ConfirmUserAsync(
             new ConfirmUserRequest() { Confirmation = request.Confirmation }
@@ -46,13 +49,6 @@ public class UserController : ControllerBase
             }
         );
 
-        return Ok(
-            new
-            {
-                loginResponse.IsSuccess,
-                loginResponse.TokenType,
-                loginResponse.Token
-            }
-        );
+        return Ok(new { loginResponse.TokenType, loginResponse.Token });
     }
 }

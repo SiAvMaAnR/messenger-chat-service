@@ -1,3 +1,6 @@
+using MessengerX.Application.Services.AccountService;
+using MessengerX.Application.Services.AccountService.Models;
+using MessengerX.WebApi.Controllers.Models.Account;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessengerX.WebApi.Controllers;
@@ -6,27 +9,20 @@ namespace MessengerX.WebApi.Controllers;
 [ApiController]
 public class AccountController : ControllerBase
 {
-    private readonly IAccountService accountService;
+    private readonly IAccountService _accountService;
 
     public AccountController(IAccountService accountService)
     {
-        this.accountService = accountService;
+        _accountService = accountService;
     }
 
-    [HttpPost("Login")]
-    public async Task<IActionResult> Login([FromBody] LoginAccount request)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        var response = await this.accountService.LoginAsync(
+        var response = await _accountService.LoginAsync(
             new LoginAccountRequest() { Email = request.Email, Password = request.Password }
         );
 
-        return Ok(
-            new
-            {
-                response.IsSuccess,
-                response.TokenType,
-                response.Token
-            }
-        );
+        return Ok(new { response.TokenType, response.Token, });
     }
 }
