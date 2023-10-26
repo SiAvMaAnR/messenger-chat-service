@@ -7,6 +7,7 @@ namespace MessengerX.Domain.Entities.Accounts;
 [Table("Accounts")]
 public partial class Account : BaseEntity
 {
+    public string Login { get; set; } = null!;
     public string Email { get; set; } = null!;
     public AccountRole Role { get; } = AccountRole.Public;
 

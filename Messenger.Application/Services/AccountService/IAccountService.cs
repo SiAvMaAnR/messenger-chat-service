@@ -6,4 +6,5 @@ namespace MessengerX.Application.Services.AccountService;
 public interface IAccountService : IBaseService
 {
     Task<GetAllAccountsResponse> GetAllAsync(GetAllAccountsRequest request);
+    Task<LoginAccountResponse> LoginAsync(LoginAccountRequest request);
 }

@@ -1,4 +1,4 @@
-using MessengerX.Domain.Shared.Types;
+using MessengerX.Domain.Shared.Models;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,13 +6,13 @@ namespace MessengerX.Infrastructure.AuthOptions;
 
 public static class PasswordOptions
 {
-    public static PasswordType CreatePasswordHash(this string password)
+    public static Password CreatePasswordHash(string password)
     {
         try
         {
             var hmac = new HMACSHA512();
 
-            return new PasswordType()
+            return new Password()
             {
                 Salt = hmac.Key,
                 Hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password))
@@ -24,7 +24,7 @@ public static class PasswordOptions
         }
     }
 
-    public static bool VerifyPasswordHash(string password, PasswordType targetPassword)
+    public static bool VerifyPasswordHash(string password, Password targetPassword)
     {
         try
         {

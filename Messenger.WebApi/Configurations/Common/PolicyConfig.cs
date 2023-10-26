@@ -32,6 +32,10 @@ public static class PolicyConfigExtension
                     .AllowCredentials()
                     .WithOrigins(AllowOrigins)
         );
-        // .AllowAnyOrigin());
+
+        corsOptions.AddPolicy(
+            "CorsPolicy(free)",
+            policy => policy.AllowAnyMethod().AllowAnyHeader().AllowCredentials().AllowAnyOrigin()
+        );
     }
 }

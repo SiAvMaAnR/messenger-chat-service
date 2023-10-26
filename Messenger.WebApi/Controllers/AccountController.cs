@@ -25,4 +25,15 @@ public class AccountController : ControllerBase
 
         return Ok(new { response.TokenType, response.Token, });
     }
+
+
+    // [HttpPost("reset-password")]
+    // public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    // {
+    //     var resetPasswordResponse = await _accountService.ResetPasswordAsync(
+    //         new ConfirmationUserRequest() { Confirmation = request.Confirmation }
+    //     );
+
+    //     return Ok(new { loginResponse.TokenType, loginResponse.Token });
+    // }
 }
