@@ -1,16 +1,21 @@
-var builder = WebApplication.CreateBuilder(args);
+using MessengerX.WebApi.Configurations.WebApp;
+using MessengerX.WebApi.Configurations.WebService;
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
+
+builder.Services.AddCommonDependencies(config);
+builder.Services.AddTransientDependencies();
+builder.Services.AddScopedDependencies();
+builder.Services.AddSingletonDependencies();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    app.DevelopmentConfiguration();
+else
+    app.ProductionConfiguration();
 
-app.UseHttpsRedirection();
-
+app.CommonConfiguration();
+app.HubsConfiguration();
 app.Run();

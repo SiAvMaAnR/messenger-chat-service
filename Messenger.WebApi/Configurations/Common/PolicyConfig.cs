@@ -1,10 +1,16 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace MessengerX.WebApi.Config.CommonConfig;
+namespace MessengerX.WebApi.Configurations.Common;
 
 public static class PolicyConfigExtension
 {
+    private static readonly string[] AllowOrigins =
+    {
+        "http://localhost:3000",
+        "https://localhost:3000"
+    };
+
     public static void PolicyConfig(this AuthorizationOptions authorizationOptions)
     {
         authorizationOptions.AddPolicy("OnlyUser", policy => policy.RequireRole("User"));
@@ -24,8 +30,12 @@ public static class PolicyConfigExtension
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
-                    .WithOrigins("http://localhost:3000", "https://localhost:3000")
+                    .WithOrigins(AllowOrigins)
         );
-        // .AllowAnyOrigin());
+
+        corsOptions.AddPolicy(
+            "CorsPolicy(free)",
+            policy => policy.AllowAnyMethod().AllowAnyHeader().AllowCredentials().AllowAnyOrigin()
+        );
     }
 }

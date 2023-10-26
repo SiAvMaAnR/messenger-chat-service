@@ -1,5 +1,6 @@
 using MessengerX.Domain.Interfaces.UnitOfWork;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 
 namespace MessengerX.Application.Services.Common;
@@ -11,17 +12,23 @@ public interface IBaseService
 
 public abstract class BaseService : IBaseService
 {
-    protected readonly IUnitOfWork unitOfWork;
-    protected ClaimsPrincipal? claimsPrincipal;
+    protected readonly IUnitOfWork _unitOfWork;
+    protected ClaimsPrincipal? _claimsPrincipal;
+    protected readonly IConfiguration _configuration;
 
-    public BaseService(IUnitOfWork unitOfWork, IHttpContextAccessor context)
+    public BaseService(
+        IUnitOfWork unitOfWork,
+        IHttpContextAccessor context,
+        IConfiguration configuration
+    )
     {
-        this.unitOfWork = unitOfWork;
-        this.claimsPrincipal = context.HttpContext?.User;
+        _unitOfWork = unitOfWork;
+        _claimsPrincipal = context.HttpContext?.User;
+        _configuration = configuration;
     }
 
     public void SetClaimsPrincipal(ClaimsPrincipal? claimsPrincipal)
     {
-        this.claimsPrincipal = claimsPrincipal;
+        _claimsPrincipal = claimsPrincipal;
     }
 }
