@@ -21,8 +21,13 @@ public class TimingMiddleware
 
         stopwatch.Stop();
         var elapsed = stopwatch.Elapsed;
-        var controllerName = context.Request.RouteValues["controller"] ?? "??";
-        var actionName = context.Request.RouteValues["action"] ?? "??";
-        _logger.LogInformation($"[TimingMiddleware] {controllerName}.{actionName} {elapsed} ms");
+        var controllerName = context.Request.RouteValues["controller"];
+        var actionName = context.Request.RouteValues["action"];
+
+        string message = $"Controller: {controllerName}\n";
+        message += $"Action: {actionName}\n";
+        message += $"Time: {elapsed.TotalMilliseconds} ms";
+
+        _logger.LogInformation(message);
     }
 }

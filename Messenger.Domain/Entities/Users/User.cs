@@ -8,8 +8,10 @@ namespace MessengerX.Domain.Entities.Users;
 public partial class User : Account
 {
     public string? Image { get; set; }
-    public DateOnly? DateOfBirth { get; set; }
+    public DateTime? Birthday { get; set; }
 
     public User()
-        : base(AccountRole.User) { }
+    {
+        Role = AccountRole.User;
+    }
 }

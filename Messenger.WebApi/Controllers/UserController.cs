@@ -29,7 +29,7 @@ public class UserController : ControllerBase
                 Login = request.Login,
                 Email = request.Email,
                 Password = request.Password,
-                DateOfBirth = request.DateOfBirth,
+                Birthday = request.Birthday,
             }
         );
 

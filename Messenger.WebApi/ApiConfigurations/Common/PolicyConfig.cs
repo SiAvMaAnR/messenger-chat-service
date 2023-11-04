@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace MessengerX.WebApi.Configurations.Common;
+namespace MessengerX.WebApi.ApiConfigurations.Common;
 
 public static class PolicyConfigExtension
 {
@@ -27,15 +27,10 @@ public static class PolicyConfigExtension
             "CorsPolicy",
             policy =>
                 policy
+                    .WithOrigins(AllowOrigins)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
-                    .WithOrigins(AllowOrigins)
-        );
-
-        corsOptions.AddPolicy(
-            "CorsPolicy(free)",
-            policy => policy.AllowAnyMethod().AllowAnyHeader().AllowCredentials().AllowAnyOrigin()
         );
     }
 }

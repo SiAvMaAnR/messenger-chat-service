@@ -8,5 +8,7 @@ namespace MessengerX.Domain.Entities.Administrators;
 public partial class Administrator : Account
 {
     public Administrator()
-        : base(AccountRole.Admin) { }
+    {
+        Role = AccountRole.Admin;
+    }
 }

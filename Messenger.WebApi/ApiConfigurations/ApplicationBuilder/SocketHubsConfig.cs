@@ -1,6 +1,6 @@
-namespace MessengerX.WebApi.Configurations.WebApp;
+namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
 
-public static partial class WebApplicationExtension
+public static partial class ApplicationBuilderExtension
 {
     public static void HubsConfiguration(this WebApplication webApplication)
     {

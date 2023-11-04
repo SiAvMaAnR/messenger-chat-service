@@ -8,5 +8,4 @@ public interface IUserService : IBaseService
     Task<GetAllUsersResponse> GetAllAsync(GetAllUsersRequest request);
     Task<RegistrationUserResponse> RegistrationAsync(RegistrationUserRequest request);
     Task<ConfirmationUserResponse> ConfirmationAsync(ConfirmationUserRequest request);
-    
 }
