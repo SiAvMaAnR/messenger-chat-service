@@ -2,7 +2,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace MessengerX.WebApi.Configurations.Other;
+namespace MessengerX.WebApi.ApiConfigurations.Other;
 
 public static class SwaggerExtension
 {

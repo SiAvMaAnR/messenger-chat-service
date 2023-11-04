@@ -1,6 +1,8 @@
 using MessengerX.Domain.Exceptions.ApiExceptions;
+using MessengerX.Domain.Shared.Environment;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,14 +12,21 @@ namespace MessengerX.Infrastructure.AuthOptions;
 
 public static class TokenOptions
 {
-    public static void Config(this JwtBearerOptions options, ConfigurationManager? configuration)
+    public static void Config(this JwtBearerOptions options, IConfiguration configuration)
     {
+        CommonSettings commonSettings = new();
+        AuthSettings authSettings = new();
+
+        configuration.GetSection(CommonSettings.Path).Bind(commonSettings);
+        configuration.GetSection(AuthSettings.Path).Bind(authSettings);
+
         if (configuration == null)
             throw new BadRequestException("Incorrect config");
 
-        string secretKey =
-            configuration.GetSection("Authorization:SecretKey").Value
-            ?? throw new BadRequestException("Incorrect secretKey");
+        string secretKey = commonSettings.SecretKey;
+
+        string? issuer = authSettings.Issuer;
+        string? audience = authSettings.Audience;
 
         // options.RequireHttpsMetadata = true;
         options.SaveToken = true;
@@ -27,8 +36,8 @@ public static class TokenOptions
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = configuration.GetSection("Authorization:Issuer").Value,
-            ValidAudience = configuration.GetSection("Authorization:Audience").Value,
+            ValidIssuer = issuer,
+            ValidAudience = audience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
             LifetimeValidator = (
                 DateTime? notBefore,

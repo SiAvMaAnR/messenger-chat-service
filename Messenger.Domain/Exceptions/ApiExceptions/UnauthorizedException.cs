@@ -4,12 +4,15 @@ namespace MessengerX.Domain.Exceptions.ApiExceptions;
 
 public class UnauthorizedException : BaseException
 {
+    public const string DefaultType = "Unauthorized";
+    public const int DefaultStatus = 401;
+
     public UnauthorizedException(string systemMessage, string clientMessage)
         : base(
             new ExceptionArgs()
             {
-                Type = "Unauthorized",
-                Status = 401,
+                Type = DefaultType,
+                Status = DefaultStatus,
                 SystemMessage = systemMessage,
                 ClientMessage = clientMessage
             }
@@ -19,8 +22,8 @@ public class UnauthorizedException : BaseException
         : base(
             new ExceptionArgs()
             {
-                Type = "Unauthorized",
-                Status = 401,
+                Type = DefaultType,
+                Status = DefaultStatus,
                 SystemMessage = systemMessage
             }
         ) { }

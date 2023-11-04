@@ -1,6 +1,6 @@
-namespace MessengerX.WebApi.Configurations.WebService;
+namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
 
-public static partial class WebServiceExtension
+public static partial class ServiceManagerExtension
 {
     public static IServiceCollection AddTransientDependencies(
         this IServiceCollection serviceCollection

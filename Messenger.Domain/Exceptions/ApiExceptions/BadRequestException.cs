@@ -4,12 +4,15 @@ namespace MessengerX.Domain.Exceptions.ApiExceptions;
 
 public class BadRequestException : BaseException
 {
+    public const string DefaultType = "Bad Request";
+    public const int DefaultStatus = 400;
+
     public BadRequestException(string systemMessage, string clientMessage)
         : base(
             new ExceptionArgs()
             {
-                Type = "Bad Request",
-                Status = 400,
+                Type = DefaultType,
+                Status = DefaultStatus,
                 SystemMessage = systemMessage,
                 ClientMessage = clientMessage
             }
@@ -19,8 +22,8 @@ public class BadRequestException : BaseException
         : base(
             new ExceptionArgs()
             {
-                Type = "Bad Request",
-                Status = 400,
+                Type = DefaultType,
+                Status = DefaultStatus,
                 SystemMessage = systemMessage,
             }
         ) { }

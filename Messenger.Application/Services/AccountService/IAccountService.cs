@@ -7,4 +7,6 @@ public interface IAccountService : IBaseService
 {
     Task<GetAllAccountsResponse> GetAllAsync(GetAllAccountsRequest request);
     Task<LoginAccountResponse> LoginAsync(LoginAccountRequest request);
+    Task<ResetTokenAccountResponse> ResetTokenAsync(ResetTokenAccountRequest request);
+    Task<ResetPasswordAccountResponse> ResetPasswordAsync(ResetPasswordAccountRequest request);
 }

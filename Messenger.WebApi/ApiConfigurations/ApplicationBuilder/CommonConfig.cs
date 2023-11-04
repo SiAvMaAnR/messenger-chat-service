@@ -1,8 +1,8 @@
 using MessengerX.WebApi.Middlewares;
 
-namespace MessengerX.WebApi.Configurations.WebApp;
+namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
 
-public static partial class WebApplicationExtension
+public static partial class ApplicationBuilderExtension
 {
     public static void CommonConfiguration(this WebApplication webApplication)
     {

@@ -13,5 +13,5 @@ public class RegistrationRequest
 
     [MaxLength(MaxLength.Password)]
     public string Password { get; set; } = null!;
-    public DateOnly? DateOfBirth { get; set; }
+    public DateTime? Birthday { get; set; }
 }

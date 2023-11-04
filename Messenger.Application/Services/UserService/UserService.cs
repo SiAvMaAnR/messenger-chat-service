@@ -1,9 +1,12 @@
 using System.Text.Json;
 using MessengerX.Application.Services.Common;
 using MessengerX.Application.Services.UserService.Models;
+using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.ApiExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Shared.Models;
+using MessengerX.Infrastructure.AppSettings;
+using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Notifications;
 using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email.Handlers;
@@ -18,39 +21,21 @@ public class UserService : BaseService, IUserService
 {
     private readonly IDataProtectionProvider _protection;
     private readonly INotificationClient _emailClient;
+    private readonly IAppSettings _appSettings;
 
     public UserService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
         IConfiguration configuration,
-        IDataProtectionProvider protection
+        IDataProtectionProvider protection,
+        IAppSettings appSettings,
+        EmailClient emailClient
     )
         : base(unitOfWork, context, configuration)
     {
         _protection = protection;
-
-        //ПЕРЕДАТЬ ЧЕРЕЗ api level
-
-        var smtpModel = new Smtp()
-        {
-            Email =
-                _configuration["Smtp:Email"] ?? throw new BadRequestException("Missing smtp email"),
-            Password =
-                _configuration["Smtp:Password"]
-                ?? throw new BadRequestException("Missing smtp password"),
-            Host =
-                _configuration["Smtp:Host"] ?? throw new BadRequestException("Missing smtp host"),
-            Port = int.Parse(
-                _configuration["Smtp:Port"] ?? throw new BadRequestException("Missing smtp port")
-            ),
-        };
-
-        _emailClient = new EmailClient(new MessageHandler(smtpModel));
-    }
-
-    public Task<GetAllUsersResponse> GetAllAsync(GetAllUsersRequest request)
-    {
-        throw new NotImplementedException();
+        _appSettings = appSettings;
+        _emailClient = emailClient;
     }
 
     public async Task<RegistrationUserResponse> RegistrationAsync(RegistrationUserRequest request)
@@ -58,17 +43,11 @@ public class UserService : BaseService, IUserService
         if (await _unitOfWork.User.AnyAsync(user => user.Email == request.Email))
             throw new BadRequestException("Account already exists");
 
-        string baseUrl =
-            _configuration["Client:BaseUrl"]
-            ?? throw new BadRequestException("Missing client baseUrl");
+        string baseUrl = _appSettings.Client.BaseUrl;
 
-        string path =
-            _configuration["Confirmation:Path"]
-            ?? throw new BadRequestException("Missing confirmation path");
+        string path = _appSettings.Path.Registration;
 
-        string secretKey =
-            _configuration["Confirmation:SecretKey"]
-            ?? throw new BadRequestException("Missing confirmation secretKey");
+        string secretKey = _appSettings.Common.SecretKey;
 
         IDataProtector protector = _protection.CreateProtector(secretKey);
 
@@ -78,31 +57,66 @@ public class UserService : BaseService, IUserService
                 Login = request.Login,
                 Email = request.Email,
                 Password = request.Password,
-                DateOfBirth = request.DateOfBirth
+                Birthday = request.Birthday
             }
         );
 
         string confirmation = protector.Protect(confirmationJson);
 
-        string link = $"{baseUrl}/{path}?code={confirmation}";
+        string confirmationLink = $"{baseUrl}/{path}?code={confirmation}";
 
-        string smtpEmail =
-            _configuration["Smtp:Email"] ?? throw new BadRequestException("Missing smtp email");
+        string smtpEmail = _appSettings.Smtp.Email;
 
-        var messageModel = new Message()
+        var message = new Message()
         {
             From = new Address(baseUrl, smtpEmail),
             To = new Address(request.Login, request.Email),
             Subject = $"Welcome, verify your account. To do this, follow the link!",
-            Content = link
+            Content = confirmationLink
         };
 
-        await _emailClient.SendAsync(messageModel);
+        await _emailClient.SendAsync(message);
 
         return new RegistrationUserResponse() { IsSuccess = true };
     }
 
-    public Task<ConfirmationUserResponse> ConfirmationAsync(ConfirmationUserRequest request)
+    public async Task<ConfirmationUserResponse> ConfirmationAsync(ConfirmationUserRequest request)
+    {
+        var secretKey = _appSettings.Common.SecretKey;
+
+        IDataProtector protector = _protection.CreateProtector(secretKey);
+        string confirmationJson = protector.Unprotect(request.Confirmation);
+
+        Confirmation confirmation =
+            JsonSerializer.Deserialize<Confirmation>(confirmationJson)
+            ?? throw new BadRequestException("Incorrect confirmation");
+
+        if (await _unitOfWork.Account.AnyAsync(account => account.Email == confirmation.Email))
+            throw new BadRequestException("Account already exists");
+
+        var password = PasswordOptions.CreatePasswordHash(confirmation.Password);
+
+        var user = new User()
+        {
+            Login = confirmation.Login,
+            Email = confirmation.Email,
+            PasswordHash = password.Hash,
+            PasswordSalt = password.Salt,
+            Birthday = confirmation.Birthday,
+        };
+
+        await _unitOfWork.User.AddAsync(user);
+
+        await _unitOfWork.SaveChangesAsync();
+
+        return new ConfirmationUserResponse()
+        {
+            Email = confirmation.Email,
+            Password = confirmation.Password
+        };
+    }
+
+    public Task<GetAllUsersResponse> GetAllAsync(GetAllUsersRequest request)
     {
         throw new NotImplementedException();
     }

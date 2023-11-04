@@ -22,18 +22,27 @@ public class AccountController : ControllerBase
         var response = await _accountService.LoginAsync(
             new LoginAccountRequest() { Email = request.Email, Password = request.Password }
         );
-
+        
         return Ok(new { response.TokenType, response.Token, });
     }
 
+    [HttpPost("reset-token")]
+    public async Task<IActionResult> ResetToken([FromBody] ResetTokenRequest request)
+    {
+        var response = await _accountService.ResetTokenAsync(
+            new ResetTokenAccountRequest() { Email = request.Email }
+        );
 
-    // [HttpPost("reset-password")]
-    // public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
-    // {
-    //     var resetPasswordResponse = await _accountService.ResetPasswordAsync(
-    //         new ConfirmationUserRequest() { Confirmation = request.Confirmation }
-    //     );
+        return Ok(new { response.IsSuccess });
+    }
 
-    //     return Ok(new { loginResponse.TokenType, loginResponse.Token });
-    // }
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        var response = await _accountService.ResetPasswordAsync(
+            new ResetPasswordAccountRequest() { ResetToken = request.ResetToken }
+        );
+
+        return Ok(new { response.IsSuccess });
+    }
 }

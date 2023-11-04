@@ -4,12 +4,15 @@ namespace MessengerX.Domain.Exceptions.ApiExceptions;
 
 public class ForbiddenException : BaseException
 {
+    public const string DefaultType = "Forbidden";
+    public const int DefaultStatus = 403;
+
     public ForbiddenException(string systemMessage, string clientMessage)
         : base(
             new ExceptionArgs()
             {
-                Type = "Forbidden",
-                Status = 403,
+                Type = DefaultType,
+                Status = DefaultStatus,
                 SystemMessage = systemMessage,
                 ClientMessage = clientMessage
             }
@@ -19,8 +22,8 @@ public class ForbiddenException : BaseException
         : base(
             new ExceptionArgs()
             {
-                Type = "Forbidden",
-                Status = 403,
+                Type = DefaultType,
+                Status = DefaultStatus,
                 SystemMessage = systemMessage,
             }
         ) { }
