@@ -11,9 +11,10 @@ using Microsoft.AspNetCore.DataProtection;
 using System.Text.Json;
 using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email.Models;
-using MessengerX.Notifications.Email.Handlers;
 using MessengerX.Notifications;
 using MessengerX.Infrastructure.AppSettings;
+using MessengerX.Infrastructure.NotificationTemplates;
+using MessengerX.Domain.Exceptions.Common;
 
 namespace MessengerX.Application.Services.AccountService;
 
@@ -42,7 +43,7 @@ public class AccountService : BaseService, IAccountService
     {
         var account =
             await _unitOfWork.Account.GetAsync(account => account.Email == request.Email)
-            ?? throw new NotFoundException("Account not found");
+            ?? throw new NotExistsException("Account not exists");
 
         bool isVerify = PasswordOptions.VerifyPasswordHash(
             request.Password,
@@ -50,7 +51,7 @@ public class AccountService : BaseService, IAccountService
         );
 
         if (!isVerify)
-            throw new BadRequestException("Incorrect email or password");
+            throw new InvalidCredentialsException("Wrong password", ClientMessageSettings.Same);
 
         string token = TokenOptions.CreateToken(
             new List<Claim>()
@@ -81,7 +82,7 @@ public class AccountService : BaseService, IAccountService
     {
         var account =
             await _unitOfWork.Account.GetAsync(account => account.Email == request.Email)
-            ?? throw new NotFoundException("Account not found");
+            ?? throw new NotExistsException("Account not exists");
 
         string baseUrl = _appSettings.Client.BaseUrl;
 
@@ -101,12 +102,14 @@ public class AccountService : BaseService, IAccountService
 
         string smtpEmail = _appSettings.Smtp.Email;
 
+        EmailTemplate template = NotificationTemplate.ResetToken(resetPasswordLink);
+
         var message = new Message()
         {
             From = new Address(baseUrl, smtpEmail),
             To = new Address(account.Login, account.Email),
-            Subject = $"Reset password",
-            Content = resetPasswordLink
+            Subject = template.Subject,
+            Content = template.Content
         };
 
         await _emailClient.SendAsync(message);
