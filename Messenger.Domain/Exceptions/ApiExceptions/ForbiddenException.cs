@@ -1,11 +1,12 @@
 using MessengerX.Domain.Exceptions.Common;
+using MessengerX.Domain.Exceptions.StatusCode;
 
 namespace MessengerX.Domain.Exceptions.ApiExceptions;
 
 public class ForbiddenException : BaseException
 {
     public const string DefaultType = "Forbidden";
-    public const int DefaultStatus = 403;
+    public const ApiStatusCode DefaultStatus = ApiStatusCode.Forbidden;
 
     public ForbiddenException(string systemMessage, string clientMessage)
         : base(
@@ -14,17 +15,24 @@ public class ForbiddenException : BaseException
                 Type = DefaultType,
                 Status = DefaultStatus,
                 SystemMessage = systemMessage,
-                ClientMessage = clientMessage
+                ClientMessage = clientMessage,
+                ClientMessageSettings = ClientMessageSettings.Custom
             }
-        ) { }
+        )
+    { }
 
-    public ForbiddenException(string systemMessage)
+    public ForbiddenException(
+        string systemMessage,
+        ClientMessageSettings clientMessageSettings = ClientMessageSettings.Default
+    )
         : base(
             new ExceptionArgs()
             {
                 Type = DefaultType,
                 Status = DefaultStatus,
                 SystemMessage = systemMessage,
+                ClientMessageSettings = clientMessageSettings
             }
-        ) { }
+        )
+    { }
 }

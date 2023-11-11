@@ -1,3 +1,4 @@
+using MessengerX.Domain.Exceptions.ApiExceptions;
 using MessengerX.Domain.Shared.Models;
 using System.Security.Cryptography;
 using System.Text;
@@ -20,7 +21,7 @@ public static class PasswordOptions
         }
         catch (Exception)
         {
-            throw new Exception("Failed to create hash password");
+            throw new PasswordException("Failed to create hash password");
         }
     }
 
@@ -34,7 +35,7 @@ public static class PasswordOptions
         }
         catch (Exception)
         {
-            throw new Exception("Failed to verify hash password");
+            throw new PasswordException("Failed to verify hash password");
         }
     }
 }

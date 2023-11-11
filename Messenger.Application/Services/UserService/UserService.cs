@@ -7,9 +7,9 @@ using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Infrastructure.AuthOptions;
+using MessengerX.Infrastructure.NotificationTemplates;
 using MessengerX.Notifications;
 using MessengerX.Notifications.Common;
-using MessengerX.Notifications.Email.Handlers;
 using MessengerX.Notifications.Email.Models;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
@@ -41,7 +41,7 @@ public class UserService : BaseService, IUserService
     public async Task<RegistrationUserResponse> RegistrationAsync(RegistrationUserRequest request)
     {
         if (await _unitOfWork.User.AnyAsync(user => user.Email == request.Email))
-            throw new BadRequestException("Account already exists");
+            throw new AlreadyExistsException("Account already exists");
 
         string baseUrl = _appSettings.Client.BaseUrl;
 
@@ -67,12 +67,14 @@ public class UserService : BaseService, IUserService
 
         string smtpEmail = _appSettings.Smtp.Email;
 
+        EmailTemplate template = NotificationTemplate.Registration(confirmationLink);
+
         var message = new Message()
         {
             From = new Address(baseUrl, smtpEmail),
             To = new Address(request.Login, request.Email),
-            Subject = $"Welcome, verify your account. To do this, follow the link!",
-            Content = confirmationLink
+            Subject = template.Subject,
+            Content = template.Content
         };
 
         await _emailClient.SendAsync(message);
@@ -89,10 +91,12 @@ public class UserService : BaseService, IUserService
 
         Confirmation confirmation =
             JsonSerializer.Deserialize<Confirmation>(confirmationJson)
-            ?? throw new BadRequestException("Incorrect confirmation");
+            ?? throw new InvalidConfirmationException(
+                "Invalid confirmation"
+            );
 
         if (await _unitOfWork.Account.AnyAsync(account => account.Email == confirmation.Email))
-            throw new BadRequestException("Account already exists");
+            throw new AlreadyExistsException("Account already exists");
 
         var password = PasswordOptions.CreatePasswordHash(confirmation.Password);
 

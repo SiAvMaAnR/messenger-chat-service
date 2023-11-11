@@ -7,7 +7,7 @@ public class LoginRequest
 {
     [EmailAddress, MaxLength(MaxLength.Email)]
     public string Email { get; set; } = null!;
-    
+
     [MaxLength(MaxLength.Password)]
     public string Password { get; set; } = null!;
 }
