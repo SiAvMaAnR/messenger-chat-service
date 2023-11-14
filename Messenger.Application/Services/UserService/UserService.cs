@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using MessengerX.Application.Services.Common;
 using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Entities.Users;
