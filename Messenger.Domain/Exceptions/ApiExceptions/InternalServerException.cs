@@ -3,12 +3,12 @@ using MessengerX.Domain.Exceptions.StatusCode;
 
 namespace MessengerX.Domain.Exceptions.ApiExceptions;
 
-public class BadRequestException : BaseException
+public class InternalServerException : BaseException
 {
-    public const string DefaultType = "Bad Request";
-    public const ApiStatusCode DefaultStatus = ApiStatusCode.BadRequest;
+    public const string DefaultType = "Internal Server Error";
+    public const ApiStatusCode DefaultStatus = ApiStatusCode.InternalServer;
 
-    public BadRequestException(string systemMessage, string clientMessage)
+    public InternalServerException(string systemMessage, string clientMessage)
         : base(
             new ExceptionArgs()
             {
@@ -21,7 +21,7 @@ public class BadRequestException : BaseException
         )
     { }
 
-    public BadRequestException(
+    public InternalServerException(
         string systemMessage,
         ClientMessageSettings clientMessageSettings = ClientMessageSettings.Default
     )
