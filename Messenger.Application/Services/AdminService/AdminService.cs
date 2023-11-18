@@ -4,6 +4,7 @@ using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
+using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
 using Microsoft.AspNetCore.Http;
 
@@ -21,7 +22,19 @@ public class AdminService : BaseService, IAdminService
     public async Task<AdminServiceUsersResponse> GetUsersAsync(AdminServiceUsersRequest request)
     {
         IEnumerable<User> users =
-            await _unitOfWork.User.GetAllAsync() ?? throw new NotExistsException("Users not found");
+            await _unitOfWork.User.GetAllAsync()
+            ?? throw new NotExistsException("Users not exists");
+
+        Pagination? pagination = request.Pagination;
+
+        IOrderedEnumerable<User> sortedUsers = users.OrderBy((user) => user.Id);
+
+        IEnumerable<User>? pagedUsers =
+            (pagination != null)
+                ? sortedUsers
+                    .Skip(pagination.PageNumber * pagination.PageSize)
+                    .Take(pagination.PageSize)
+                : sortedUsers;
 
         throw new NotImplementedException();
     }
