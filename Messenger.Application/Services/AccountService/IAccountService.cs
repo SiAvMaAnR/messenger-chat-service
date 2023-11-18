@@ -1,12 +1,13 @@
+﻿using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.Application.Services.Common;
-using MessengerX.Application.Services.AccountService.Models;
 
 namespace MessengerX.Application.Services.AccountService;
 
 public interface IAccountService : IBaseService
 {
-    Task<GetAllAccountsResponse> GetAllAsync(GetAllAccountsRequest request);
-    Task<LoginAccountResponse> LoginAsync(LoginAccountRequest request);
-    Task<ResetTokenAccountResponse> ResetTokenAsync(ResetTokenAccountRequest request);
-    Task<ResetPasswordAccountResponse> ResetPasswordAsync(ResetPasswordAccountRequest request);
+    Task<AccountServiceLoginResponse> LoginAsync(AccountServiceLoginRequest request);
+    Task<AccountServiceResetTokenResponse> ResetTokenAsync(AccountServiceResetTokenRequest request);
+    Task<AccountServiceResetPasswordResponse> ResetPasswordAsync(
+        AccountServiceResetPasswordRequest request
+    );
 }

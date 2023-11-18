@@ -1,4 +1,4 @@
-using MessengerX.Domain.Exceptions.ApiExceptions;
+﻿using MessengerX.Domain.Exceptions.ApiExceptions;
 using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Exceptions.StatusCode;
 using Microsoft.AspNetCore.Diagnostics;
@@ -15,9 +15,9 @@ public class ErrorController : ControllerBase
         IExceptionHandlerFeature? exceptionHandlerFeature =
             HttpContext.Features.Get<IExceptionHandlerFeature>()!;
 
-        var exception = exceptionHandlerFeature.Error;
+        Exception exception = exceptionHandlerFeature.Error;
 
-        var clientMessage = (exception as BaseException)?.ClientMessage;
+        string? clientMessage = (exception as BaseException)?.ClientMessage;
 
         object errorInfo = isDevelopment
             ? new
@@ -33,7 +33,7 @@ public class ErrorController : ControllerBase
             }
             : new { clientMessage };
 
-        var statusCode = exception switch
+        int statusCode = exception switch
         {
             BadRequestException => (int)ApiStatusCode.BadRequest,
             UnauthorizedException => (int)ApiStatusCode.Unauthorized,

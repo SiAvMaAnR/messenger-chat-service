@@ -1,4 +1,4 @@
-using MessengerX.Notifications.Common;
+﻿using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email.Interfaces;
 using MessengerX.Notifications.Email.Models;
 using MimeKit;

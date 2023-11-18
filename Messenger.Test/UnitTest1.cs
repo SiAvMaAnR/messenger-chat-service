@@ -1,4 +1,4 @@
-namespace Messenger.Test;
+﻿namespace Messenger.Test;
 
 [TestClass]
 public class UnitTest1

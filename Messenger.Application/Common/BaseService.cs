@@ -1,7 +1,7 @@
+﻿using System.Security.Claims;
 using MessengerX.Domain.Interfaces.UnitOfWork;
+using MessengerX.Infrastructure.AppSettings;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using System.Security.Claims;
 
 namespace MessengerX.Application.Services.Common;
 
@@ -14,17 +14,17 @@ public abstract class BaseService : IBaseService
 {
     protected readonly IUnitOfWork _unitOfWork;
     protected ClaimsPrincipal? _claimsPrincipal;
-    protected readonly IConfiguration _configuration;
+    protected readonly IAppSettings _appSettings;
 
     public BaseService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
-        IConfiguration configuration
+        IAppSettings appSettings
     )
     {
         _unitOfWork = unitOfWork;
         _claimsPrincipal = context.HttpContext?.User;
-        _configuration = configuration;
+        _appSettings = appSettings;
     }
 
     public void SetClaimsPrincipal(ClaimsPrincipal? claimsPrincipal)

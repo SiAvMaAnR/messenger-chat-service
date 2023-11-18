@@ -1,4 +1,4 @@
-namespace MessengerX.Persistence.Extensions;
+﻿namespace MessengerX.Persistence.Extensions;
 
 public static class FileManagerExtension
 {

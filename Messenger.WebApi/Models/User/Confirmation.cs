@@ -1,6 +1,6 @@
-namespace MessengerX.WebApi.Controllers.Models.User;
+﻿namespace MessengerX.WebApi.Controllers.Models.User;
 
-public class ConfirmationRequest
+public class UserControllerConfirmationRequest
 {
     public string Confirmation { get; set; } = null!;
 }

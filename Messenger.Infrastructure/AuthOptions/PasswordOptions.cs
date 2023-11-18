@@ -1,7 +1,7 @@
+﻿using System.Security.Cryptography;
+using System.Text;
 using MessengerX.Domain.Exceptions.ApiExceptions;
 using MessengerX.Domain.Shared.Models;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace MessengerX.Infrastructure.AuthOptions;
 
@@ -30,7 +30,7 @@ public static class PasswordOptions
         try
         {
             var hmac = new HMACSHA512(targetPassword.Salt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            byte[] computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             return computedHash.SequenceEqual(targetPassword.Hash);
         }
         catch (Exception)

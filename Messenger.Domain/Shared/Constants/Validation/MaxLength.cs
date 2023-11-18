@@ -1,4 +1,4 @@
-namespace MessengerX.Domain.Shared.Constants.Validation;
+﻿namespace MessengerX.Domain.Shared.Constants.Validation;
 
 public static class MaxLength
 {

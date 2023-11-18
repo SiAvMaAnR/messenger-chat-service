@@ -1,4 +1,4 @@
-using MessengerX.Infrastructure.AppSettings;
+﻿using MessengerX.Infrastructure.AppSettings;
 
 namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
 

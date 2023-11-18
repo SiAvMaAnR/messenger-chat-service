@@ -1,4 +1,4 @@
-using MimeKit;
+﻿using MimeKit;
 
 namespace MessengerX.Notifications.Email.Interfaces;
 
