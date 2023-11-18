@@ -1,3 +1,3 @@
-namespace MessengerX.Domain.Entities;
+﻿namespace MessengerX.Domain.Entities;
 
 public interface IAggregateRoot { }

@@ -1,4 +1,4 @@
-namespace MessengerX.Domain.Exceptions.StatusCode;
+﻿namespace MessengerX.Domain.Exceptions.StatusCode;
 
 public enum BusinessStatusCode
 {

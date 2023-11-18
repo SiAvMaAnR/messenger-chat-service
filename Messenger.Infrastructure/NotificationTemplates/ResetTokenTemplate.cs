@@ -1,4 +1,4 @@
-using MessengerX.Domain.Shared.Models;
+﻿using MessengerX.Domain.Shared.Models;
 
 namespace MessengerX.Infrastructure.NotificationTemplates;
 

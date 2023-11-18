@@ -1,4 +1,4 @@
-using MessengerX.Domain.Exceptions.Common;
+﻿using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Exceptions.StatusCode;
 
 namespace MessengerX.Domain.Exceptions.ApiExceptions;

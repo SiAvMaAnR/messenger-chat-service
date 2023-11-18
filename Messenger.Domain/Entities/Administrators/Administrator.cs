@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Shared.Enums;
+using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.Domain.Entities.Administrators;
 

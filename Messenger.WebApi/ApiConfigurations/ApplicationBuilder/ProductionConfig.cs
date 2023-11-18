@@ -1,4 +1,4 @@
-namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
+﻿namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
 
 public static partial class ApplicationBuilderExtension
 {

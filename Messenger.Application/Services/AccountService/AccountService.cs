@@ -1,20 +1,20 @@
-using MessengerX.Application.Services.Common;
-using MessengerX.Application.Services.AccountService.Models;
-using MessengerX.Domain.Interfaces.UnitOfWork;
-using MessengerX.Domain.Exceptions.ApiExceptions;
-using MessengerX.Infrastructure.AuthOptions;
-using MessengerX.Domain.Shared.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
-using Microsoft.AspNetCore.DataProtection;
+﻿using System.Security.Claims;
 using System.Text.Json;
+using MessengerX.Application.Services.AccountService.Models;
+using MessengerX.Application.Services.Common;
+using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Exceptions.ApiExceptions;
+using MessengerX.Domain.Exceptions.Common;
+using MessengerX.Domain.Interfaces.UnitOfWork;
+using MessengerX.Domain.Shared.Models;
+using MessengerX.Infrastructure.AppSettings;
+using MessengerX.Infrastructure.AuthOptions;
+using MessengerX.Infrastructure.NotificationTemplates;
+using MessengerX.Notifications;
 using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email.Models;
-using MessengerX.Notifications;
-using MessengerX.Infrastructure.AppSettings;
-using MessengerX.Infrastructure.NotificationTemplates;
-using MessengerX.Domain.Exceptions.Common;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 
 namespace MessengerX.Application.Services.AccountService;
 
@@ -22,26 +22,23 @@ public class AccountService : BaseService, IAccountService
 {
     private readonly IDataProtectionProvider _protection;
     private readonly INotificationClient _emailClient;
-    private readonly IAppSettings _appSettings;
 
     public AccountService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
-        IConfiguration configuration,
-        IDataProtectionProvider protection,
         IAppSettings appSettings,
+        IDataProtectionProvider protection,
         EmailClient emailClient
     )
-        : base(unitOfWork, context, configuration)
+        : base(unitOfWork, context, appSettings)
     {
         _protection = protection;
-        _appSettings = appSettings;
         _emailClient = emailClient;
     }
 
-    public async Task<LoginAccountResponse> LoginAsync(LoginAccountRequest request)
+    public async Task<AccountServiceLoginResponse> LoginAsync(AccountServiceLoginRequest request)
     {
-        var account =
+        Account account =
             await _unitOfWork.Account.GetAsync(account => account.Email == request.Email)
             ?? throw new NotExistsException("Account not exists");
 
@@ -70,17 +67,14 @@ public class AccountService : BaseService, IAccountService
             }
         );
 
-        return new LoginAccountResponse() { TokenType = "Bearer", Token = token };
+        return new AccountServiceLoginResponse() { TokenType = "Bearer", Token = token };
     }
 
-    public Task<GetAllAccountsResponse> GetAllAsync(GetAllAccountsRequest request)
+    public async Task<AccountServiceResetTokenResponse> ResetTokenAsync(
+        AccountServiceResetTokenRequest request
+    )
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<ResetTokenAccountResponse> ResetTokenAsync(ResetTokenAccountRequest request)
-    {
-        var account =
+        Account account =
             await _unitOfWork.Account.GetAsync(account => account.Email == request.Email)
             ?? throw new NotExistsException("Account not exists");
 
@@ -114,11 +108,11 @@ public class AccountService : BaseService, IAccountService
 
         await _emailClient.SendAsync(message);
 
-        return new ResetTokenAccountResponse() { IsSuccess = true };
+        return new AccountServiceResetTokenResponse() { IsSuccess = true };
     }
 
-    public Task<ResetPasswordAccountResponse> ResetPasswordAsync(
-        ResetPasswordAccountRequest request
+    public Task<AccountServiceResetPasswordResponse> ResetPasswordAsync(
+        AccountServiceResetPasswordRequest request
     )
     {
         throw new NotImplementedException();

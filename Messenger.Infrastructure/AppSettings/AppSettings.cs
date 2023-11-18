@@ -1,4 +1,4 @@
-using MessengerX.Domain.Shared.Environment;
+﻿using MessengerX.Domain.Shared.Environment;
 using Microsoft.Extensions.Options;
 
 namespace MessengerX.Infrastructure.AppSettings;

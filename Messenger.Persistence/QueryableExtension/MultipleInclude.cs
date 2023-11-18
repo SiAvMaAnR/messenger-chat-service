@@ -1,6 +1,6 @@
+﻿using System.Linq.Expressions;
 using MessengerX.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace MessengerX.Persistence.QueryableExtension;
 

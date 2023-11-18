@@ -1,4 +1,4 @@
-namespace MessengerX.Domain.Interfaces.UnitOfWork;
+﻿namespace MessengerX.Domain.Interfaces.UnitOfWork;
 
 public partial interface IUnitOfWork : IDisposable
 {

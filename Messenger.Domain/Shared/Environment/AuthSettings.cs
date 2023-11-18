@@ -1,4 +1,4 @@
-namespace MessengerX.Domain.Shared.Environment;
+﻿namespace MessengerX.Domain.Shared.Environment;
 
 public class AuthSettings
 {

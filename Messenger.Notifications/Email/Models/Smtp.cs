@@ -1,4 +1,4 @@
-namespace MessengerX.Notifications.Email.Models;
+﻿namespace MessengerX.Notifications.Email.Models;
 
 public class Smtp
 {

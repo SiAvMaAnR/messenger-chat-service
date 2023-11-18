@@ -1,6 +1,6 @@
-namespace MessengerX.Application.Services.UserService.Models;
+﻿namespace MessengerX.Application.Services.UserService.Models;
 
-public class RegistrationUserRequest
+public class UserServiceRegistrationRequest
 {
     public string Login { get; set; } = null!;
     public string Email { get; set; } = null!;

@@ -1,3 +1,4 @@
+﻿using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.WebApi.Middlewares;
 
 namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
@@ -7,7 +8,7 @@ public static partial class ApplicationBuilderExtension
     public static void CommonConfiguration(this WebApplication webApplication)
     {
         webApplication.UseMiddleware<TimingMiddleware>();
-        webApplication.UseCors("CorsPolicy");
+        webApplication.UseCors(CorsPolicyName.Default);
         webApplication.UseHttpsRedirection();
         webApplication.UseRouting();
         webApplication.UseAuthentication();

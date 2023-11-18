@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace MessengerX.WebApi.Middlewares;
 
@@ -20,9 +20,9 @@ public class TimingMiddleware
         await _next(context);
 
         stopwatch.Stop();
-        var elapsed = stopwatch.Elapsed;
-        var controllerName = context.Request.RouteValues["controller"];
-        var actionName = context.Request.RouteValues["action"];
+        TimeSpan elapsed = stopwatch.Elapsed;
+        object? controllerName = context.Request.RouteValues["controller"];
+        object? actionName = context.Request.RouteValues["action"];
 
         string message = $"Controller: {controllerName}\n";
         message += $"Action: {actionName}\n";
