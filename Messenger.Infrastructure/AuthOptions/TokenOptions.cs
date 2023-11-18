@@ -1,12 +1,11 @@
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using MessengerX.Domain.Exceptions.ApiExceptions;
 using MessengerX.Domain.Shared.Environment;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace MessengerX.Infrastructure.AuthOptions;
 
@@ -51,9 +50,9 @@ public static class TokenOptions
         {
             OnMessageReceived = context =>
             {
-                var accessToken = context.Request.Query["access_token"];
+                Microsoft.Extensions.Primitives.StringValues accessToken = context.Request.Query["access_token"];
 
-                var path = context.HttpContext.Request.Path;
+                Microsoft.AspNetCore.Http.PathString path = context.HttpContext.Request.Path;
                 if (!string.IsNullOrEmpty(accessToken))
                 {
                     context.Token = accessToken;
@@ -67,7 +66,7 @@ public static class TokenOptions
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenParams["secretKey"]));
 
-        var expires = DateTime.Now.AddMinutes(double.Parse(tokenParams["lifeTime"]));
+        DateTime expires = DateTime.Now.AddMinutes(double.Parse(tokenParams["lifeTime"]));
 
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

@@ -1,8 +1,11 @@
-using MessengerX.Application.Services.AccountService;
+﻿using MessengerX.Application.Services.AccountService;
 using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.Application.Services.UserService;
 using MessengerX.Application.Services.UserService.Models;
+using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.WebApi.Controllers.Models.User;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessengerX.WebApi.Controllers;
@@ -21,10 +24,12 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("registration")]
-    public async Task<IActionResult> Registration([FromBody] RegistrationRequest request)
+    public async Task<IActionResult> Registration(
+        [FromBody] UserControllerRegistrationRequest request
+    )
     {
-        var response = await _userService.RegistrationAsync(
-            new RegistrationUserRequest()
+        UserServiceRegistrationResponse response = await _userService.RegistrationAsync(
+            new UserServiceRegistrationRequest()
             {
                 Login = request.Login,
                 Email = request.Email,
@@ -37,14 +42,16 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("confirmation")]
-    public async Task<IActionResult> Confirmation([FromBody] ConfirmationRequest request)
+    public async Task<IActionResult> Confirmation(
+        [FromBody] UserControllerConfirmationRequest request
+    )
     {
-        var confirmResponse = await _userService.ConfirmationAsync(
-            new ConfirmationUserRequest() { Confirmation = request.Confirmation }
+        UserServiceConfirmationResponse confirmResponse = await _userService.ConfirmationAsync(
+            new UserServiceConfirmationRequest() { Confirmation = request.Confirmation }
         );
 
-        var loginResponse = await _accountService.LoginAsync(
-            new LoginAccountRequest()
+        AccountServiceLoginResponse loginResponse = await _accountService.LoginAsync(
+            new AccountServiceLoginRequest()
             {
                 Email = confirmResponse.Email,
                 Password = confirmResponse.Password
@@ -52,5 +59,13 @@ public class UserController : ControllerBase
         );
 
         return Ok(new { loginResponse.TokenType, loginResponse.Token });
+    }
+
+    [HttpPost("profile"), Authorize(Policy = AuthPolicy.OnlyUser)]
+    public async Task<IActionResult> Profile([FromQuery] UserControllerProfileRequest request)
+    {
+        UserServiceProfileResponse response = await _userService.GetProfileAsync(new UserServiceProfileRequest() { });
+
+        return Ok(new { response });
     }
 }

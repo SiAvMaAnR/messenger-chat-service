@@ -1,4 +1,4 @@
-using MessengerX.Notifications.Email.Models;
+﻿using MessengerX.Notifications.Email.Models;
 
 namespace MessengerX.Notifications.Common;
 

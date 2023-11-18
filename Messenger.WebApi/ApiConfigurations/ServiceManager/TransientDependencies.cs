@@ -1,4 +1,4 @@
-namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
+﻿namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
 
 public static partial class ServiceManagerExtension
 {

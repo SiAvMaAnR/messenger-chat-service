@@ -1,4 +1,4 @@
-using MessengerX.Domain.Interfaces.Repository;
+﻿using MessengerX.Domain.Interfaces.Repository;
 
 namespace MessengerX.Domain.Entities.Users;
 

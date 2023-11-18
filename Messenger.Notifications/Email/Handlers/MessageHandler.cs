@@ -1,7 +1,7 @@
-using MessengerX.Notifications.Email.Models;
-using MessengerX.Notifications.Email.Interfaces;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
+using MessengerX.Notifications.Email.Interfaces;
+using MessengerX.Notifications.Email.Models;
 using MimeKit;
 
 namespace MessengerX.Notifications.Email.Handlers;

@@ -1,6 +1,6 @@
-using MessengerX.Persistence.EntityConfigurations;
-using MessengerX.Domain.Entities.Accounts;
+﻿using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Users;
+using MessengerX.Persistence.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace MessengerX.Persistence.DBContext;

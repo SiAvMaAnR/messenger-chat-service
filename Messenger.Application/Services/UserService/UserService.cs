@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using MessengerX.Application.Services.Common;
 using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Entities.Users;
@@ -13,7 +13,6 @@ using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email.Models;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 
 namespace MessengerX.Application.Services.UserService;
 
@@ -21,24 +20,23 @@ public class UserService : BaseService, IUserService
 {
     private readonly IDataProtectionProvider _protection;
     private readonly INotificationClient _emailClient;
-    private readonly IAppSettings _appSettings;
 
     public UserService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
-        IConfiguration configuration,
-        IDataProtectionProvider protection,
         IAppSettings appSettings,
+        IDataProtectionProvider protection,
         EmailClient emailClient
     )
-        : base(unitOfWork, context, configuration)
+        : base(unitOfWork, context, appSettings)
     {
         _protection = protection;
-        _appSettings = appSettings;
         _emailClient = emailClient;
     }
 
-    public async Task<RegistrationUserResponse> RegistrationAsync(RegistrationUserRequest request)
+    public async Task<UserServiceRegistrationResponse> RegistrationAsync(
+        UserServiceRegistrationRequest request
+    )
     {
         if (await _unitOfWork.User.AnyAsync(user => user.Email == request.Email))
             throw new AlreadyExistsException("Account already exists");
@@ -79,12 +77,14 @@ public class UserService : BaseService, IUserService
 
         await _emailClient.SendAsync(message);
 
-        return new RegistrationUserResponse() { IsSuccess = true };
+        return new UserServiceRegistrationResponse() { IsSuccess = true };
     }
 
-    public async Task<ConfirmationUserResponse> ConfirmationAsync(ConfirmationUserRequest request)
+    public async Task<UserServiceConfirmationResponse> ConfirmationAsync(
+        UserServiceConfirmationRequest request
+    )
     {
-        var secretKey = _appSettings.Common.SecretKey;
+        string secretKey = _appSettings.Common.SecretKey;
 
         IDataProtector protector = _protection.CreateProtector(secretKey);
         string confirmationJson = protector.Unprotect(request.Confirmation);
@@ -96,7 +96,7 @@ public class UserService : BaseService, IUserService
         if (await _unitOfWork.Account.AnyAsync(account => account.Email == confirmation.Email))
             throw new AlreadyExistsException("Account already exists");
 
-        var password = PasswordOptions.CreatePasswordHash(confirmation.Password);
+        Password password = PasswordOptions.CreatePasswordHash(confirmation.Password);
 
         var user = new User()
         {
@@ -111,15 +111,15 @@ public class UserService : BaseService, IUserService
 
         await _unitOfWork.SaveChangesAsync();
 
-        return new ConfirmationUserResponse()
+        return new UserServiceConfirmationResponse()
         {
             Email = confirmation.Email,
             Password = confirmation.Password
         };
     }
 
-    public Task<GetAllUsersResponse> GetAllAsync(GetAllUsersRequest request)
+    public async Task<UserServiceProfileResponse> GetProfileAsync(UserServiceProfileRequest request)
     {
-        throw new NotImplementedException();
+        return await Task.FromResult(new UserServiceProfileResponse() { });
     }
 }

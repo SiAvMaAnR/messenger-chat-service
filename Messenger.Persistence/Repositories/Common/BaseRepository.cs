@@ -1,9 +1,9 @@
-﻿using MessengerX.Domain.Entities;
+﻿using System.Linq.Expressions;
+using MessengerX.Domain.Entities;
 using MessengerX.Domain.Interfaces.Repository;
 using MessengerX.Persistence.DBContext;
 using MessengerX.Persistence.QueryableExtension;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace MessengerX.Persistence.Repositories.Common;
 
