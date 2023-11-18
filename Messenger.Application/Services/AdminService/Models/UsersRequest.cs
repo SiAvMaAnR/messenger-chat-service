@@ -1,3 +1,8 @@
-﻿namespace MessengerX.Application.Services.AdminService.Models;
+﻿using MessengerX.Domain.Shared.Models;
 
-public class AdminServiceUsersRequest { }
+namespace MessengerX.Application.Services.AdminService.Models;
+
+public class AdminServiceUsersRequest
+{
+    public Pagination? Pagination { get; set; }
+}
