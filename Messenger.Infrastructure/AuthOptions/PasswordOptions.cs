@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using MessengerX.Domain.Exceptions.ApiExceptions;
+using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Shared.Models;
 
 namespace MessengerX.Infrastructure.AuthOptions;

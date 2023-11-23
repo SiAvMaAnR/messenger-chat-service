@@ -12,8 +12,9 @@ public class ErrorController : ControllerBase
 {
     private IActionResult HandleError(bool isDevelopment)
     {
-        IExceptionHandlerFeature? exceptionHandlerFeature =
-            HttpContext.Features.Get<IExceptionHandlerFeature>()!;
+        IExceptionHandlerFeature? exceptionHandlerFeature = HttpContext
+            .Features
+            .Get<IExceptionHandlerFeature>()!;
 
         Exception exception = exceptionHandlerFeature.Error;
 

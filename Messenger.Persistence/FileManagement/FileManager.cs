@@ -4,7 +4,11 @@ public static class FileManagerExtension
 {
     // private const string path = "../MessengerX.Persistence/Uploads";
 
-    public static async Task<string?> WriteToFileAsync(this byte[]? file, string path, string fileName)
+    public static async Task<string?> WriteToFileAsync(
+        this byte[]? file,
+        string path,
+        string fileName
+    )
     {
         string fullName = $"{Guid.NewGuid()}.{fileName}.{DateTime.Now:ddMMyyyy.HHmm}";
         string fullPath = $"{path}/{fullName}";

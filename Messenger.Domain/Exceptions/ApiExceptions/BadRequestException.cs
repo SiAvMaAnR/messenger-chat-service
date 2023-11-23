@@ -18,8 +18,7 @@ public class BadRequestException : BaseException
                 ClientMessage = clientMessage,
                 ClientMessageSettings = ClientMessageSettings.Custom
             }
-        )
-    { }
+        ) { }
 
     public BadRequestException(
         string systemMessage,
@@ -33,6 +32,5 @@ public class BadRequestException : BaseException
                 SystemMessage = systemMessage,
                 ClientMessageSettings = clientMessageSettings
             }
-        )
-    { }
+        ) { }
 }

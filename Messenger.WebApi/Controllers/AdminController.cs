@@ -20,7 +20,7 @@ public class AdminController : ControllerBase
         _accountService = accountService;
     }
 
-    [HttpPost("users"), Authorize(Policy = "OnlyAdmin")]
+    [HttpGet("users"), Authorize(Policy = "OnlyAdmin")]
     public async Task<IActionResult> GetUsers([FromQuery] AdminControllerUsersRequest request)
     {
         AdminServiceUsersResponse response = await _adminService.GetUsersAsync(
