@@ -2,7 +2,7 @@
 .vscode/*
 .config/*
 
-appsettings.production.json
+appsettings.Production.json
 **/bin/*
 **/obj/*
 

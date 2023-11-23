@@ -2,8 +2,6 @@
 
 public static class FileManagerExtension
 {
-    // private const string path = "../MessengerX.Persistence/Uploads";
-
     public static async Task<string?> WriteToFileAsync(
         this byte[]? file,
         string path,
