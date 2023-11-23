@@ -18,7 +18,8 @@ public class InternalServerException : BaseException
                 ClientMessage = clientMessage,
                 ClientMessageSettings = ClientMessageSettings.Custom
             }
-        ) { }
+        )
+    { }
 
     public InternalServerException(
         string systemMessage,
@@ -32,5 +33,6 @@ public class InternalServerException : BaseException
                 SystemMessage = systemMessage,
                 ClientMessageSettings = clientMessageSettings
             }
-        ) { }
+        )
+    { }
 }

@@ -1,4 +1,4 @@
-namespace MessengerX.Application.Services.UserService.Models;
+﻿namespace MessengerX.Application.Services.UserService.Models;
 
 public class UserServiceUploadImageResponse
 {

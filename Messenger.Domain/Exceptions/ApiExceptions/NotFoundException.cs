@@ -18,7 +18,8 @@ public class NotFoundException : BaseException
                 ClientMessage = clientMessage,
                 ClientMessageSettings = ClientMessageSettings.Custom
             }
-        ) { }
+        )
+    { }
 
     public NotFoundException(
         string systemMessage,
@@ -32,5 +33,6 @@ public class NotFoundException : BaseException
                 SystemMessage = systemMessage,
                 ClientMessageSettings = clientMessageSettings
             }
-        ) { }
+        )
+    { }
 }
