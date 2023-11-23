@@ -69,9 +69,7 @@ public class BaseRepository<TEntity> : IAsyncRepository<TEntity>
         params Expression<Func<TEntity, object>>[] includeProperties
     )
     {
-        return await Task.FromResult(
-            _dbSet.MultipleInclude(includeProperties).Where(predicate)
-        );
+        return await Task.FromResult(_dbSet.MultipleInclude(includeProperties).Where(predicate));
     }
 
     public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)

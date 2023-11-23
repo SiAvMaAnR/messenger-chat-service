@@ -3,7 +3,7 @@ using System.Text.Json;
 using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Exceptions.ApiExceptions;
+using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Shared.Models;
@@ -56,7 +56,7 @@ public class AccountService : BaseService, IAccountService
                 new(ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new(ClaimTypes.Name, account.Login),
                 new(ClaimTypes.Email, account.Email),
-                new(ClaimTypes.Role, account.Role.ToString())
+                new(ClaimTypes.Role, account.Role)
             },
             new Dictionary<string, string>()
             {
@@ -80,7 +80,7 @@ public class AccountService : BaseService, IAccountService
 
         string baseUrl = _appSettings.Client.BaseUrl;
 
-        string path = _appSettings.Path.ResetToken;
+        string path = _appSettings.RoutePath.ResetToken;
 
         string secretKey = _appSettings.Common.SecretKey;
 
@@ -111,10 +111,35 @@ public class AccountService : BaseService, IAccountService
         return new AccountServiceResetTokenResponse() { IsSuccess = true };
     }
 
-    public Task<AccountServiceResetPasswordResponse> ResetPasswordAsync(
+    public async Task<AccountServiceResetPasswordResponse> ResetPasswordAsync(
         AccountServiceResetPasswordRequest request
     )
     {
-        throw new NotImplementedException();
+        string secretKey = _appSettings.Common.SecretKey;
+
+        IDataProtector protector = _protection.CreateProtector(secretKey);
+
+        string resetTokenJson = protector.Unprotect(request.ResetToken);
+
+        ResetToken resetToken =
+            JsonSerializer.Deserialize<ResetToken>(resetTokenJson)
+            ?? throw new IncorrectDataException(
+                "Incorrect reset token",
+                ClientMessageSettings.Default
+            );
+
+        Account account =
+            await _unitOfWork.Account.GetAsync(account => account.Id == resetToken.Id)
+            ?? throw new NotExistsException("Account not exists");
+
+        Password password = PasswordOptions.CreatePasswordHash(request.Password);
+
+        account.PasswordHash = password.Hash;
+        account.PasswordSalt = password.Salt;
+
+        await _unitOfWork.Account.UpdateAsync(account);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new AccountServiceResetPasswordResponse() { IsSuccess = true };
     }
 }

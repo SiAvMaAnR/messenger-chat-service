@@ -1,6 +1,3 @@
 ﻿namespace MessengerX.Domain.Entities.Accounts;
 
-public partial class Account : IAggregateRoot
-{
-
-}
+public partial class Account : IAggregateRoot { }

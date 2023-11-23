@@ -2,7 +2,7 @@
 using MessengerX.Application.Services.Common;
 using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions.ApiExceptions;
+using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
@@ -11,6 +11,7 @@ using MessengerX.Infrastructure.NotificationTemplates;
 using MessengerX.Notifications;
 using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email.Models;
+using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 
@@ -43,7 +44,7 @@ public class UserService : BaseService, IUserService
 
         string baseUrl = _appSettings.Client.BaseUrl;
 
-        string path = _appSettings.Path.Registration;
+        string path = _appSettings.RoutePath.Registration;
 
         string secretKey = _appSettings.Common.SecretKey;
 
@@ -91,9 +92,7 @@ public class UserService : BaseService, IUserService
 
         Confirmation confirmation =
             JsonSerializer.Deserialize<Confirmation>(confirmationJson)
-            ?? throw new InvalidConfirmationException(
-                "Invalid confirmation"
-            );
+            ?? throw new InvalidConfirmationException("Invalid confirmation");
 
         if (await _unitOfWork.Account.AnyAsync(account => account.Email == confirmation.Email))
             throw new AlreadyExistsException("Account already exists");
@@ -120,8 +119,48 @@ public class UserService : BaseService, IUserService
         };
     }
 
-    public async Task<UserServiceProfileResponse> GetProfileAsync(UserServiceProfileRequest request)
+    public async Task<UserServiceProfileResponse> GetProfileAsync()
     {
-        return await Task.FromResult(new UserServiceProfileResponse() { });
+        User user =
+            await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
+            ?? throw new NotExistsException("User not found");
+
+        return new UserServiceProfileResponse()
+        {
+            Login = user.Login,
+            Email = user.Email,
+            Role = user.Role,
+            Birthday = user.Birthday
+        };
+    }
+
+    public async Task<UserServiceImageResponse> GetImageAsync()
+    {
+        User user =
+            await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
+            ?? throw new NotExistsException("User not found");
+
+        byte[]? image = await user.Image.ReadToBytesAsync();
+
+        return new UserServiceImageResponse() { Image = image };
+    }
+
+    public async Task<UserServiceUploadImageResponse> UploadImageAsync(
+        UserServiceUploadImageRequest request
+    )
+    {
+        User user =
+            await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
+            ?? throw new NotExistsException("User not found");
+
+        string imagePath = _appSettings.FilePath.Image;
+
+        using (var stream = new MemoryStream())
+        {
+            request.File.CopyTo(stream);
+            await stream.ToArray().WriteToFileAsync(imagePath, user.Email);
+        }
+
+        return new UserServiceUploadImageResponse() { IsSuccess = true };
     }
 }
