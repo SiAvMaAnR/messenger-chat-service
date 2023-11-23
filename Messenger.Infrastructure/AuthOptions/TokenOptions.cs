@@ -50,7 +50,9 @@ public static class TokenOptions
         {
             OnMessageReceived = context =>
             {
-                Microsoft.Extensions.Primitives.StringValues accessToken = context.Request.Query["access_token"];
+                Microsoft.Extensions.Primitives.StringValues accessToken = context.Request.Query[
+                    "access_token"
+                ];
 
                 Microsoft.AspNetCore.Http.PathString path = context.HttpContext.Request.Path;
                 if (!string.IsNullOrEmpty(accessToken))

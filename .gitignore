@@ -2,10 +2,10 @@
 .vscode/*
 .config/*
 
-appsettings.*.json
+appsettings.production.json
 **/bin/*
 **/obj/*
 
 .meta/*
 
-# **/Uploads/*
+**/Uploads/*

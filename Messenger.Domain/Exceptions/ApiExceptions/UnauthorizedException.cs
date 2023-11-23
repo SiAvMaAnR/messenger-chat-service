@@ -18,8 +18,7 @@ public class UnauthorizedException : BaseException
                 ClientMessage = clientMessage,
                 ClientMessageSettings = ClientMessageSettings.Custom
             }
-        )
-    { }
+        ) { }
 
     public UnauthorizedException(
         string systemMessage,
@@ -33,6 +32,5 @@ public class UnauthorizedException : BaseException
                 SystemMessage = systemMessage,
                 ClientMessageSettings = clientMessageSettings
             }
-        )
-    { }
+        ) { }
 }

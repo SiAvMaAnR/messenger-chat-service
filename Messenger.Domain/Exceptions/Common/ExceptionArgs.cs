@@ -8,5 +8,5 @@ public class ExceptionArgs
     public string? ClientMessage { get; set; }
     public string SystemMessage { get; set; } = null!;
     public string Type { get; set; } = null!;
-    public ClientMessageSettings ClientMessageSettings { get; set; }
+    public ClientMessageSettings ClientMessageSettings { get; set; } = ClientMessageSettings.Custom;
 }

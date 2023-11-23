@@ -18,8 +18,7 @@ public class ForbiddenException : BaseException
                 ClientMessage = clientMessage,
                 ClientMessageSettings = ClientMessageSettings.Custom
             }
-        )
-    { }
+        ) { }
 
     public ForbiddenException(
         string systemMessage,
@@ -33,6 +32,5 @@ public class ForbiddenException : BaseException
                 SystemMessage = systemMessage,
                 ClientMessageSettings = clientMessageSettings
             }
-        )
-    { }
+        ) { }
 }

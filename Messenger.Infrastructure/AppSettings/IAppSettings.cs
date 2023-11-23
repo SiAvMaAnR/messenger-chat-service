@@ -6,7 +6,8 @@ public interface IAppSettings
 {
     CommonSettings Common { get; }
     SmtpSettings Smtp { get; }
-    PathSettings Path { get; }
+    RoutePathSettings RoutePath { get; }
+    FilePathSettings FilePath { get; }
     ClientSettings Client { get; }
     AuthSettings Auth { get; }
 }

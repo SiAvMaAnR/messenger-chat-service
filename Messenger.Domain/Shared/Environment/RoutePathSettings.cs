@@ -1,8 +1,8 @@
 ﻿namespace MessengerX.Domain.Shared.Environment;
 
-public class PathSettings
+public class RoutePathSettings
 {
-    public const string Path = "Path";
+    public const string Path = "RoutePath";
 
     public string Registration { get; set; } = null!;
     public string Confirmation { get; set; } = null!;
