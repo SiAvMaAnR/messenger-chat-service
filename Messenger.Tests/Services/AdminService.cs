@@ -1,4 +1,4 @@
-namespace Messenger.Tests.Services;
+﻿namespace Messenger.Tests.Services;
 
 public class AdminService
 {

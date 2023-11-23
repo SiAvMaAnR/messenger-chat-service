@@ -1,4 +1,4 @@
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 
 namespace MessengerX.Infrastructure.UserIdentity;
