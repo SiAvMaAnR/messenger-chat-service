@@ -1,9 +1,10 @@
-﻿using MessengerX.Domain.Exceptions.Common;
+﻿using MessengerX.Domain.Exceptions.ApiExceptions;
+using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Exceptions.StatusCode;
 
-namespace MessengerX.Domain.Exceptions.ApiExceptions;
+namespace MessengerX.Domain.Exceptions.BusinessExceptions;
 
-public class AlreadyExistsException : BadRequestException, IBusinessException
+public class AlreadyExistsException : InternalServerException, IBusinessException
 {
     public const BusinessStatusCode Code = BusinessStatusCode.E001;
 

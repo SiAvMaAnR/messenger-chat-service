@@ -1,5 +1,3 @@
 ﻿namespace MessengerX.Domain.Exceptions.Common;
 
-public interface IBusinessException
-{
-}
+public interface IBusinessException { }

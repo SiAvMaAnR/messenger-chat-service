@@ -4,7 +4,6 @@ using MessengerX.Application.Services.UserService;
 using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.WebApi.Controllers.Models.User;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,11 +60,37 @@ public class UserController : ControllerBase
         return Ok(new { loginResponse.TokenType, loginResponse.Token });
     }
 
-    [HttpPost("profile"), Authorize(Policy = AuthPolicy.OnlyUser)]
-    public async Task<IActionResult> Profile([FromQuery] UserControllerProfileRequest request)
+    [HttpGet("profile"), Authorize(Policy = AuthPolicy.OnlyUser)]
+    public async Task<IActionResult> Profile()
     {
-        UserServiceProfileResponse response = await _userService.GetProfileAsync(new UserServiceProfileRequest() { });
+        UserServiceProfileResponse response = await _userService.GetProfileAsync();
 
-        return Ok(new { response });
+        return Ok(
+            new
+            {
+                response.Login,
+                response.Email,
+                response.Role,
+                response.Birthday
+            }
+        );
+    }
+
+    [HttpGet("image"), Authorize(Policy = AuthPolicy.OnlyUser)]
+    public async Task<IActionResult> Image()
+    {
+        UserServiceImageResponse response = await _userService.GetImageAsync();
+
+        return Ok(new { response.Image });
+    }
+
+    [HttpPost("upload-image"), Authorize(Policy = AuthPolicy.OnlyUser)]
+    public async Task<IActionResult> UploadImage([FromForm] IFormFile file)
+    {
+        UserServiceUploadImageResponse response = await _userService.UploadImageAsync(
+            new UserServiceUploadImageRequest() { File = file }
+        );
+
+        return Ok(new { response.IsSuccess });
     }
 }
