@@ -1,10 +1,12 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using MessengerX.Domain.Exceptions.ApiExceptions;
 using MessengerX.Domain.Shared.Environment;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 
 namespace MessengerX.Infrastructure.AuthOptions;
@@ -13,8 +15,8 @@ public static class TokenOptions
 {
     public static void Config(this JwtBearerOptions options, IConfiguration configuration)
     {
-        CommonSettings commonSettings = new();
-        AuthSettings authSettings = new();
+        var commonSettings = new CommonSettings();
+        var authSettings = new AuthSettings();
 
         configuration.GetSection(CommonSettings.Path).Bind(commonSettings);
         configuration.GetSection(AuthSettings.Path).Bind(authSettings);
@@ -22,10 +24,10 @@ public static class TokenOptions
         if (configuration == null)
             throw new BadRequestException("Incorrect config");
 
-        string secretKey = commonSettings.SecretKey;
-
         string? issuer = authSettings.Issuer;
         string? audience = authSettings.Audience;
+
+        byte[] hashSecretKey = SHA512.HashData(Encoding.UTF8.GetBytes(commonSettings.SecretKey));
 
         // options.RequireHttpsMetadata = true;
         options.SaveToken = true;
@@ -37,24 +39,20 @@ public static class TokenOptions
             ValidateIssuerSigningKey = true,
             ValidIssuer = issuer,
             ValidAudience = audience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+            IssuerSigningKey = new SymmetricSecurityKey(hashSecretKey),
             LifetimeValidator = (
                 DateTime? notBefore,
                 DateTime? expires,
                 SecurityToken securityToken,
                 TokenValidationParameters validationParameters
-            ) => (expires != null) ? DateTime.UtcNow < expires : false
+            ) => (expires != null) && DateTime.UtcNow < expires
         };
-
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
             {
-                Microsoft.Extensions.Primitives.StringValues accessToken = context.Request.Query[
-                    "access_token"
-                ];
+                StringValues accessToken = context.Request.Query["access_token"];
 
-                Microsoft.AspNetCore.Http.PathString path = context.HttpContext.Request.Path;
                 if (!string.IsNullOrEmpty(accessToken))
                 {
                     context.Token = accessToken;
@@ -66,7 +64,8 @@ public static class TokenOptions
 
     public static string CreateToken(List<Claim> claims, Dictionary<string, string> tokenParams)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenParams["secretKey"]));
+        byte[] hashSecretKey = SHA512.HashData(Encoding.UTF8.GetBytes(tokenParams["secretKey"]));
+        var key = new SymmetricSecurityKey(hashSecretKey);
 
         DateTime expires = DateTime.Now.AddMinutes(double.Parse(tokenParams["lifeTime"]));
 

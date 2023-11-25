@@ -7,4 +7,7 @@ public class ResetPasswordRequest
 {
     [MaxLength(MaxLength.ResetToken)]
     public string ResetToken { get; set; } = null!;
+
+    [MaxLength(MaxLength.Password)]
+    public string Password { get; set; } = null!;
 }

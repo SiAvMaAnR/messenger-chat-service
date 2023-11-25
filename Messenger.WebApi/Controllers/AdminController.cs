@@ -24,7 +24,7 @@ public class AdminController : ControllerBase
     public async Task<IActionResult> GetUsers([FromQuery] AdminControllerUsersRequest request)
     {
         AdminServiceUsersResponse response = await _adminService.GetUsersAsync(
-            new AdminServiceUsersRequest() { }
+            new AdminServiceUsersRequest() { Pagination = request.Pagination }
         );
 
         return Ok(new { response });
