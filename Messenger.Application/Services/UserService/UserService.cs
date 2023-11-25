@@ -8,7 +8,6 @@ using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Infrastructure.NotificationTemplates;
-using MessengerX.Notifications;
 using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email.Models;
 using MessengerX.Persistence.Extensions;
@@ -27,7 +26,7 @@ public class UserService : BaseService, IUserService
         IHttpContextAccessor context,
         IAppSettings appSettings,
         IDataProtectionProvider protection,
-        EmailClient emailClient
+        INotificationClient emailClient
     )
         : base(unitOfWork, context, appSettings)
     {
@@ -56,7 +55,8 @@ public class UserService : BaseService, IUserService
                 Login = request.Login,
                 Email = request.Email,
                 Password = request.Password,
-                Birthday = request.Birthday
+                Birthday = request.Birthday,
+                ExpirationDate = DateTime.Now.AddHours(1)
             }
         );
 
@@ -93,6 +93,9 @@ public class UserService : BaseService, IUserService
         Confirmation confirmation =
             JsonSerializer.Deserialize<Confirmation>(confirmationJson)
             ?? throw new InvalidConfirmationException("Invalid confirmation");
+
+        if (confirmation.ExpirationDate < DateTime.Now)
+            throw new ExpiredException("Confirmation has expired");
 
         if (await _unitOfWork.Account.AnyAsync(account => account.Email == confirmation.Email))
             throw new AlreadyExistsException("Account already exists");
@@ -158,8 +161,10 @@ public class UserService : BaseService, IUserService
         using (var stream = new MemoryStream())
         {
             request.File.CopyTo(stream);
-            await stream.ToArray().WriteToFileAsync(imagePath, user.Email);
+            user.Image = await stream.ToArray().WriteToFileAsync(imagePath, user.Email);
         }
+        await _unitOfWork.User.UpdateAsync(user);
+        await _unitOfWork.SaveChangesAsync();
 
         return new UserServiceUploadImageResponse() { IsSuccess = true };
     }

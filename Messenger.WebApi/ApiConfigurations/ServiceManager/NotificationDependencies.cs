@@ -12,7 +12,7 @@ public static partial class ServiceManagerExtension
         IConfiguration configuration
     )
     {
-        SmtpSettings smtpSettings = new();
+        var smtpSettings = new SmtpSettings();
 
         configuration.GetSection(SmtpSettings.Path).Bind(smtpSettings);
 

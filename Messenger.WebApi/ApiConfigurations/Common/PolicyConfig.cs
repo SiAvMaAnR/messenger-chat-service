@@ -6,7 +6,7 @@ namespace MessengerX.WebApi.ApiConfigurations.Common;
 
 public static class PolicyConfigExtension
 {
-    private static readonly string[] AllowOrigins =
+    private static readonly string[] s_allowOrigins =
     {
         "http://localhost:3000",
         "https://localhost:3000"
@@ -16,7 +16,10 @@ public static class PolicyConfigExtension
     {
         authorizationOptions.AddPolicy(AuthPolicy.OnlyUser, policy => policy.RequireRole("User"));
         authorizationOptions.AddPolicy(AuthPolicy.OnlyAdmin, policy => policy.RequireRole("Admin"));
-        authorizationOptions.AddPolicy(AuthPolicy.FullAccess, policy => policy.Build());
+        authorizationOptions.AddPolicy(
+            AuthPolicy.FullAccess,
+            policy => policy.RequireAssertion(context => true)
+        );
     }
 
     public static void CorsConfig(this CorsOptions corsOptions)
@@ -25,7 +28,7 @@ public static class PolicyConfigExtension
             CorsPolicyName.Default,
             policy =>
                 policy
-                    .WithOrigins(AllowOrigins)
+                    .WithOrigins(s_allowOrigins)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()

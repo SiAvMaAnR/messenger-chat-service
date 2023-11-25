@@ -2,12 +2,12 @@
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Shared.Constants.Common;
 
-namespace MessengerX.Domain.Entities.Administrators;
+namespace MessengerX.Domain.Entities.Admins;
 
-[Table("Administrators")]
-public partial class Administrator : Account
+[Table("Admins")]
+public partial class Admin : Account
 {
-    public Administrator()
+    public Admin()
     {
         Role = AccountRole.Admin;
     }

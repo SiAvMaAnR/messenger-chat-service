@@ -40,7 +40,11 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
     {
         AccountServiceResetPasswordResponse response = await _accountService.ResetPasswordAsync(
-            new AccountServiceResetPasswordRequest() { ResetToken = request.ResetToken }
+            new AccountServiceResetPasswordRequest()
+            {
+                ResetToken = request.ResetToken,
+                Password = request.Password
+            }
         );
 
         return Ok(new { response.IsSuccess });
