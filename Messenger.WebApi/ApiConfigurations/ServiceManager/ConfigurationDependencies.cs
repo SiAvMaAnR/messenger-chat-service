@@ -16,6 +16,7 @@ public static partial class ServiceManagerExtension
                 { "authSettings", config.GetSection(AuthSettings.Path) },
                 { "clientSettings", config.GetSection(ClientSettings.Path) },
                 { "routePathSettings", config.GetSection(RoutePathSettings.Path) },
+                { "filePathSettings", config.GetSection(FilePathSettings.Path) },
                 { "smtpSettings", config.GetSection(SmtpSettings.Path) },
             };
 
@@ -23,6 +24,7 @@ public static partial class ServiceManagerExtension
         serviceCollection.Configure<AuthSettings>(configurations["authSettings"]);
         serviceCollection.Configure<ClientSettings>(configurations["clientSettings"]);
         serviceCollection.Configure<RoutePathSettings>(configurations["routePathSettings"]);
+        serviceCollection.Configure<FilePathSettings>(configurations["filePathSettings"]);
         serviceCollection.Configure<SmtpSettings>(configurations["smtpSettings"]);
 
         return serviceCollection;
