@@ -1,4 +1,5 @@
 ﻿using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Persistence.DBContext;
 using MessengerX.Persistence.Repositories;
@@ -11,11 +12,13 @@ public partial class UnitOfWork
 
     public IUserRepository User { get; }
     public IAccountRepository Account { get; }
+    public IAdminRepository Admin { get; }
 
     public UnitOfWork(EFContext eFContext)
     {
         _eFContext = eFContext;
         User = new UserRepository(eFContext);
         Account = new AccountRepository(eFContext);
+        Admin = new AdminRepository(eFContext);
     }
 }

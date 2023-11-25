@@ -1,3 +1,8 @@
-﻿namespace MessengerX.WebApi.Controllers.Models.Admin;
+﻿using MessengerX.Domain.Shared.Models;
 
-public class AdminControllerUsersRequest { }
+namespace MessengerX.WebApi.Controllers.Models.Admin;
+
+public class AdminControllerUsersRequest
+{
+    public Pagination? Pagination { get; set; }
+}

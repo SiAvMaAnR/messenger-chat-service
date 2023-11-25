@@ -10,7 +10,6 @@ using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Infrastructure.NotificationTemplates;
-using MessengerX.Notifications;
 using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email.Models;
 using Microsoft.AspNetCore.DataProtection;
@@ -28,7 +27,7 @@ public class AccountService : BaseService, IAccountService
         IHttpContextAccessor context,
         IAppSettings appSettings,
         IDataProtectionProvider protection,
-        EmailClient emailClient
+        INotificationClient emailClient
     )
         : base(unitOfWork, context, appSettings)
     {
@@ -40,7 +39,7 @@ public class AccountService : BaseService, IAccountService
     {
         Account account =
             await _unitOfWork.Account.GetAsync(account => account.Email == request.Email)
-            ?? throw new NotExistsException("Account not exists");
+            ?? throw new NotExistsException("Account not exists", ClientMessageSettings.Same);
 
         bool isVerify = PasswordOptions.VerifyPasswordHash(
             request.Password,
@@ -51,7 +50,7 @@ public class AccountService : BaseService, IAccountService
             throw new InvalidCredentialsException("Wrong password", ClientMessageSettings.Same);
 
         string token = TokenOptions.CreateToken(
-            new List<Claim>()
+            new()
             {
                 new(ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new(ClaimTypes.Name, account.Login),
@@ -67,7 +66,7 @@ public class AccountService : BaseService, IAccountService
             }
         );
 
-        return new AccountServiceLoginResponse() { TokenType = "Bearer", Token = token };
+        return new AccountServiceLoginResponse() { TokenType = "Bearer", Token = "token" };
     }
 
     public async Task<AccountServiceResetTokenResponse> ResetTokenAsync(
@@ -87,7 +86,12 @@ public class AccountService : BaseService, IAccountService
         IDataProtector protector = _protection.CreateProtector(secretKey);
 
         string resetTokenJson = JsonSerializer.Serialize(
-            new ResetToken() { Id = account.Id, Email = request.Email, }
+            new ResetToken()
+            {
+                Id = account.Id,
+                Email = request.Email,
+                ExpirationDate = DateTime.Now.AddHours(1),
+            }
         );
 
         string resetToken = protector.Protect(resetTokenJson);
@@ -123,10 +127,10 @@ public class AccountService : BaseService, IAccountService
 
         ResetToken resetToken =
             JsonSerializer.Deserialize<ResetToken>(resetTokenJson)
-            ?? throw new IncorrectDataException(
-                "Incorrect reset token",
-                ClientMessageSettings.Default
-            );
+            ?? throw new IncorrectDataException("Incorrect reset token");
+
+        if (resetToken.ExpirationDate < DateTime.Now)
+            throw new ExpiredException("Reset token has expired");
 
         Account account =
             await _unitOfWork.Account.GetAsync(account => account.Id == resetToken.Id)

@@ -8,5 +8,6 @@ public enum BusinessStatusCode
     E004,
     E005,
     E006,
-    E007
+    E007,
+    E008
 }
