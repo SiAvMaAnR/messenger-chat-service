@@ -1,6 +1,7 @@
 ﻿using MessengerX.Domain.Shared.Environment;
 using MessengerX.Notifications;
 using MessengerX.Notifications.Email.Handlers;
+using MessengerX.Notifications.Email.Interfaces;
 using MessengerX.Notifications.Email.Models;
 
 namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
@@ -16,7 +17,7 @@ public static partial class ServiceManagerExtension
 
         configuration.GetSection(SmtpSettings.Path).Bind(smtpSettings);
 
-        serviceCollection.AddSingleton(
+        serviceCollection.AddSingleton<IEmailClient>(
             new EmailClient(
                 new MessageHandler(
                     new Smtp()

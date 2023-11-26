@@ -1,12 +1,11 @@
-﻿using MessengerX.Notifications.Common;
-using MessengerX.Notifications.Email.Interfaces;
+﻿using MessengerX.Notifications.Email.Interfaces;
 using MessengerX.Notifications.Email.Models;
 using MimeKit;
 using MimeKit.Text;
 
 namespace MessengerX.Notifications;
 
-public class EmailClient : INotificationClient
+public class EmailClient : IEmailClient
 {
     private readonly IHandler _messageHandler;
 
