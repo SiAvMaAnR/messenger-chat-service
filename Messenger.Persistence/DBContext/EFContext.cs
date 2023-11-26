@@ -2,6 +2,7 @@
 using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Persistence.EntityConfigurations;
+using MessengerX.Persistence.Seeds;
 using Microsoft.EntityFrameworkCore;
 
 namespace MessengerX.Persistence.DBContext;
@@ -24,6 +25,8 @@ public class EFContext : DbContext
         modelBuilder.ApplyConfiguration(new AccountConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new AdminConfiguration());
+
+        modelBuilder.ApplySeeds();
 
         base.OnModelCreating(modelBuilder);
     }

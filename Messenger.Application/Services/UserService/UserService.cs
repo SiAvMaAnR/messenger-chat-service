@@ -8,7 +8,7 @@ using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Infrastructure.NotificationTemplates;
-using MessengerX.Notifications.Common;
+using MessengerX.Notifications.Email.Interfaces;
 using MessengerX.Notifications.Email.Models;
 using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.DataProtection;
@@ -19,14 +19,14 @@ namespace MessengerX.Application.Services.UserService;
 public class UserService : BaseService, IUserService
 {
     private readonly IDataProtectionProvider _protection;
-    private readonly INotificationClient _emailClient;
+    private readonly IEmailClient _emailClient;
 
     public UserService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
         IAppSettings appSettings,
         IDataProtectionProvider protection,
-        INotificationClient emailClient
+        IEmailClient emailClient
     )
         : base(unitOfWork, context, appSettings)
     {
