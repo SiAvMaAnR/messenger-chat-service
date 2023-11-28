@@ -9,15 +9,16 @@ namespace MessengerX.Persistence.DBContext;
 
 public class EFContext : DbContext
 {
-    public DbSet<Account> Accounts { get; set; } = null!;
-    public DbSet<User> Users { get; set; } = null!;
-    public DbSet<Admin> Admins { get; set; } = null!;
+    public DbSet<Account> Accounts { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Admin> Admins { get; set; }
 
     public EFContext(DbContextOptions<EFContext> options)
         : base(options)
     {
-        // Database.EnsureCreated();
         // Database.EnsureDeleted();
+        // Database.EnsureCreated();
+        Database.Migrate();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
