@@ -8,5 +8,6 @@ internal static class Seed
     public static void ApplySeeds(this ModelBuilder modelBuilder)
     {
         modelBuilder.CreateAdmins();
+        modelBuilder.CreateUsers();
     }
 }

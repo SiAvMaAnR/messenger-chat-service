@@ -1,6 +1,8 @@
 ﻿using MessengerX.Application.Services.AdminService;
+using MessengerX.Application.Services.AdminService.Adapters;
 using MessengerX.Application.Services.AdminService.Models;
 using MessengerX.Application.Services.Common;
+using MessengerX.Application.Services.Helpers;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
@@ -29,13 +31,17 @@ public class AdminService : BaseService, IAdminService
 
         IOrderedEnumerable<User> sortedUsers = users.OrderBy((user) => user.Id);
 
-        IEnumerable<User>? pagedUsers =
-            (pagination != null)
-                ? sortedUsers
-                    .Skip(pagination.PageNumber * pagination.PageSize)
-                    .Take(pagination.PageSize)
-                : sortedUsers;
+        PaginatorResponse<User> paginatedData = sortedUsers.Pagination(pagination);
 
+        IEnumerable<AdminServiceUserResponsePayload> adaptedUsers = paginatedData.Collection.Select(
+            user => new AdminServiceUserAdapter(user)
+        );
+
+        return new AdminServiceUsersResponse() { Meta = paginatedData.Meta, Users = adaptedUsers };
+    }
+
+    public async Task<AdminServiceUsersResponse> GetUserAsync(AdminServiceUsersRequest request)
+    {
         throw new NotImplementedException();
     }
 }
