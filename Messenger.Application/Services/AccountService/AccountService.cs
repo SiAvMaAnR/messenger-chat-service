@@ -6,6 +6,7 @@ using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Interfaces.UnitOfWork;
+using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Infrastructure.AuthOptions;
@@ -59,14 +60,14 @@ public class AccountService : BaseService, IAccountService
             },
             new Dictionary<string, string>()
             {
-                { "secretKey", _appSettings.Common.SecretKey },
-                { "audience", _appSettings.Auth.Audience },
-                { "issuer", _appSettings.Auth.Issuer },
-                { "lifeTime", _appSettings.Auth.LifeTime },
+                { TokenClaim.SecretKey, _appSettings.Common.SecretKey },
+                { TokenClaim.Audience, _appSettings.Auth.Audience },
+                { TokenClaim.Issuer, _appSettings.Auth.Issuer },
+                { TokenClaim.LifeTime, _appSettings.Auth.LifeTime },
             }
         );
 
-        return new AccountServiceLoginResponse() { TokenType = "Bearer", Token = "token" };
+        return new AccountServiceLoginResponse() { TokenType = "Bearer", Token = token };
     }
 
     public async Task<AccountServiceResetTokenResponse> ResetTokenAsync(

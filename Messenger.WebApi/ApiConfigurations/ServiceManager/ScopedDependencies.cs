@@ -1,4 +1,5 @@
 ﻿using MessengerX.Application.Services.AccountService;
+using MessengerX.Application.Services.AdminService;
 using MessengerX.Application.Services.UserService;
 using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Persistence.UnitOfWork;
@@ -15,6 +16,7 @@ public static partial class ServiceManagerExtension
 
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IAccountService, AccountService>();
+        serviceCollection.AddScoped<IAdminService, AdminService>();
 
         return serviceCollection;
     }

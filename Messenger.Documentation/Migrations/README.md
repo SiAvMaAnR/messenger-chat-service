@@ -6,9 +6,14 @@
 
 `dotnet ef database update --startup-project ../Messenger.WebApi --verbose`
 
-### Migration: disable ensure created
+### Migration: list (./Messenger.Persistence)
+
+`dotnet ef migrations list --startup-project ../Messenger.WebApi`
+
+### Migration: behavior rules 
 
 ```
-// Database.EnsureCreated();
-// Database.EnsureDeleted();
+Database.EnsureDeleted();
+Database.EnsureCreated();
+Database.Migrate();
 ```
