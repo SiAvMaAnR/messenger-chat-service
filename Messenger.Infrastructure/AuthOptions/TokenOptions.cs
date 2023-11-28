@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using MessengerX.Domain.Exceptions.ApiExceptions;
+using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Environment;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -64,16 +65,18 @@ public static class TokenOptions
 
     public static string CreateToken(List<Claim> claims, Dictionary<string, string> tokenParams)
     {
-        byte[] hashSecretKey = SHA512.HashData(Encoding.UTF8.GetBytes(tokenParams["secretKey"]));
+        byte[] hashSecretKey = SHA512.HashData(
+            Encoding.UTF8.GetBytes(tokenParams[TokenClaim.SecretKey])
+        );
         var key = new SymmetricSecurityKey(hashSecretKey);
 
-        DateTime expires = DateTime.Now.AddMinutes(double.Parse(tokenParams["lifeTime"]));
+        DateTime expires = DateTime.Now.AddMinutes(double.Parse(tokenParams[TokenClaim.LifeTime]));
 
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
         var token = new JwtSecurityToken(
-            audience: tokenParams["audience"],
-            issuer: tokenParams["issuer"],
+            audience: tokenParams[TokenClaim.Audience],
+            issuer: tokenParams[TokenClaim.Issuer],
             claims: claims,
             expires: expires,
             signingCredentials: credentials

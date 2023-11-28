@@ -13,5 +13,5 @@ public class UserControllerRegistrationRequest
 
     [MaxLength(MaxLength.Password)]
     public string Password { get; set; } = null!;
-    public DateTime? Birthday { get; set; }
+    public DateOnly? Birthday { get; set; }
 }

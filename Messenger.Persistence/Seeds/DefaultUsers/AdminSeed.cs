@@ -34,6 +34,6 @@ internal static partial class DefaultUsersSeed
             };
         });
 
-        modelBuilder.Entity<Admin>().HasData(adminList);
+        modelBuilder.Entity<Admin>().HasData(adminList.ToArray());
     }
 }
