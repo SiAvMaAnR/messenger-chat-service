@@ -24,9 +24,7 @@ public class TimingMiddleware
         object? controllerName = context.Request.RouteValues["controller"];
         object? actionName = context.Request.RouteValues["action"];
 
-        string message = $"Controller: {controllerName}\n";
-        message += $"Action: {actionName}\n";
-        message += $"Time: {elapsed.TotalMilliseconds} ms";
+        string message = $"Controller: {controllerName}. Action: {actionName}. Time: {elapsed.TotalMilliseconds} ms";
 
         _logger.LogInformation(message);
     }

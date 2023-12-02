@@ -1,6 +1,6 @@
 ﻿namespace MessengerX.Notifications.Email.Models;
 
-public class Smtp
+public class SmtpConfig
 {
     public string Email = null!;
     public string Password = null!;

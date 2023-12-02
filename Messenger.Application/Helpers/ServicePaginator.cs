@@ -20,7 +20,7 @@ public static class ServicePaginator
         int itemCount = collection.Count();
         int pageSize = pagination?.PageSize ?? itemCount;
         int pageNumber = pagination?.PageNumber ?? 0;
-        int pagesCount = pagination != null ? (int)Math.Ceiling((float)itemCount / pageSize) : 1;
+        int pagesCount = pageSize > 0 ? (int)Math.Ceiling((float)itemCount / pageSize) : 0;
 
         IEnumerable<TEntity>? pagedCollection =
             pagination != null ? collection.Skip(pageNumber * pageSize).Take(pageSize) : collection;
