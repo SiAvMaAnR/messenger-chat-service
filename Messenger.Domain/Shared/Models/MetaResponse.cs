@@ -6,5 +6,4 @@ public class MetaResponse
     public int PageSize { get; set; }
     public int ItemsCount { get; set; }
     public int PagesCount { get; set; }
-
 }

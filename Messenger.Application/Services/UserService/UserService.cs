@@ -8,7 +8,7 @@ using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Infrastructure.NotificationTemplates;
-using MessengerX.Notifications.Email.Interfaces;
+using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
 using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.DataProtection;

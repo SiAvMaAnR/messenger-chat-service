@@ -1,7 +1,5 @@
 ﻿using MessengerX.Domain.Shared.Environment;
-using MessengerX.Notifications;
-using MessengerX.Notifications.Email.Handlers;
-using MessengerX.Notifications.Email.Interfaces;
+using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
 
 namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
@@ -19,15 +17,13 @@ public static partial class ServiceManagerExtension
 
         serviceCollection.AddSingleton<IEmailClient>(
             new EmailClient(
-                new MessageHandler(
-                    new Smtp()
-                    {
-                        Email = smtpSettings.Email,
-                        Password = smtpSettings.Password,
-                        Host = smtpSettings.Host,
-                        Port = smtpSettings.Port
-                    }
-                )
+                new SmtpConfig()
+                {
+                    Email = smtpSettings.Email,
+                    Password = smtpSettings.Password,
+                    Host = smtpSettings.Host,
+                    Port = smtpSettings.Port
+                }
             )
         );
 

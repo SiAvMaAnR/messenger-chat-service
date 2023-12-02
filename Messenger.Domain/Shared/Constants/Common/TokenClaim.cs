@@ -1,4 +1,4 @@
-namespace MessengerX.Domain.Shared.Constants.Common;
+﻿namespace MessengerX.Domain.Shared.Constants.Common;
 
 public static class TokenClaim
 {

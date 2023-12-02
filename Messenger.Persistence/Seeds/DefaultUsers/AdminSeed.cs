@@ -1,14 +1,19 @@
 ﻿using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AuthOptions;
-using Microsoft.EntityFrameworkCore;
+using MessengerX.Persistence.DBContext;
 
 namespace MessengerX.Persistence.Seeds.DefaultUsers;
 
 internal static partial class DefaultUsersSeed
 {
-    public static void CreateAdmins(this ModelBuilder modelBuilder)
+    public static void CreateAdmins(EFContext eFContext)
     {
+        if (eFContext.Admins.Any())
+        {
+            throw new InvalidOperationException("Admins already exists");
+        }
+
         var admins = new[]
         {
             new
@@ -34,6 +39,7 @@ internal static partial class DefaultUsersSeed
             };
         });
 
-        modelBuilder.Entity<Admin>().HasData(adminList.ToArray());
+        eFContext.Admins.AddRange(adminList);
+        eFContext.SaveChanges();
     }
 }
