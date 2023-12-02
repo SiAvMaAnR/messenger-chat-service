@@ -1,4 +1,5 @@
 ﻿using MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
+using MessengerX.WebApi.ApiConfigurations.LoggingBuilder;
 using MessengerX.WebApi.ApiConfigurations.ServiceManager;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddNotificationDependencies(config);
 builder.Services.AddTransientDependencies();
 builder.Services.AddScopedDependencies();
 builder.Services.AddSingletonDependencies();
+
+builder.Logging.AddCommonConfig(config);
 
 WebApplication app = builder.Build();
 

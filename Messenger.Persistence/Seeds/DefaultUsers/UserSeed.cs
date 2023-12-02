@@ -1,14 +1,19 @@
-using MessengerX.Domain.Entities.Users;
+﻿using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AuthOptions;
-using Microsoft.EntityFrameworkCore;
+using MessengerX.Persistence.DBContext;
 
 namespace MessengerX.Persistence.Seeds.DefaultUsers;
 
 internal static partial class DefaultUsersSeed
 {
-    public static void CreateUsers(this ModelBuilder modelBuilder)
+    public static void CreateUsers(EFContext eFContext)
     {
+        if (eFContext.Users.Any())
+        {
+            throw new InvalidOperationException("Users already exists");
+        }
+
         var users = new[]
         {
             new
@@ -35,6 +40,7 @@ internal static partial class DefaultUsersSeed
             };
         });
 
-        modelBuilder.Entity<User>().HasData(userList.ToArray());
+        eFContext.Users.AddRange(userList);
+        eFContext.SaveChanges();
     }
 }
