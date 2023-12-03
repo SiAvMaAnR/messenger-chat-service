@@ -1,10 +1,10 @@
-﻿using MessengerX.Domain.Shared.Environment;
+﻿using MessengerX.Domain.Shared.Settings;
 
 namespace MessengerX.WebApi.ApiConfigurations.LoggingBuilder;
 
 public static partial class LoggingBuilderExtension
 {
-    public static ILoggingBuilder AddCommonConfig(
+    public static ILoggingBuilder AddCommonConfiguration(
         this ILoggingBuilder loggingBuilder,
         IConfiguration configuration
     )

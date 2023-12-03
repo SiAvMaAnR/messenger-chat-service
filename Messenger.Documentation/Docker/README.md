@@ -1,11 +1,15 @@
-### Docker-Compose: Up
+### Docker-Compose: up
 
 `docker-compose up -d`
 
-### Docker-Compose: Down
+### Docker-Compose: down
 
 `docker-compose down`
 
-### Docker-Compose: Logs
+### Docker-Compose: logs
 
 `docker-compose logs`
+
+### Docker: image build
+
+`docker buildx build -t messenger-server:latest .`
