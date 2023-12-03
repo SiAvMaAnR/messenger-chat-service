@@ -12,15 +12,11 @@ builder.Services.AddTransientDependencies();
 builder.Services.AddScopedDependencies();
 builder.Services.AddSingletonDependencies();
 
-builder.Logging.AddCommonConfig(config);
+builder.Logging.AddCommonConfiguration(config);
 
-WebApplication app = builder.Build();
+WebApplication application = builder.Build();
 
-if (app.Environment.IsDevelopment())
-    app.DevelopmentConfiguration();
-else
-    app.ProductionConfiguration();
-
-app.CommonConfiguration();
-app.HubsConfiguration();
-app.Run();
+application.AddEnvironmentConfiguration();
+application.CommonConfiguration();
+application.HubsConfiguration();
+application.Run();

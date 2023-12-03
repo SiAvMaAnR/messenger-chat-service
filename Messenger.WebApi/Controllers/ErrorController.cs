@@ -51,4 +51,7 @@ public class ErrorController : ControllerBase
 
     [Route("Development")]
     public IActionResult HandleErrorDevelopment() => HandleError(true);
+
+    [Route("Docker")]
+    public IActionResult HandleErrorDocker() => HandleError(true);
 }
