@@ -17,3 +17,15 @@
 ### Dotnet: update workload
 
 `dotnet workload update`
+
+### Dotnet: publish
+
+`dotnet publish -c Release`
+
+### Dotnet: launch
+
+`dotnet run --launch-profile "Messenger.Development"`
+
+### Dotnet: launch release
+
+`dotnet bin/Release/net8.0/Messenger.WebApi.dll`

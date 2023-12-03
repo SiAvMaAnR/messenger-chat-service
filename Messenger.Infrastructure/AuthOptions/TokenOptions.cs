@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using MessengerX.Domain.Exceptions.ApiExceptions;
 using MessengerX.Domain.Shared.Constants.Common;
-using MessengerX.Domain.Shared.Environment;
+using MessengerX.Domain.Shared.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;

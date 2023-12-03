@@ -1,4 +1,4 @@
-﻿using MessengerX.Domain.Shared.Environment;
+﻿using MessengerX.Domain.Shared.Settings;
 using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
 

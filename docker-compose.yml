@@ -1,8 +1,18 @@
 version: "3"
 services:
-  mssql:
+  backend-aspnet:
+    image: messenger-server
+    container_name: messenger-server
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database-mssql
+
+  database-mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: mssql-server-messenger
+    container_name: messenger-database
     environment:
       ACCEPT_EULA: Y
       SA_PASSWORD: SecretPassword161
