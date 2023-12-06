@@ -6,4 +6,5 @@ namespace MessengerX.Application.Services.AdminService;
 public interface IAdminService : IBaseService
 {
     Task<AdminServiceUsersResponse> GetUsersAsync(AdminServiceUsersRequest request);
+    Task<AdminServiceUserResponse> GetUserAsync(AdminServiceUserRequest request);
 }

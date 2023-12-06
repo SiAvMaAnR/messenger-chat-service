@@ -2,6 +2,7 @@
 using MessengerX.Persistence.DBContext;
 using MessengerX.WebApi.ApiConfigurations.Common;
 using MessengerX.WebApi.ApiConfigurations.Other;
+using MessengerX.WebApi.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ public static partial class ServiceManagerExtension
         IConfiguration config
     )
     {
-        string connection = config.GetConnectionString("DefaultConnection") ?? "";
+        string? connection = AppEnvironment.GetConnectionString(config);
 
         serviceCollection.AddOptions();
         serviceCollection.AddDbContext<EFContext>(options => options.UseSqlServer(connection));
