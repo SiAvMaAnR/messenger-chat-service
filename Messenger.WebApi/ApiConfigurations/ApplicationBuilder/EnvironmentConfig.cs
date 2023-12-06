@@ -12,7 +12,6 @@ public static partial class ApplicationBuilderExtension
         {
             AppEnvironment.Production => webApplication.ProductionConfiguration(),
             AppEnvironment.Development => webApplication.DevelopmentConfiguration(),
-            AppEnvironment.Docker => webApplication.DevelopmentConfiguration(),
             _ => throw new NotImplementedException(),
         };
     }
