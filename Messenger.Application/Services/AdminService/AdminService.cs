@@ -33,15 +33,29 @@ public class AdminService : BaseService, IAdminService
 
         PaginatorResponse<User> paginatedData = sortedUsers.Pagination(pagination);
 
-        IEnumerable<AdminServiceUserResponsePayload> adaptedUsers = paginatedData.Collection.Select(
-            user => new AdminServiceUserAdapter(user)
-        );
+        IEnumerable<AdminServiceUserResponsePayload> adaptedUsers = paginatedData
+            .Collection
+            .Select(user => new AdminServiceUserAdapter(user));
 
         return new AdminServiceUsersResponse() { Meta = paginatedData.Meta, Users = adaptedUsers };
     }
 
-    public async Task<AdminServiceUsersResponse> GetUserAsync(AdminServiceUsersRequest request)
+    public async Task<AdminServiceUserResponse> GetUserAsync(AdminServiceUserRequest request)
     {
-        throw new NotImplementedException();
+        User user =
+            await _unitOfWork.User.GetAsync((user) => user.Id == request.Id)
+            ?? throw new NotExistsException("User not exists");
+
+        return new AdminServiceUserResponse()
+        {
+            Id = user.Id,
+            Login = user.Login,
+            Email = user.Email,
+            Role = user.Role,
+            Image = user.Image,
+            Birthday = user.Birthday,
+            CreatedAt = user.CreatedAt,
+            UpdatedAt = user.UpdatedAt
+        };
     }
 }
