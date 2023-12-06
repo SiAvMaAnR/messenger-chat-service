@@ -27,7 +27,7 @@ public class AdminController : ControllerBase
             new AdminServiceUsersRequest() { Pagination = request.Pagination }
         );
 
-        return Ok(new { response });
+        return Ok(response);
     }
 
     [HttpGet("users/{id:int}"), Authorize(Policy = "OnlyAdmin")]
@@ -37,6 +37,6 @@ public class AdminController : ControllerBase
             new AdminServiceUserRequest() { Id = request.Id }
         );
 
-        return Ok(new { response });
+        return Ok(response);
     }
 }
