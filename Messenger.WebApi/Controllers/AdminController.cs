@@ -29,4 +29,14 @@ public class AdminController : ControllerBase
 
         return Ok(new { response });
     }
+
+    [HttpGet("users/{id:int}"), Authorize(Policy = "OnlyAdmin")]
+    public async Task<IActionResult> GetUser([FromRoute] AdminControllerUserRequest request)
+    {
+        AdminServiceUserResponse response = await _adminService.GetUserAsync(
+            new AdminServiceUserRequest() { Id = request.Id }
+        );
+
+        return Ok(new { response });
+    }
 }
