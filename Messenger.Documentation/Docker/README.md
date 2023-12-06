@@ -12,4 +12,4 @@
 
 ### Docker: image build
 
-`docker buildx build -t messenger-server:latest .`
+`docker buildx build -t samarkinivan/messenger-server .`
