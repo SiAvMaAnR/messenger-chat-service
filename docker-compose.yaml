@@ -6,12 +6,11 @@ services:
     restart: always
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      DB_HOST: database-mssql
     ports:
       - "8080:8080"
     depends_on:
       - database-mssql
-    networks:
-      - default
 
   database-mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -28,8 +27,3 @@ services:
       - ./.meta/db/data:/var/opt/mssql-server/data
       - ./.meta/db/log:/var/opt/mssql-server/log
       - ./.meta/db/secrets:/var/opt/mssql-server/secrets
-    networks:
-      - default
-
-networks:
-  mynetwork:
