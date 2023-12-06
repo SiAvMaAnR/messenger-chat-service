@@ -19,16 +19,6 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Messenger.Docker": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:8080",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Docker"
-      }
-    },
     "Messenger.Production": {
       "commandName": "Project",
       "dotnetRunMessages": true,
