@@ -1,8 +1,9 @@
 version: "3"
 services:
   backend-aspnet:
-    image: messenger-server
+    image: samarkinivan/messenger-server:latest
     container_name: messenger-server
+    restart: always
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
     ports:
