@@ -1,16 +1,16 @@
 version: "3"
 services:
-  backend-aspnet:
-    image: samarkinivan/messenger-server:latest
-    container_name: messenger-server
-    restart: always
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      DB_HOST: database-mssql
-    ports:
-      - "8080:8080"
-    depends_on:
-      - database-mssql
+  # backend-aspnet:
+  #   image: samarkinivan/messenger-server:latest
+  #   container_name: messenger-server
+  #   restart: always
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: Development
+  #     DB_HOST: database-mssql
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - database-mssql
 
   database-mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -24,6 +24,6 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - ./.meta/db/data:/var/opt/mssql-server/data
-      - ./.meta/db/log:/var/opt/mssql-server/log
-      - ./.meta/db/secrets:/var/opt/mssql-server/secrets
+      - ./.meta/db/data:/var/opt/mssql/data
+      - ./.meta/db/log:/var/opt/mssql/log
+      - ./.meta/db/secrets:/var/opt/mssql/secrets

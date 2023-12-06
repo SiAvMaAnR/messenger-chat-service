@@ -23,7 +23,7 @@ public class AccountController : ControllerBase
             new AccountServiceLoginRequest() { Email = request.Email, Password = request.Password }
         );
 
-        return Ok(new { response.TokenType, response.Token, });
+        return Ok(response);
     }
 
     [HttpPost("reset-token")]
@@ -33,7 +33,7 @@ public class AccountController : ControllerBase
             new AccountServiceResetTokenRequest() { Email = request.Email }
         );
 
-        return Ok(new { response.IsSuccess });
+        return Ok(response);
     }
 
     [HttpPost("reset-password")]
@@ -47,6 +47,6 @@ public class AccountController : ControllerBase
             }
         );
 
-        return Ok(new { response.IsSuccess });
+        return Ok(response);
     }
 }

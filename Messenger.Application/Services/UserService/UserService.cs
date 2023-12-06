@@ -168,4 +168,18 @@ public class UserService : BaseService, IUserService
 
         return new UserServiceUploadImageResponse() { IsSuccess = true };
     }
+
+    public async Task<UserServiceUpdateResponse> UpdateAsync(UserServiceUpdateRequest request)
+    {
+        User user =
+            await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
+            ?? throw new NotExistsException("User not found");
+
+        // UPDATE =========================================== !!!
+
+        await _unitOfWork.User.UpdateAsync(user);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new UserServiceUpdateResponse() { IsSuccess = true };
+    }
 }
