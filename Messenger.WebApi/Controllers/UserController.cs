@@ -37,7 +37,7 @@ public class UserController : ControllerBase
             }
         );
 
-        return Ok(new { response.IsSuccess });
+        return Ok(response);
     }
 
     [HttpPost("confirmation")]
@@ -49,7 +49,7 @@ public class UserController : ControllerBase
             new UserServiceConfirmationRequest() { Confirmation = request.Confirmation }
         );
 
-        AccountServiceLoginResponse loginResponse = await _accountService.LoginAsync(
+        AccountServiceLoginResponse response = await _accountService.LoginAsync(
             new AccountServiceLoginRequest()
             {
                 Email = confirmResponse.Email,
@@ -57,7 +57,17 @@ public class UserController : ControllerBase
             }
         );
 
-        return Ok(new { loginResponse.TokenType, loginResponse.Token });
+        return Ok(response);
+    }
+
+    [HttpPut("update"), Authorize(Policy = AuthPolicy.OnlyUser)]
+    public async Task<IActionResult> UpdateInfo(UserControllerUpdateInfoRequest request)
+    {
+        UserServiceUpdateResponse response = await _userService.UpdateAsync(
+            new UserServiceUpdateRequest() { }
+        );
+
+        return Ok(new { response });
     }
 
     [HttpGet("profile"), Authorize(Policy = AuthPolicy.OnlyUser)]
@@ -65,15 +75,7 @@ public class UserController : ControllerBase
     {
         UserServiceProfileResponse response = await _userService.GetProfileAsync();
 
-        return Ok(
-            new
-            {
-                response.Login,
-                response.Email,
-                response.Role,
-                response.Birthday
-            }
-        );
+        return Ok(response);
     }
 
     [HttpGet("image"), Authorize(Policy = AuthPolicy.OnlyUser)]
@@ -81,7 +83,7 @@ public class UserController : ControllerBase
     {
         UserServiceImageResponse response = await _userService.GetImageAsync();
 
-        return Ok(new { response.Image });
+        return Ok(response);
     }
 
     [HttpPost("upload-image"), Authorize(Policy = AuthPolicy.OnlyUser)]
@@ -91,6 +93,6 @@ public class UserController : ControllerBase
             new UserServiceUploadImageRequest() { File = file }
         );
 
-        return Ok(new { response.IsSuccess });
+        return Ok(response);
     }
 }
