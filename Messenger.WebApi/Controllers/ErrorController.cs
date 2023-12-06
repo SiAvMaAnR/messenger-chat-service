@@ -1,6 +1,7 @@
 ﻿using MessengerX.Domain.Exceptions.ApiExceptions;
 using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Exceptions.StatusCode;
+using MessengerX.WebApi.Common;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,28 +11,32 @@ namespace MessengerX.WebApi.Controllers;
 [ApiExplorerSettings(IgnoreApi = true)]
 public class ErrorController : ControllerBase
 {
-    private IActionResult HandleError(bool isDevelopment)
+    private IActionResult HandleError(string envName)
     {
-        IExceptionHandlerFeature? exceptionHandlerFeature =
-            HttpContext.Features.Get<IExceptionHandlerFeature>()!;
+        IExceptionHandlerFeature? exceptionHandlerFeature = HttpContext
+            .Features
+            .Get<IExceptionHandlerFeature>()!;
 
         Exception exception = exceptionHandlerFeature.Error;
 
         string? clientMessage = (exception as BaseException)?.ClientMessage;
 
-        object errorInfo = isDevelopment
-            ? new
-            {
-                clientMessage,
-                exception.Message,
-                exception.Source,
-                exception.StackTrace,
-                exception.InnerException,
-                exception.Data,
-                exception.HelpLink,
-                exception.HResult,
-            }
-            : new { clientMessage };
+        object errorInfo = envName switch
+        {
+            AppEnvironment.Development
+                => new
+                {
+                    clientMessage,
+                    exception.Message,
+                    exception.Source,
+                    exception.StackTrace,
+                    exception.InnerException,
+                    exception.Data,
+                    exception.HelpLink,
+                    exception.HResult,
+                },
+            _ => new { clientMessage }
+        };
 
         int statusCode = exception switch
         {
@@ -47,11 +52,8 @@ public class ErrorController : ControllerBase
     }
 
     [Route("Production")]
-    public IActionResult HandleErrorProduction() => HandleError(false);
+    public IActionResult HandleErrorProduction() => HandleError(AppEnvironment.Production);
 
     [Route("Development")]
-    public IActionResult HandleErrorDevelopment() => HandleError(true);
-
-    [Route("Docker")]
-    public IActionResult HandleErrorDocker() => HandleError(true);
+    public IActionResult HandleErrorDevelopment() => HandleError(AppEnvironment.Development);
 }
