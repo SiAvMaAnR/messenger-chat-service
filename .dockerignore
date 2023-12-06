@@ -3,9 +3,11 @@
 .config/*
 .meta/*
 
-**/appsettings.Production.json
 **/*.log
 **/bin/*
 **/obj/*
 
 **/Uploads/*
+
+**/Dockerfile
+**/docker-compose.yaml

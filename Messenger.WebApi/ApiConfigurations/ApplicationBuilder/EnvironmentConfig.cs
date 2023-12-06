@@ -1,20 +1,18 @@
-﻿namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
+﻿using MessengerX.WebApi.Common;
+
+namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
 
 public static partial class ApplicationBuilderExtension
 {
-    private const string Production = "Production";
-    private const string Development = "Development";
-    private const string Docker = "Docker";
-
     public static IApplicationBuilder AddEnvironmentConfiguration(
         this WebApplication webApplication
     )
     {
         return webApplication.Environment.EnvironmentName switch
         {
-            Production => webApplication.ProductionConfiguration(),
-            Development => webApplication.DevelopmentConfiguration(),
-            Docker => webApplication.DockerConfiguration(),
+            AppEnvironment.Production => webApplication.ProductionConfiguration(),
+            AppEnvironment.Development => webApplication.DevelopmentConfiguration(),
+            AppEnvironment.Docker => webApplication.DevelopmentConfiguration(),
             _ => throw new NotImplementedException(),
         };
     }
@@ -43,21 +41,6 @@ public static partial class ApplicationBuilderExtension
                 ExceptionHandlingPath = "/Production"
             }
         );
-
-        return webApplication;
-    }
-
-    internal static IApplicationBuilder DockerConfiguration(this WebApplication webApplication)
-    {
-        webApplication.UseExceptionHandler(
-            new ExceptionHandlerOptions()
-            {
-                AllowStatusCode404Response = true,
-                ExceptionHandlingPath = "/Docker"
-            }
-        );
-        webApplication.UseSwagger();
-        webApplication.UseSwaggerUI();
 
         return webApplication;
     }
