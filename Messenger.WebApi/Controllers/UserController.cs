@@ -64,10 +64,10 @@ public class UserController : ControllerBase
     public async Task<IActionResult> UpdateInfo(UserControllerUpdateInfoRequest request)
     {
         UserServiceUpdateResponse response = await _userService.UpdateAsync(
-            new UserServiceUpdateRequest() { }
+            new UserServiceUpdateRequest() { Login = request.Login, Birthday = request.Birthday }
         );
 
-        return Ok(new { response });
+        return Ok(response);
     }
 
     [HttpGet("profile"), Authorize(Policy = AuthPolicy.OnlyUser)]

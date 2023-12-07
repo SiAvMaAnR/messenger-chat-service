@@ -24,17 +24,24 @@ public class AdminController : ControllerBase
     public async Task<IActionResult> GetUsers([FromQuery] AdminControllerUsersRequest request)
     {
         AdminServiceUsersResponse response = await _adminService.GetUsersAsync(
-            new AdminServiceUsersRequest() { Pagination = request.Pagination }
+            new AdminServiceUsersRequest()
+            {
+                Pagination = request.Pagination,
+                IsLoadImage = request.IsLoadImage
+            }
         );
 
         return Ok(response);
     }
 
     [HttpGet("users/{id:int}"), Authorize(Policy = "OnlyAdmin")]
-    public async Task<IActionResult> GetUser([FromRoute] AdminControllerUserRequest request)
+    public async Task<IActionResult> GetUser(
+        [FromQuery] AdminControllerUserRequest request,
+        [FromRoute] int id
+    )
     {
         AdminServiceUserResponse response = await _adminService.GetUserAsync(
-            new AdminServiceUserRequest() { Id = request.Id }
+            new AdminServiceUserRequest() { Id = id, IsLoadImage = request.IsLoadImage }
         );
 
         return Ok(response);

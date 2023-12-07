@@ -1,19 +1,28 @@
 ﻿using MessengerX.Application.Services.AdminService.Models;
 using MessengerX.Domain.Entities.Users;
+using MessengerX.Persistence.Extensions;
 
 namespace MessengerX.Application.Services.AdminService.Adapters;
 
 public class AdminServiceUserAdapter : AdminServiceUserResponsePayload
 {
+    private readonly string? _imagePath;
+
     public AdminServiceUserAdapter(User user)
     {
+        _imagePath = user.Image;
+
         Id = user.Id;
         Login = user.Login;
         Email = user.Email;
         Role = user.Role;
-        Image = user.Image;
         Birthday = user.Birthday;
         CreatedAt = user.CreatedAt;
         UpdatedAt = user.UpdatedAt;
+    }
+
+    public async Task LoadImageAsync()
+    {
+        Image = await FileManager.ReadToBytesAsync(_imagePath);
     }
 }

@@ -8,6 +8,7 @@ using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
+using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;
 
 namespace MessengerX.Application.Services.UserService;
@@ -33,9 +34,13 @@ public class AdminService : BaseService, IAdminService
 
         PaginatorResponse<User> paginatedData = sortedUsers.Pagination(pagination);
 
-        IEnumerable<AdminServiceUserResponsePayload> adaptedUsers = paginatedData
+        var adaptedUsers = paginatedData
             .Collection
-            .Select(user => new AdminServiceUserAdapter(user));
+            .Select(user => new AdminServiceUserAdapter(user))
+            .ToList();
+
+        if (request.IsLoadImage)
+            await Task.WhenAll(adaptedUsers.Select(user => user.LoadImageAsync()));
 
         return new AdminServiceUsersResponse() { Meta = paginatedData.Meta, Users = adaptedUsers };
     }
@@ -46,13 +51,15 @@ public class AdminService : BaseService, IAdminService
             await _unitOfWork.User.GetAsync((user) => user.Id == request.Id)
             ?? throw new NotExistsException("User not exists");
 
+        byte[]? image = request.IsLoadImage ? await FileManager.ReadToBytesAsync(user.Image) : null;
+
         return new AdminServiceUserResponse()
         {
             Id = user.Id,
             Login = user.Login,
             Email = user.Email,
             Role = user.Role,
-            Image = user.Image,
+            Image = image,
             Birthday = user.Birthday,
             CreatedAt = user.CreatedAt,
             UpdatedAt = user.UpdatedAt
