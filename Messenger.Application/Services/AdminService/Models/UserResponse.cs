@@ -6,7 +6,7 @@ public class AdminServiceUserResponse
     public string Login { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string Role { get; set; } = null!;
-    public string? Image { get; set; }
+    public byte[]? Image { get; set; }
     public DateOnly? Birthday { get; set; }
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
