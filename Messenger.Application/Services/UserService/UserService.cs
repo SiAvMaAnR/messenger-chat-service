@@ -143,7 +143,7 @@ public class UserService : BaseService, IUserService
             await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
             ?? throw new NotExistsException("User not found");
 
-        byte[]? image = await user.Image.ReadToBytesAsync();
+        byte[]? image = await FileManager.ReadToBytesAsync(user.Image);
 
         return new UserServiceImageResponse() { Image = image };
     }
@@ -175,7 +175,8 @@ public class UserService : BaseService, IUserService
             await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
             ?? throw new NotExistsException("User not found");
 
-        // UPDATE =========================================== !!!
+        user.Login = request.Login;
+        user.Birthday = request.Birthday;
 
         await _unitOfWork.User.UpdateAsync(user);
         await _unitOfWork.SaveChangesAsync();
