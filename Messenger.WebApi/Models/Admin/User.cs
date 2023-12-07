@@ -2,5 +2,5 @@
 
 public class AdminControllerUserRequest
 {
-    public int Id { get; set; }
+    public bool IsLoadImage { get; set; }
 }

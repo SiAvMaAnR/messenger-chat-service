@@ -1,6 +1,6 @@
 ﻿namespace MessengerX.Persistence.Extensions;
 
-public static class FileManagerExtension
+public static class FileManager
 {
     public static async Task<string?> WriteToFileAsync(
         this byte[]? file,
@@ -22,12 +22,12 @@ public static class FileManagerExtension
         return fullPath;
     }
 
-    public static async Task<byte[]?> ReadToBytesAsync(this string? path)
+    public static async Task<byte[]?> ReadToBytesAsync(string? path)
     {
         return path != null ? await File.ReadAllBytesAsync(path) : null;
     }
 
-    public static byte[]? ReadToBytes(this string? path)
+    public static byte[]? ReadToBytes(string? path)
     {
         return path != null ? File.ReadAllBytes(path) : null;
     }
