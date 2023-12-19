@@ -40,7 +40,10 @@ public class AccountService : BaseService, IAccountService
     {
         Account account =
             await _unitOfWork.Account.GetAsync(account => account.Email == request.Email)
-            ?? throw new NotExistsException("Account not exists", ClientMessageSettings.Same);
+            ?? throw new InvalidCredentialsException(
+                "Invalid credentials",
+                ClientMessageSettings.Same
+            );
 
         bool isVerify = PasswordOptions.VerifyPasswordHash(
             request.Password,
