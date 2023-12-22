@@ -54,13 +54,12 @@ public class AccountService : BaseService, IAccountService
             throw new InvalidCredentialsException("Wrong password", ClientMessageSettings.Same);
 
         string token = TokenOptions.CreateToken(
-            new()
-            {
+            [
                 new(ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new(ClaimTypes.Name, account.Login),
                 new(ClaimTypes.Email, account.Email),
                 new(ClaimTypes.Role, account.Role)
-            },
+            ],
             new Dictionary<string, string>()
             {
                 { TokenClaim.SecretKey, _appSettings.Common.SecretKey },
