@@ -15,6 +15,7 @@ services:
   database-mssql:
     image: mcr.microsoft.com/mssql/server
     container_name: messenger-database
+    restart: always
     user: root
     environment:
       ACCEPT_EULA: Y
