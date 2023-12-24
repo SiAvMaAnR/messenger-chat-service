@@ -3,6 +3,7 @@ using System.Text.Json;
 using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Interfaces.UnitOfWork;
@@ -53,7 +54,8 @@ public class AccountService : BaseService, IAccountService
         if (!isVerify)
             throw new InvalidCredentialsException("Wrong password", ClientMessageSettings.Same);
 
-        string token = TokenOptions.CreateToken(
+        string refreshToken = TokenOptions.CreateRefreshToken();
+        string accessToken = TokenOptions.CreateAccessToken(
             [
                 new(ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new(ClaimTypes.Name, account.Login),
@@ -65,11 +67,70 @@ public class AccountService : BaseService, IAccountService
                 { TokenClaim.SecretKey, _appSettings.Common.SecretKey },
                 { TokenClaim.Audience, _appSettings.Auth.Audience },
                 { TokenClaim.Issuer, _appSettings.Auth.Issuer },
-                { TokenClaim.LifeTime, _appSettings.Auth.LifeTime },
+                { TokenClaim.AccessTokenLifeTime, _appSettings.Auth.AccessTokenLifeTime },
             }
         );
 
-        return new AccountServiceLoginResponse() { TokenType = "Bearer", Token = token };
+        double refreshTokenLifeTime = double.Parse(_appSettings.Auth.RefreshTokenLifeTime);
+
+        DateTime expiryTime = DateTime.Now.AddMinutes(refreshTokenLifeTime);
+
+        var newRefreshToken = new RefreshToken()
+        {
+            Token = refreshToken,
+            ExpiryTime = expiryTime,
+            Account = account
+        };
+
+        await _unitOfWork.RefreshToken.AddAsync(newRefreshToken);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new AccountServiceLoginResponse()
+        {
+            AccessToken = accessToken,
+            RefreshToken = refreshToken,
+            RefreshTokenExp = expiryTime
+        };
+    }
+
+    public async Task<AccountServiceRefreshTokenResponse> RefreshTokenAsync(
+        AccountServiceRefreshTokenRequest request
+    )
+    {
+        RefreshToken refreshToken =
+            await _unitOfWork.RefreshToken.GetAsync(token => token.Token == request.RefreshToken)
+            ?? throw new InvalidCredentialsException(
+                "Invalid refresh token",
+                ClientMessageSettings.Same
+            );
+
+        if (refreshToken.ExpiryTime < DateTime.Now)
+            throw new ExpiredException("Expired refresh token", ClientMessageSettings.Same);
+
+        Account account =
+            await _unitOfWork.Account.GetAsync(account => account.Id == refreshToken.AccountId)
+            ?? throw new InvalidCredentialsException(
+                "Account not exists",
+                ClientMessageSettings.Default
+            );
+
+        string accessToken = TokenOptions.CreateAccessToken(
+            [
+                new(ClaimTypes.NameIdentifier, account.Id.ToString()),
+                new(ClaimTypes.Name, account.Login),
+                new(ClaimTypes.Email, account.Email),
+                new(ClaimTypes.Role, account.Role)
+            ],
+            new Dictionary<string, string>()
+            {
+                { TokenClaim.SecretKey, _appSettings.Common.SecretKey },
+                { TokenClaim.Audience, _appSettings.Auth.Audience },
+                { TokenClaim.Issuer, _appSettings.Auth.Issuer },
+                { TokenClaim.AccessTokenLifeTime, _appSettings.Auth.AccessTokenLifeTime },
+            }
+        );
+
+        return new AccountServiceRefreshTokenResponse() { AccessToken = accessToken };
     }
 
     public async Task<AccountServiceResetTokenResponse> ResetTokenAsync(
@@ -148,5 +209,25 @@ public class AccountService : BaseService, IAccountService
         await _unitOfWork.SaveChangesAsync();
 
         return new AccountServiceResetPasswordResponse() { IsSuccess = true };
+    }
+
+    public async Task<AccountServiceRevokeTokenResponse> RevokeTokenAsync(
+        AccountServiceRevokeTokenRequest request
+    )
+    {
+        RefreshToken refreshToken =
+            await _unitOfWork.RefreshToken.GetAsync(token => token.Token == request.RefreshToken)
+            ?? throw new InvalidCredentialsException(
+                "Invalid refresh token",
+                ClientMessageSettings.Same
+            );
+
+        if (refreshToken.ExpiryTime < DateTime.Now)
+            throw new ExpiredException("Expired refresh token", ClientMessageSettings.Same);
+
+        await _unitOfWork.RefreshToken.DeleteAsync(refreshToken);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new AccountServiceRevokeTokenResponse() { IsSuccess = true };
     }
 }

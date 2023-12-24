@@ -6,5 +6,6 @@ public class AuthSettings
 
     public string Audience { get; set; } = null!;
     public string Issuer { get; set; } = null!;
-    public string LifeTime { get; set; } = null!;
+    public string AccessTokenLifeTime { get; set; } = null!;
+    public string RefreshTokenLifeTime { get; set; } = null!;
 }

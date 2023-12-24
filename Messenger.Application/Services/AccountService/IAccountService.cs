@@ -10,4 +10,10 @@ public interface IAccountService : IBaseService
     Task<AccountServiceResetPasswordResponse> ResetPasswordAsync(
         AccountServiceResetPasswordRequest request
     );
+    Task<AccountServiceRefreshTokenResponse> RefreshTokenAsync(
+        AccountServiceRefreshTokenRequest request
+    );
+    Task<AccountServiceRevokeTokenResponse> RevokeTokenAsync(
+        AccountServiceRevokeTokenRequest request
+    );
 }
