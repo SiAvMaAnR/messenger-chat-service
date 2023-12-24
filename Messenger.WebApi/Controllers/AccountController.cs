@@ -49,4 +49,25 @@ public class AccountController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+    {
+        AccountServiceRefreshTokenResponse response = await _accountService.RefreshTokenAsync(
+            new AccountServiceRefreshTokenRequest() { RefreshToken = request.RefreshToken }
+        );
+
+        return Ok(response);
+    }
+
+
+    [HttpPost("revoke-token")]
+    public async Task<IActionResult> RevokeToken([FromBody] RevokeTokenRequest request)
+    {
+        AccountServiceRevokeTokenResponse response = await _accountService.RevokeTokenAsync(
+            new AccountServiceRevokeTokenRequest() { RefreshToken = request.RefreshToken }
+        );
+
+        return Ok(response);
+    }
 }

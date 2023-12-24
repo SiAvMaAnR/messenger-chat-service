@@ -1,14 +1,14 @@
-### Migration: add (./Messenger.Persistence)
+### Migration: add
 
-`dotnet ef --startup-project ../Messenger.WebApi/ migrations add <MIGRATION_NAME>`
+`dotnet ef --project ./Messenger.Persistence/ --startup-project ./Messenger.WebApi/ migrations add <MIGRATION_NAME>`
 
-### Migration: apply (./Messenger.Persistence)
+### Migration: apply
 
-`dotnet ef database update --startup-project ../Messenger.WebApi --verbose`
+`dotnet ef database update --project ./Messenger.Persistence/ --startup-project ./Messenger.WebApi --verbose`
 
-### Migration: list (./Messenger.Persistence)
+### Migration: list
 
-`dotnet ef migrations list --startup-project ../Messenger.WebApi`
+`dotnet ef migrations list --project ./Messenger.Persistence/ --startup-project ./Messenger.WebApi`
 
 ### Migration: behavior rules 
 
