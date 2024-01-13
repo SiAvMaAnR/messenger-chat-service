@@ -1,4 +1,5 @@
 ﻿using MessengerX.Domain.Shared.Settings;
+using NReco.Logging.File;
 
 namespace MessengerX.WebApi.ApiConfigurations.LoggingBuilder;
 
