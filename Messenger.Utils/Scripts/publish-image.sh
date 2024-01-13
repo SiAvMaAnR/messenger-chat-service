@@ -6,6 +6,8 @@ else
   imageName="$1"
 fi
 
+cd ../../
+
 dotnet build
 
 dotnet format
