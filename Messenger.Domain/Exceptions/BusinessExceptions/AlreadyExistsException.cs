@@ -4,7 +4,7 @@ using MessengerX.Domain.Exceptions.StatusCode;
 
 namespace MessengerX.Domain.Exceptions.BusinessExceptions;
 
-public class AlreadyExistsException : InternalServerException, IBusinessException
+public class AlreadyExistsException : BadRequestException, IBusinessException
 {
     public const BusinessStatusCode Code = BusinessStatusCode.E001;
 
