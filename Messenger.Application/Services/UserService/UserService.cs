@@ -46,7 +46,7 @@ public class UserService : BaseService, IUserService
 
         string baseUrl = _appSettings.Client.BaseUrl;
 
-        string path = _appSettings.RoutePath.Registration;
+        string path = _appSettings.RoutePath.Confirmation;
 
         string secretKey = _appSettings.Common.SecretKey;
 
