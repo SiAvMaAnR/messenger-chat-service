@@ -38,8 +38,11 @@ public class UserService : BaseService, IUserService
         UserServiceRegistrationRequest request
     )
     {
-        if (await _unitOfWork.User.AnyAsync(user => user.Email == request.Email))
-            throw new AlreadyExistsException("Account already exists");
+        if (await _unitOfWork.Account.AnyAsync(account => account.Email == request.Email))
+            throw new AlreadyExistsException(
+                "Account already exists",
+                "Account with this email already exists"
+            );
 
         string baseUrl = _appSettings.Client.BaseUrl;
 

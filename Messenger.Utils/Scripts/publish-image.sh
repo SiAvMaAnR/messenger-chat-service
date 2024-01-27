@@ -8,8 +8,6 @@ fi
 
 cd ../../
 
-dotnet build
-
 dotnet format
 
 # build image from Dockerfile
