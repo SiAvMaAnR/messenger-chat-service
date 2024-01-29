@@ -3,6 +3,7 @@ using MessengerX.Application.Services.Common;
 using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
+using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
@@ -98,10 +99,10 @@ public class UserService : BaseService, IUserService
             ?? throw new InvalidConfirmationException("Invalid confirmation");
 
         if (confirmation.ExpirationDate < DateTime.Now)
-            throw new ExpiredException("Confirmation has expired");
+            throw new ExpiredException("Confirmation has expired", ClientMessageSettings.Same);
 
         if (await _unitOfWork.Account.AnyAsync(account => account.Email == confirmation.Email))
-            throw new AlreadyExistsException("Account already exists");
+            throw new AlreadyExistsException("Account already exists", ClientMessageSettings.Same);
 
         Password password = PasswordOptions.CreatePasswordHash(confirmation.Password);
 
