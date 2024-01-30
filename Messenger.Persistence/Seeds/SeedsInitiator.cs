@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace MessengerX.Persistence.Seeds;
 
-internal static class SeedsInitiator
+public static class SeedsInitiator
 {
     public static void Apply(EFContext eFContext, ILogger<EFContext> logger)
     {
