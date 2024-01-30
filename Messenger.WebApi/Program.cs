@@ -19,4 +19,6 @@ WebApplication application = builder.Build();
 application.AddEnvironmentConfiguration();
 application.CommonConfiguration();
 application.HubsConfiguration();
+application.SeedsConfiguration();
+
 application.Run();

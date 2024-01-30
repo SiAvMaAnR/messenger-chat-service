@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Tests", "Messenge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Utils", "Messenger.Utils\Messenger.Utils.csproj", "{36DE3220-14E5-45B9-B676-4C5067CEF43C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Scheduler", "Messenger.Scheduler\Messenger.Scheduler.csproj", "{DEF66894-D27D-481C-B915-D0F250CCCD1A}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,5 +147,17 @@ Global
 		{36DE3220-14E5-45B9-B676-4C5067CEF43C}.Release|x64.Build.0 = Release|Any CPU
 		{36DE3220-14E5-45B9-B676-4C5067CEF43C}.Release|x86.ActiveCfg = Release|Any CPU
 		{36DE3220-14E5-45B9-B676-4C5067CEF43C}.Release|x86.Build.0 = Release|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Debug|x64.Build.0 = Debug|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Debug|x86.Build.0 = Debug|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Release|x64.ActiveCfg = Release|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Release|x64.Build.0 = Release|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Release|x86.ActiveCfg = Release|Any CPU
+		{DEF66894-D27D-481C-B915-D0F250CCCD1A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
