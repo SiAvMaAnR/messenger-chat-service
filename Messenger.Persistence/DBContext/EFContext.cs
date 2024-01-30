@@ -3,9 +3,7 @@ using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Persistence.EntityConfigurations;
-using MessengerX.Persistence.Seeds;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MessengerX.Persistence.DBContext;
 
@@ -16,14 +14,12 @@ public class EFContext : DbContext
     public DbSet<Admin> Admins { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
 
-    public EFContext(DbContextOptions<EFContext> options, ILogger<EFContext> logger)
+    public EFContext(DbContextOptions<EFContext> options)
         : base(options)
     {
         // Database.EnsureDeleted();
         // Database.EnsureCreated();
         Database.Migrate();
-
-        SeedsInitiator.Apply(this, logger);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
