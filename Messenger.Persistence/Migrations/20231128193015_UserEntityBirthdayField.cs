@@ -24,9 +24,9 @@ public partial class UserEntityBirthdayField : Migration
             table: "Admins",
             keyColumn: "Id",
             keyValue: 1000,
-            columns: new[] { "CreatedAt", "PasswordHash", "PasswordSalt" },
-            values: new object[]
-            {
+            columns: ["CreatedAt", "PasswordHash", "PasswordSalt"],
+            values:
+            [
                 new DateTime(2023, 11, 28, 22, 30, 15, 391, DateTimeKind.Local).AddTicks(2258),
                 new byte[]
                 {
@@ -226,7 +226,7 @@ public partial class UserEntityBirthdayField : Migration
                     229,
                     33
                 }
-            }
+            ]
         );
     }
 
@@ -247,9 +247,9 @@ public partial class UserEntityBirthdayField : Migration
             table: "Admins",
             keyColumn: "Id",
             keyValue: 1000,
-            columns: new[] { "CreatedAt", "PasswordHash", "PasswordSalt" },
-            values: new object[]
-            {
+            columns: ["CreatedAt", "PasswordHash", "PasswordSalt"],
+            values:
+            [
                 new DateTime(2023, 11, 26, 20, 1, 39, 713, DateTimeKind.Local).AddTicks(8471),
                 new byte[]
                 {
@@ -449,7 +449,7 @@ public partial class UserEntityBirthdayField : Migration
                     121,
                     200
                 }
-            }
+            ]
         );
     }
 }

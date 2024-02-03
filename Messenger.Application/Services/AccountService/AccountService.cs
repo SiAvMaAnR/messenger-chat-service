@@ -14,6 +14,7 @@ using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Infrastructure.NotificationTemplates;
 using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
+using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 
@@ -229,5 +230,37 @@ public class AccountService : BaseService, IAccountService
         await _unitOfWork.SaveChangesAsync();
 
         return new AccountServiceRevokeTokenResponse() { IsSuccess = true };
+    }
+
+    public async Task<AccountServiceUploadImageResponse> UploadImageAsync(
+        AccountServiceUploadImageRequest request
+    )
+    {
+        Account account =
+            await _unitOfWork.Account.GetAsync((account) => account.Id == _userIdentity.Id)
+            ?? throw new NotExistsException("Account not found");
+
+        string imagePath = _appSettings.FilePath.Image;
+
+        using (var stream = new MemoryStream())
+        {
+            request.File.CopyTo(stream);
+            account.Image = await stream.ToArray().WriteToFileAsync(imagePath, account.Email);
+        }
+        await _unitOfWork.Account.UpdateAsync(account);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new AccountServiceUploadImageResponse() { IsSuccess = true };
+    }
+
+    public async Task<AccountServiceImageResponse> GetImageAsync()
+    {
+        Account account =
+            await _unitOfWork.Account.GetAsync((account) => account.Id == _userIdentity.Id)
+            ?? throw new NotExistsException("Account not found");
+
+        byte[]? image = await FileManager.ReadToBytesAsync(account.Image);
+
+        return new AccountServiceImageResponse() { Image = image };
     }
 }
