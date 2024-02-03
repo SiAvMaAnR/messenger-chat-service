@@ -77,22 +77,4 @@ public class UserController : ControllerBase
 
         return Ok(response);
     }
-
-    [HttpGet("image"), Authorize(Policy = AuthPolicy.OnlyUser)]
-    public async Task<IActionResult> Image()
-    {
-        UserServiceImageResponse response = await _userService.GetImageAsync();
-
-        return Ok(response);
-    }
-
-    [HttpPost("upload-image"), Authorize(Policy = AuthPolicy.OnlyUser)]
-    public async Task<IActionResult> UploadImage(IFormFile file)
-    {
-        UserServiceUploadImageResponse response = await _userService.UploadImageAsync(
-            new UserServiceUploadImageRequest() { File = file }
-        );
-
-        return Ok(response);
-    }
 }

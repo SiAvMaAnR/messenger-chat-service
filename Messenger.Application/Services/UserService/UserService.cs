@@ -11,7 +11,6 @@ using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Infrastructure.NotificationTemplates;
 using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
-using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 
@@ -139,38 +138,6 @@ public class UserService : BaseService, IUserService
             Role = user.Role,
             Birthday = user.Birthday
         };
-    }
-
-    public async Task<UserServiceImageResponse> GetImageAsync()
-    {
-        User user =
-            await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
-            ?? throw new NotExistsException("User not found");
-
-        byte[]? image = await FileManager.ReadToBytesAsync(user.Image);
-
-        return new UserServiceImageResponse() { Image = image };
-    }
-
-    public async Task<UserServiceUploadImageResponse> UploadImageAsync(
-        UserServiceUploadImageRequest request
-    )
-    {
-        User user =
-            await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
-            ?? throw new NotExistsException("User not found");
-
-        string imagePath = _appSettings.FilePath.Image;
-
-        using (var stream = new MemoryStream())
-        {
-            request.File.CopyTo(stream);
-            user.Image = await stream.ToArray().WriteToFileAsync(imagePath, user.Email);
-        }
-        await _unitOfWork.User.UpdateAsync(user);
-        await _unitOfWork.SaveChangesAsync();
-
-        return new UserServiceUploadImageResponse() { IsSuccess = true };
     }
 
     public async Task<UserServiceUpdateResponse> UpdateAsync(UserServiceUpdateRequest request)

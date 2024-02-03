@@ -7,10 +7,10 @@ namespace MessengerX.WebApi.ApiConfigurations.Common;
 public static class PolicyConfigExtension
 {
     private static readonly string[] s_allowOrigins =
-    {
+    [
         "http://localhost:3000",
         "https://localhost:3000"
-    };
+    ];
 
     public static void PolicyConfig(this AuthorizationOptions authorizationOptions)
     {
