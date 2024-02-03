@@ -1,6 +1,7 @@
 ﻿using MessengerX.Application.Services.AccountService;
 using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.WebApi.Controllers.Models.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessengerX.WebApi.Controllers;
@@ -60,12 +61,29 @@ public class AccountController : ControllerBase
         return Ok(response);
     }
 
-
     [HttpPost("revoke-token")]
     public async Task<IActionResult> RevokeToken([FromBody] RevokeTokenRequest request)
     {
         AccountServiceRevokeTokenResponse response = await _accountService.RevokeTokenAsync(
             new AccountServiceRevokeTokenRequest() { RefreshToken = request.RefreshToken }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpGet("image"), Authorize]
+    public async Task<IActionResult> Image()
+    {
+        AccountServiceImageResponse response = await _accountService.GetImageAsync();
+
+        return Ok(response);
+    }
+
+    [HttpPost("upload-image"), Authorize]
+    public async Task<IActionResult> UploadImage(IFormFile file)
+    {
+        AccountServiceUploadImageResponse response = await _accountService.UploadImageAsync(
+            new AccountServiceUploadImageRequest() { File = file }
         );
 
         return Ok(response);
