@@ -1,6 +1,7 @@
 ﻿using MessengerX.Application.Services.AccountService;
 using MessengerX.Application.Services.AdminService;
 using MessengerX.Application.Services.AdminService.Models;
+using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.WebApi.Controllers.Models.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,14 @@ public class AdminController : ControllerBase
     {
         _adminService = adminService;
         _accountService = accountService;
+    }
+
+    [HttpGet("profile"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
+    public async Task<IActionResult> Profile()
+    {
+        AdminServiceProfileResponse response = await _adminService.GetProfileAsync();
+
+        return Ok(response);
     }
 
     [HttpGet("users"), Authorize(Policy = "OnlyAdmin")]
