@@ -7,4 +7,5 @@ public interface IAdminService : IBaseService
 {
     Task<AdminServiceUsersResponse> GetUsersAsync(AdminServiceUsersRequest request);
     Task<AdminServiceUserResponse> GetUserAsync(AdminServiceUserRequest request);
+    Task<AdminServiceProfileResponse> GetProfileAsync();
 }

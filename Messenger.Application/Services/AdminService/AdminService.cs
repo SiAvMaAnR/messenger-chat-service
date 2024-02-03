@@ -3,6 +3,7 @@ using MessengerX.Application.Services.AdminService.Adapters;
 using MessengerX.Application.Services.AdminService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Application.Services.Helpers;
+using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
@@ -63,6 +64,20 @@ public class AdminService : BaseService, IAdminService
             Birthday = user.Birthday,
             CreatedAt = user.CreatedAt,
             UpdatedAt = user.UpdatedAt
+        };
+    }
+
+    public async Task<AdminServiceProfileResponse> GetProfileAsync()
+    {
+        Admin admin =
+            await _unitOfWork.Admin.GetAsync((admin) => admin.Id == _userIdentity.Id)
+            ?? throw new NotExistsException("Admin not found");
+
+        return new AdminServiceProfileResponse()
+        {
+            Login = admin.Login,
+            Email = admin.Email,
+            Role = admin.Role,
         };
     }
 }
