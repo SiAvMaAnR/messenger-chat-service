@@ -16,4 +16,8 @@ public interface IAccountService : IBaseService
     Task<AccountServiceRevokeTokenResponse> RevokeTokenAsync(
         AccountServiceRevokeTokenRequest request
     );
+    Task<AccountServiceUploadImageResponse> UploadImageAsync(
+        AccountServiceUploadImageRequest request
+    );
+    Task<AccountServiceImageResponse> GetImageAsync();
 }
