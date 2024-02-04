@@ -11,6 +11,8 @@ services:
       - "8080:8080"
     depends_on:
       - database-mssql
+    volumes:
+      - ./.meta/server/uploads:/Messenger.Persistence/Uploads
 
   database-mssql:
     image: mcr.microsoft.com/mssql/server
