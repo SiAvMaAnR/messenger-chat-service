@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace MessengerX.WebApi.ApiConfigurations.Common;
+namespace MessengerX.WebApi.ApiConfigurations.Other;
 
 public static class PolicyConfigExtension
 {

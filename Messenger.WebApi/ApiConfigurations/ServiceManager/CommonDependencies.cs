@@ -1,6 +1,5 @@
 ﻿using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Persistence.DBContext;
-using MessengerX.WebApi.ApiConfigurations.Common;
 using MessengerX.WebApi.ApiConfigurations.Other;
 using MessengerX.WebApi.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
