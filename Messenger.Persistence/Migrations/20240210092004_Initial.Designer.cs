@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Messenger.Persistence.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20231126170140_AdminEntityIsActiveField")]
-    partial class AdminEntityIsActiveField
+    [Migration("20240210092004_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -42,6 +42,9 @@ namespace Messenger.Persistence.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -75,6 +78,38 @@ namespace Messenger.Persistence.Migrations
                     b.UseTpcMappingStrategy();
                 });
 
+            modelBuilder.Entity("MessengerX.Domain.Entities.RefreshTokens.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("MessengerX.Domain.Entities.Admins.Admin", b =>
                 {
                     b.HasBaseType("MessengerX.Domain.Entities.Accounts.Account");
@@ -83,33 +118,32 @@ namespace Messenger.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.ToTable("Admins");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1000,
-                            CreatedAt = new DateTime(2023, 11, 26, 20, 1, 39, 713, DateTimeKind.Local).AddTicks(8471),
-                            Email = "admin@admin.com",
-                            Login = "Admin",
-                            PasswordHash = new byte[] { 21, 199, 171, 201, 166, 31, 40, 225, 20, 77, 141, 66, 119, 70, 176, 14, 101, 169, 21, 91, 164, 107, 160, 25, 213, 99, 30, 195, 14, 40, 76, 29, 34, 235, 247, 52, 181, 173, 177, 55, 218, 69, 225, 126, 8, 169, 125, 205, 98, 255, 131, 5, 83, 63, 75, 61, 244, 219, 66, 212, 156, 19, 100, 147 },
-                            PasswordSalt = new byte[] { 165, 174, 251, 7, 56, 105, 158, 254, 34, 31, 40, 28, 88, 150, 37, 222, 253, 237, 116, 184, 141, 200, 197, 39, 219, 232, 69, 211, 24, 81, 73, 204, 215, 151, 12, 129, 205, 136, 240, 35, 92, 57, 110, 253, 227, 96, 250, 29, 205, 49, 56, 220, 225, 134, 52, 171, 201, 61, 32, 142, 106, 251, 142, 69, 112, 88, 152, 138, 205, 14, 240, 102, 6, 128, 207, 181, 172, 160, 241, 8, 211, 219, 130, 149, 190, 167, 75, 58, 215, 7, 250, 118, 242, 56, 167, 123, 54, 191, 239, 6, 242, 99, 100, 122, 51, 2, 169, 10, 29, 238, 132, 18, 22, 0, 77, 225, 75, 8, 120, 72, 77, 137, 213, 34, 254, 72, 121, 200 },
-                            Role = "Admin",
-                            UpdatedAt = new DateTime(2023, 11, 26, 20, 1, 39, 713, DateTimeKind.Local).AddTicks(8515),
-                            IsActive = true
-                        });
                 });
 
             modelBuilder.Entity("MessengerX.Domain.Entities.Users.User", b =>
                 {
                     b.HasBaseType("MessengerX.Domain.Entities.Accounts.Account");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateOnly?>("Birthday")
+                        .HasColumnType("date");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MessengerX.Domain.Entities.RefreshTokens.RefreshToken", b =>
+                {
+                    b.HasOne("MessengerX.Domain.Entities.Accounts.Account", "Account")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("MessengerX.Domain.Entities.Accounts.Account", b =>
+                {
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }
