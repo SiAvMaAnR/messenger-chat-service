@@ -7,5 +7,6 @@ public static partial class ApplicationBuilderExtension
     public static void HubsConfiguration(this WebApplication webApplication)
     {
         webApplication.MapHub<ChatHub>("/chat");
+        webApplication.MapHub<StateHub>("/state");
     }
 }
