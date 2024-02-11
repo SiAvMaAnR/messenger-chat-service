@@ -1,6 +1,6 @@
-﻿namespace MessengerX.Application.Services.AccountService.Models;
+﻿namespace MessengerX.Application.Services.AuthService.Models;
 
-public class AccountServiceLoginResponse
+public class AuthServiceLoginResponse
 {
     public string AccessToken { get; set; } = null!;
     public string RefreshToken { get; set; } = null!;

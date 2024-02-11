@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Messenger.Application\Messenger.Application.csproj" />
     <ProjectReference Include="..\Messenger.Infrastructure\Messenger.Infrastructure.csproj" />
     <ProjectReference Include="..\Messenger.Persistence\Messenger.Persistence.csproj" />
+    <ProjectReference Include="..\Messenger.SignalR\Messenger.SignalR.csproj" />
   </ItemGroup>
 
 </Project>
