@@ -25,6 +25,7 @@ public class StateHub(IAccountService accountService) : BaseHub(), IHub
         await _accountService.UpdateStatusAsync(
             new AccountServiceUpdateStatusRequest(AccountStatus.Offline)
         );
+
         await base.OnDisconnectedAsync(exception);
     }
 }
