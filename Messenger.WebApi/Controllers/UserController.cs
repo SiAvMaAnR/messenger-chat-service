@@ -1,5 +1,5 @@
-﻿using MessengerX.Application.Services.AccountService;
-using MessengerX.Application.Services.AccountService.Models;
+﻿using MessengerX.Application.Services.AuthService;
+using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.UserService;
 using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Shared.Constants.Common;
@@ -14,12 +14,12 @@ namespace MessengerX.WebApi.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
-    private readonly IAccountService _accountService;
+    private readonly IAuthService _authService;
 
-    public UserController(IUserService userService, IAccountService accountService)
+    public UserController(IUserService userService, IAuthService authService)
     {
         _userService = userService;
-        _accountService = accountService;
+        _authService = authService;
     }
 
     [HttpPost("registration")]
@@ -49,8 +49,8 @@ public class UserController : ControllerBase
             new UserServiceConfirmationRequest() { Confirmation = request.Confirmation }
         );
 
-        AccountServiceLoginResponse response = await _accountService.LoginAsync(
-            new AccountServiceLoginRequest()
+        AuthServiceLoginResponse response = await _authService.LoginAsync(
+            new AuthServiceLoginRequest()
             {
                 Email = confirmResponse.Email,
                 Password = confirmResponse.Password
