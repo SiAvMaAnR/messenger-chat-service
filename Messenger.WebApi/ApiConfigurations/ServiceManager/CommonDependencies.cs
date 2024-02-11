@@ -24,10 +24,10 @@ public static partial class ServiceManagerExtension
         serviceCollection.AddLogging();
         serviceCollection.AddCors(options => options.CorsConfig());
         serviceCollection.AddAuthorization(options => options.PolicyConfig());
-        serviceCollection.AddSwaggerGen(options => options.Config());
         serviceCollection
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => options.Config(config));
+        serviceCollection.AddSwaggerGen(options => options.Config());
         serviceCollection.AddDataProtection();
         serviceCollection.AddSignalR();
 

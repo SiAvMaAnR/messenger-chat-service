@@ -1,4 +1,5 @@
 ﻿using Messenger.SignalR.Hubs;
+using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
 
@@ -6,7 +7,7 @@ public static partial class ApplicationBuilderExtension
 {
     public static void HubsConfiguration(this WebApplication webApplication)
     {
-        webApplication.MapHub<ChatHub>("/chat");
-        webApplication.MapHub<StateHub>("/state");
+        webApplication.MapHub<ChatHub>(HubPath.Chat);
+        webApplication.MapHub<StateHub>(HubPath.State);
     }
 }

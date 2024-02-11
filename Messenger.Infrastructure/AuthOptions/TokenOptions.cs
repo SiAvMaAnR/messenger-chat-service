@@ -48,7 +48,7 @@ public static class TokenOptions
                 TokenValidationParameters validationParameters
             ) => (expires != null) && DateTime.UtcNow < expires
         };
-        options.Events = new JwtBearerEvents
+        options.Events = new JwtBearerEvents()
         {
             OnMessageReceived = context =>
             {
