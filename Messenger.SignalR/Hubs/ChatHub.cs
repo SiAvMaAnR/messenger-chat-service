@@ -1,17 +1,18 @@
 ﻿using Messenger.SignalR.Hubs.Common;
-using MessengerX.Domain.Interfaces.UnitOfWork;
-using MessengerX.Infrastructure.AppSettings;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Messenger.SignalR.Hubs;
 
-public class ChatHub : BaseHub, IHub
+public class ChatHub() : BaseHub, IHub
 {
-    public ChatHub(IUnitOfWork unitOfWork, IHttpContextAccessor context, IAppSettings appSettings)
-        : base(unitOfWork, context, appSettings)
+    [Authorize]
+    public override async Task OnConnectedAsync()
     {
+        await base.OnConnectedAsync();
+    }
 
-
-
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        await base.OnDisconnectedAsync(exception);
     }
 }
