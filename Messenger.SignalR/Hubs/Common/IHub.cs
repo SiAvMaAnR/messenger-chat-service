@@ -1,3 +1,3 @@
-namespace Messenger.SignalR.Hubs.Common;
+﻿namespace Messenger.SignalR.Hubs.Common;
 
 public interface IHub { }

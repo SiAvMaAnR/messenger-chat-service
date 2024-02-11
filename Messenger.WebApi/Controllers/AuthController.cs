@@ -1,4 +1,4 @@
-using MessengerX.Application.Services.AuthService;
+﻿using MessengerX.Application.Services.AuthService;
 using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.WebApi.Controllers.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
