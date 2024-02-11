@@ -1,17 +1,16 @@
-﻿using MessengerX.Domain.Interfaces.UnitOfWork;
+using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Infrastructure.UserIdentity;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 
-namespace MessengerX.Application.Services.Common;
+namespace Messenger.SignalR.Hubs.Common;
 
-public interface IBaseService { }
-
-public abstract class BaseService(
+public class BaseHub(
     IUnitOfWork unitOfWork,
     IHttpContextAccessor context,
     IAppSettings appSettings
-    ) : IBaseService
+    ) : Hub
 {
     protected readonly IUnitOfWork _unitOfWork = unitOfWork;
     protected readonly IAppSettings _appSettings = appSettings;
