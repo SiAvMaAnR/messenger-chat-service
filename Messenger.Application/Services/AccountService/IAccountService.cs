@@ -5,6 +5,9 @@ namespace MessengerX.Application.Services.AccountService;
 
 public interface IAccountService : IBaseService
 {
+    Task<AccountServiceUpdateStatusResponse> UpdateStatusAsync(
+        AccountServiceUpdateStatusRequest request
+    );
     Task<AccountServiceUploadImageResponse> UploadImageAsync(
         AccountServiceUploadImageRequest request
     );

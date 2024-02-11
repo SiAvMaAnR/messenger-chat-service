@@ -42,7 +42,8 @@ public class AccountService : BaseService, IAccountService
         using (var stream = new MemoryStream())
         {
             request.File.CopyTo(stream);
-            account.Image = await stream.ToArray().WriteToFileAsync(imagePath, account.Email);
+            string? image = await stream.ToArray().WriteToFileAsync(imagePath, account.Email);
+            account.UpdateImage(image);
         }
         await _unitOfWork.Account.UpdateAsync(account);
         await _unitOfWork.SaveChangesAsync();
@@ -59,5 +60,21 @@ public class AccountService : BaseService, IAccountService
         byte[]? image = await FileManager.ReadToBytesAsync(account.Image);
 
         return new AccountServiceImageResponse() { Image = image };
+    }
+
+    public async Task<AccountServiceUpdateStatusResponse> UpdateStatusAsync(
+        AccountServiceUpdateStatusRequest request
+    )
+    {
+        Account account =
+            await _unitOfWork.Account.GetAsync((account) => account.Id == _userIdentity.Id)
+            ?? throw new NotExistsException("Account not found");
+
+        account.UpdateActivityStatus(request.ActivityStatus);
+
+        await _unitOfWork.Account.UpdateAsync(account);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new AccountServiceUpdateStatusResponse() { IsSuccess = true };
     }
 }
