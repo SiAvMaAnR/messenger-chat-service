@@ -1,4 +1,4 @@
-﻿using MessengerX.Application.Services.ChannelService.Models;
+using MessengerX.Application.Services.ChannelService.Models;
 using MessengerX.Application.Services.Common;
 
 namespace MessengerX.Application.Services.ChannelService;
