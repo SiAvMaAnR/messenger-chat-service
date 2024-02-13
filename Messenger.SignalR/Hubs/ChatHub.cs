@@ -17,7 +17,8 @@ public class ChatHub : BaseHub, IHub
     }
 
 
-    public async Task SendMessageAsync(){
+    public async Task SendMessageAsync()
+    {
 
     }
 }
