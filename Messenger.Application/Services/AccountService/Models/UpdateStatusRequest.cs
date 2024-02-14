@@ -1,4 +1,4 @@
-namespace MessengerX.Application.Services.AccountService.Models;
+﻿namespace MessengerX.Application.Services.AccountService.Models;
 
 public class AccountServiceUpdateStatusRequest(string activityStatus)
 {

@@ -18,6 +18,10 @@
 
 `dotnet workload update`
 
+### Dotnet: update tool
+
+`dotnet tool update --global <Tool>`
+
 ### Dotnet: publish
 
 `dotnet publish -c Release`

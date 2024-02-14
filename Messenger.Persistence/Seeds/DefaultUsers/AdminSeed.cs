@@ -18,7 +18,6 @@ internal static partial class DefaultUsersSeed
         {
             new
             {
-                Id = 1,
                 Email = "admin@admin.com",
                 Login = "Admin",
                 Password = "Sosnova61S"
@@ -31,7 +30,6 @@ internal static partial class DefaultUsersSeed
 
             return new Admin()
             {
-                Id = admin.Id,
                 Email = admin.Email,
                 Login = admin.Login,
                 PasswordHash = password.Hash,

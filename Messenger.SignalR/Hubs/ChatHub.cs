@@ -16,8 +16,5 @@ public class ChatHub : BaseHub, IHub
         await base.OnDisconnectedAsync(exception);
     }
 
-
-    public async Task SendMessageAsync(){
-
-    }
+    public async Task SendMessageAsync(int channelId, string message) { }
 }
