@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Messenger.Application\Messenger.Application.csproj" />
+    <ProjectReference Include="..\Messenger.WebApi\Messenger.WebApi.csproj" />
   </ItemGroup>
 
 </Project>
