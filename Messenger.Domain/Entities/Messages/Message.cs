@@ -11,6 +11,7 @@ public partial class Message : BaseEntity
     public DateTime? ModifiedDate { get; set; }
     public bool IsRead { get; set; } = false;
     public bool IsDelete { get; set; } = false;
+
     [InverseProperty("ReadMessages")]
     public ICollection<Account> ReadAccounts { get; set; } = [];
     public ICollection<Message> ChildMessages { get; set; } = [];

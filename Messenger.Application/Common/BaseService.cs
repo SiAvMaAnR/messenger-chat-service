@@ -11,7 +11,7 @@ public abstract class BaseService(
     IUnitOfWork unitOfWork,
     IHttpContextAccessor context,
     IAppSettings appSettings
-    ) : IBaseService
+) : IBaseService
 {
     protected readonly IUnitOfWork _unitOfWork = unitOfWork;
     protected readonly IAppSettings _appSettings = appSettings;

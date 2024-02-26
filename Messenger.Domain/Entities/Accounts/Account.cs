@@ -16,13 +16,17 @@ public partial class Account : BaseEntity
     public string? Image { get; set; }
     public string ActivityStatus { get; set; } = AccountStatus.Offline;
     public ICollection<RefreshToken> RefreshTokens { get; set; } = [];
+
     [JsonIgnore]
     public byte[] PasswordHash { get; set; } = null!;
+
     [JsonIgnore]
     public byte[] PasswordSalt { get; set; } = null!;
     public ICollection<Channel> Channels { get; set; } = [];
+
     [InverseProperty("ReadAccounts")]
     public ICollection<Message> ReadMessages { get; set; } = [];
+
     [InverseProperty("Author")]
     public ICollection<Message> Messages { get; set; } = [];
 }

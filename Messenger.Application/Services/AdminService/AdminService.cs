@@ -31,7 +31,7 @@ public class AdminService : BaseService, IAdminService
 
         Pagination? pagination = request.Pagination;
 
-        IOrderedEnumerable<User> sortedUsers = users.OrderBy((user) => user.Id);
+        IOrderedEnumerable<User> sortedUsers = users.OrderBy(user => user.Id);
 
         PaginatorResponse<User> paginatedData = sortedUsers.Pagination(pagination);
 
@@ -49,7 +49,7 @@ public class AdminService : BaseService, IAdminService
     public async Task<AdminServiceUserResponse> GetUserAsync(AdminServiceUserRequest request)
     {
         User user =
-            await _unitOfWork.User.GetAsync((user) => user.Id == request.Id)
+            await _unitOfWork.User.GetAsync(user => user.Id == request.Id)
             ?? throw new NotExistsException("User not exists");
 
         byte[]? image = request.IsLoadImage ? await FileManager.ReadToBytesAsync(user.Image) : null;
@@ -70,7 +70,7 @@ public class AdminService : BaseService, IAdminService
     public async Task<AdminServiceProfileResponse> GetProfileAsync()
     {
         Admin admin =
-            await _unitOfWork.Admin.GetAsync((admin) => admin.Id == _userIdentity.Id)
+            await _unitOfWork.Admin.GetAsync(admin => admin.Id == _userIdentity.Id)
             ?? throw new NotExistsException("Admin not found");
 
         return new AdminServiceProfileResponse()
@@ -79,5 +79,33 @@ public class AdminService : BaseService, IAdminService
             Email = admin.Email,
             Role = admin.Role,
         };
+    }
+
+    public async Task<AdminServiceBlockUserResponse> BlockUserAsync(
+        AdminServiceBlockUserRequest request
+    )
+    {
+        User user =
+            await _unitOfWork.User.GetAsync(user => user.Id == request.UserId)
+            ?? throw new NotExistsException("User not found");
+
+        user.UpdateIsBanned(true);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new AdminServiceBlockUserResponse() { IsSuccess = true };
+    }
+
+    public async Task<AdminServiceUnblockUserResponse> UnblockUserAsync(
+        AdminServiceUnblockUserRequest request
+    )
+    {
+        User user =
+            await _unitOfWork.User.GetAsync(user => user.Id == request.UserId)
+            ?? throw new NotExistsException("User not found");
+
+        user.UpdateIsBanned(false);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new AdminServiceUnblockUserResponse() { IsSuccess = true };
     }
 }

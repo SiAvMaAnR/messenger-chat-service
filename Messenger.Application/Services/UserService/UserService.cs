@@ -128,7 +128,7 @@ public class UserService : BaseService, IUserService
     public async Task<UserServiceProfileResponse> GetProfileAsync()
     {
         User user =
-            await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
+            await _unitOfWork.User.GetAsync(user => user.Id == _userIdentity.Id)
             ?? throw new NotExistsException("User not found");
 
         return new UserServiceProfileResponse()
@@ -143,7 +143,7 @@ public class UserService : BaseService, IUserService
     public async Task<UserServiceUpdateResponse> UpdateAsync(UserServiceUpdateRequest request)
     {
         User user =
-            await _unitOfWork.User.GetAsync((user) => user.Id == _userIdentity.Id)
+            await _unitOfWork.User.GetAsync(user => user.Id == _userIdentity.Id)
             ?? throw new NotExistsException("User not found");
 
         user.Login = request.Login;

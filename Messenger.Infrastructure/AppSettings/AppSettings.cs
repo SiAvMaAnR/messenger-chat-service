@@ -10,7 +10,7 @@ public class AppSettings(
     IOptions<FilePathSettings> filePathSettings,
     IOptions<ClientSettings> clientSettings,
     IOptions<AuthSettings> authSettings
-    ) : IAppSettings
+) : IAppSettings
 {
     public CommonSettings Common { get; } = commonSettings.Value;
     public SmtpSettings Smtp { get; } = smtpSettings.Value;

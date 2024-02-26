@@ -4,7 +4,7 @@ using MessengerX.Domain.Exceptions.StatusCode;
 
 namespace MessengerX.Domain.Exceptions.BusinessExceptions;
 
-public class NotExistsException : NotFoundException, IBusinessException
+public class NotExistsException : BadRequestException, IBusinessException
 {
     public const BusinessStatusCode Code = BusinessStatusCode.E004;
 

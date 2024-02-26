@@ -8,6 +8,8 @@ public class AdminServiceUserResponsePayload
     public string Login { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string Role { get; set; } = null!;
+    public bool IsBanned { get; set; }
+    public string ActivityStatus { get; set; } = null!;
     public byte[]? Image { get; set; }
     public DateOnly? Birthday { get; set; }
     public DateTime? CreatedAt { get; set; }

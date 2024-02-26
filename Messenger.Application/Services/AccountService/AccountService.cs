@@ -23,7 +23,7 @@ public class AccountService : BaseService, IAccountService
     )
     {
         Account account =
-            await _unitOfWork.Account.GetAsync((account) => account.Id == _userIdentity.Id)
+            await _unitOfWork.Account.GetAsync(account => account.Id == _userIdentity.Id)
             ?? throw new NotExistsException("Account not found");
 
         string imagePath = _appSettings.FilePath.Image;
@@ -43,7 +43,7 @@ public class AccountService : BaseService, IAccountService
     public async Task<AccountServiceImageResponse> GetImageAsync()
     {
         Account account =
-            await _unitOfWork.Account.GetAsync((account) => account.Id == _userIdentity.Id)
+            await _unitOfWork.Account.GetAsync(account => account.Id == _userIdentity.Id)
             ?? throw new NotExistsException("Account not found");
 
         byte[]? image = await FileManager.ReadToBytesAsync(account.Image);
@@ -56,7 +56,7 @@ public class AccountService : BaseService, IAccountService
     )
     {
         Account account =
-            await _unitOfWork.Account.GetAsync((account) => account.Id == _userIdentity.Id)
+            await _unitOfWork.Account.GetAsync(account => account.Id == _userIdentity.Id)
             ?? throw new NotExistsException("Account not found");
 
         account.UpdateActivityStatus(request.ActivityStatus);

@@ -3,7 +3,7 @@ using MessengerX.Domain.Shared.Constants.Validation;
 
 namespace MessengerX.WebApi.Controllers.Models.Auth;
 
-public class RefreshTokenRequest
+public class AuthControllerRefreshTokenRequest
 {
     [MaxLength(MaxLength.RefreshToken)]
     public string RefreshToken { get; set; } = null!;

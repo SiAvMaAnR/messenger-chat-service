@@ -3,7 +3,7 @@ using MessengerX.Domain.Shared.Constants.Validation;
 
 namespace MessengerX.WebApi.Controllers.Models.Auth;
 
-public class ResetPasswordRequest
+public class AuthControllerResetPasswordRequest
 {
     [MaxLength(MaxLength.ResetToken)]
     public string ResetToken { get; set; } = null!;

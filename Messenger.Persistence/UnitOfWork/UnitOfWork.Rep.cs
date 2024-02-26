@@ -1,5 +1,7 @@
 ﻿using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Admins;
+using MessengerX.Domain.Entities.Channels;
+using MessengerX.Domain.Entities.Messages;
 using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Persistence.DBContext;
@@ -15,4 +17,6 @@ public partial class UnitOfWork(EFContext eFContext)
     public IAccountRepository Account { get; } = new AccountRepository(eFContext);
     public IAdminRepository Admin { get; } = new AdminRepository(eFContext);
     public IRefreshTokenRepository RefreshToken { get; } = new RefreshTokenRepository(eFContext);
+    public IMessageRepository Message { get; } = new MessageRepository(eFContext);
+    public IChannelRepository Channel { get; } = new ChannelRepository(eFContext);
 }

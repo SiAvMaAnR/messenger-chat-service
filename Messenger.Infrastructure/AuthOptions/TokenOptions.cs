@@ -73,7 +73,9 @@ public static class TokenOptions
         );
         var key = new SymmetricSecurityKey(hashSecretKey);
 
-        DateTime expires = DateTime.Now.AddMinutes(double.Parse(tokenParams[TokenClaim.AccessTokenLifeTime]));
+        DateTime expires = DateTime
+            .Now
+            .AddMinutes(double.Parse(tokenParams[TokenClaim.AccessTokenLifeTime]));
 
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

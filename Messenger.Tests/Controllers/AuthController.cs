@@ -20,7 +20,11 @@ public class AuthControllerTest
     public async Task Login()
     {
         // Arrange
-        var loginRequest = new LoginRequest { Email = "admin@admin.com", Password = "Sosnova61S" };
+        var loginRequest = new AuthControllerLoginRequest
+        {
+            Email = "admin@admin.com",
+            Password = "Sosnova61S"
+        };
 
         // Act
         IActionResult response = await _authController.Login(loginRequest);
@@ -34,7 +38,7 @@ public class AuthControllerTest
     public async Task ResetToken()
     {
         // Arrange
-        var resetTokenRequest = new ResetTokenRequest { Email = "admin@admin.com" };
+        var resetTokenRequest = new AuthControllerResetTokenRequest { Email = "admin@admin.com" };
 
         // Act
         IActionResult response = await _authController.ResetToken(resetTokenRequest);
