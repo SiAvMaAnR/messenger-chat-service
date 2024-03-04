@@ -4,6 +4,7 @@ using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.RefreshTokens;
+using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Interfaces.UnitOfWork;
@@ -53,6 +54,9 @@ public class AuthService : BaseService, IAuthService
 
         if (!isVerify)
             throw new InvalidCredentialsException("Wrong password", ClientMessageSettings.Same);
+
+        if (account is User { IsBanned: true })
+            throw new AccessException("Account was banned", ClientMessageSettings.Same);
 
         string refreshToken = TokenOptions.CreateRefreshToken();
         string accessToken = TokenOptions.CreateAccessToken(
@@ -113,6 +117,9 @@ public class AuthService : BaseService, IAuthService
                 "Account not exists",
                 ClientMessageSettings.Default
             );
+
+        if (account is User { IsBanned: true })
+            throw new AccessException("Account was banned", ClientMessageSettings.Same);
 
         string accessToken = TokenOptions.CreateAccessToken(
             [

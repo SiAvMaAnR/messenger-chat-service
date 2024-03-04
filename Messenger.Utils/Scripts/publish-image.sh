@@ -15,3 +15,6 @@ docker buildx build -t $imageName .
 
 # push to DockerHub
 docker push $imageName
+
+# cache clear
+docker buildx prune -af

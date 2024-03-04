@@ -1,5 +1,4 @@
-﻿using MessengerX.Application.Services.AccountService;
-using MessengerX.Application.Services.AdminService;
+﻿using MessengerX.Application.Services.AdminService;
 using MessengerX.Application.Services.AdminService.Models;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.WebApi.Controllers.Models.Admin;
@@ -13,12 +12,10 @@ namespace MessengerX.WebApi.Controllers;
 public class AdminController : ControllerBase
 {
     private readonly IAdminService _adminService;
-    private readonly IAccountService _accountService;
 
-    public AdminController(IAdminService adminService, IAccountService accountService)
+    public AdminController(IAdminService adminService)
     {
         _adminService = adminService;
-        _accountService = accountService;
     }
 
     [HttpGet("profile"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
@@ -29,7 +26,7 @@ public class AdminController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("users"), Authorize(Policy = "OnlyAdmin")]
+    [HttpGet("users"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
     public async Task<IActionResult> GetUsers([FromQuery] AdminControllerUsersRequest request)
     {
         AdminServiceUsersResponse response = await _adminService.GetUsersAsync(
@@ -43,7 +40,7 @@ public class AdminController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("users/{id:int}"), Authorize(Policy = "OnlyAdmin")]
+    [HttpGet("users/{id:int}"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
     public async Task<IActionResult> GetUser(
         [FromQuery] AdminControllerUserRequest request,
         [FromRoute] int id
@@ -51,6 +48,26 @@ public class AdminController : ControllerBase
     {
         AdminServiceUserResponse response = await _adminService.GetUserAsync(
             new AdminServiceUserRequest() { Id = id, IsLoadImage = request.IsLoadImage }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpPost("block-user"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
+    public async Task<IActionResult> BlockUser([FromBody] AdminControllerBlockUserRequest request)
+    {
+        AdminServiceBlockUserResponse response = await _adminService.BlockUserAsync(
+            new AdminServiceBlockUserRequest() { UserId = request.Id }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpPost("unblock-user"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
+    public async Task<IActionResult> UnblockUser([FromBody] AdminControllerBlockUserRequest request)
+    {
+        AdminServiceUnblockUserResponse response = await _adminService.UnblockUserAsync(
+            new AdminServiceUnblockUserRequest() { UserId = request.Id }
         );
 
         return Ok(response);

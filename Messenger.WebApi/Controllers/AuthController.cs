@@ -17,7 +17,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    public async Task<IActionResult> Login([FromBody] AuthControllerLoginRequest request)
     {
         AuthServiceLoginResponse response = await _authService.LoginAsync(
             new AuthServiceLoginRequest() { Email = request.Email, Password = request.Password }
@@ -27,7 +27,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("reset-token")]
-    public async Task<IActionResult> ResetToken([FromBody] ResetTokenRequest request)
+    public async Task<IActionResult> ResetToken([FromBody] AuthControllerResetTokenRequest request)
     {
         AuthServiceResetTokenResponse response = await _authService.ResetTokenAsync(
             new AuthServiceResetTokenRequest() { Email = request.Email }
@@ -37,7 +37,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("reset-password")]
-    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    public async Task<IActionResult> ResetPassword(
+        [FromBody] AuthControllerResetPasswordRequest request
+    )
     {
         AuthServiceResetPasswordResponse response = await _authService.ResetPasswordAsync(
             new AuthServiceResetPasswordRequest()
@@ -51,7 +53,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("refresh-token")]
-    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+    public async Task<IActionResult> RefreshToken(
+        [FromBody] AuthControllerRefreshTokenRequest request
+    )
     {
         AuthServiceRefreshTokenResponse response = await _authService.RefreshTokenAsync(
             new AuthServiceRefreshTokenRequest() { RefreshToken = request.RefreshToken }
@@ -61,7 +65,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("revoke-token")]
-    public async Task<IActionResult> RevokeToken([FromBody] RevokeTokenRequest request)
+    public async Task<IActionResult> RevokeToken(
+        [FromBody] AuthControllerRevokeTokenRequest request
+    )
     {
         AuthServiceRevokeTokenResponse response = await _authService.RevokeTokenAsync(
             new AuthServiceRevokeTokenRequest() { RefreshToken = request.RefreshToken }

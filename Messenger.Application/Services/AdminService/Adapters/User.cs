@@ -17,6 +17,8 @@ public class AdminServiceUserAdapter : AdminServiceUserResponsePayload
         Email = user.Email;
         Role = user.Role;
         Birthday = user.Birthday;
+        IsBanned = user.IsBanned;
+        ActivityStatus = user.ActivityStatus;
         CreatedAt = user.CreatedAt;
         UpdatedAt = user.UpdatedAt;
     }

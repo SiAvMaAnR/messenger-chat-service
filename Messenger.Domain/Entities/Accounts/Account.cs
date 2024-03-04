@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using MessengerX.Domain.Entities.Channels;
+using MessengerX.Domain.Entities.Messages;
 using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Shared.Constants.Common;
 
@@ -20,4 +22,11 @@ public partial class Account : BaseEntity
 
     [JsonIgnore]
     public byte[] PasswordSalt { get; set; } = null!;
+    public ICollection<Channel> Channels { get; set; } = [];
+
+    [InverseProperty("ReadAccounts")]
+    public ICollection<Message> ReadMessages { get; set; } = [];
+
+    [InverseProperty("Author")]
+    public ICollection<Message> Messages { get; set; } = [];
 }

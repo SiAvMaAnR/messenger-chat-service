@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Messenger.SignalR.Hubs;
 
-public class StateHub(IAccountService accountService) : BaseHub(), IHub
+public class StateHub(IAccountService accountService) : BaseHub, IHub
 {
     private readonly IAccountService _accountService = accountService;
 

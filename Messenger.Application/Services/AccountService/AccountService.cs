@@ -4,37 +4,26 @@ using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Infrastructure.AppSettings;
-using MessengerX.Notifications.Email;
 using MessengerX.Persistence.Extensions;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 
 namespace MessengerX.Application.Services.AccountService;
 
 public class AccountService : BaseService, IAccountService
 {
-    private readonly IDataProtectionProvider _protection;
-    private readonly IEmailClient _emailClient;
-
     public AccountService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
-        IAppSettings appSettings,
-        IDataProtectionProvider protection,
-        IEmailClient emailClient
+        IAppSettings appSettings
     )
-        : base(unitOfWork, context, appSettings)
-    {
-        _protection = protection;
-        _emailClient = emailClient;
-    }
+        : base(unitOfWork, context, appSettings) { }
 
     public async Task<AccountServiceUploadImageResponse> UploadImageAsync(
         AccountServiceUploadImageRequest request
     )
     {
         Account account =
-            await _unitOfWork.Account.GetAsync((account) => account.Id == _userIdentity.Id)
+            await _unitOfWork.Account.GetAsync(account => account.Id == _userIdentity.Id)
             ?? throw new NotExistsException("Account not found");
 
         string imagePath = _appSettings.FilePath.Image;
@@ -54,7 +43,7 @@ public class AccountService : BaseService, IAccountService
     public async Task<AccountServiceImageResponse> GetImageAsync()
     {
         Account account =
-            await _unitOfWork.Account.GetAsync((account) => account.Id == _userIdentity.Id)
+            await _unitOfWork.Account.GetAsync(account => account.Id == _userIdentity.Id)
             ?? throw new NotExistsException("Account not found");
 
         byte[]? image = await FileManager.ReadToBytesAsync(account.Image);
@@ -67,7 +56,7 @@ public class AccountService : BaseService, IAccountService
     )
     {
         Account account =
-            await _unitOfWork.Account.GetAsync((account) => account.Id == _userIdentity.Id)
+            await _unitOfWork.Account.GetAsync(account => account.Id == _userIdentity.Id)
             ?? throw new NotExistsException("Account not found");
 
         account.UpdateActivityStatus(request.ActivityStatus);
