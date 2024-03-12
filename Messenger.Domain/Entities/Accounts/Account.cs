@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using MessengerX.Domain.Entities.Accounts.RefreshTokens;
 using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Entities.Messages;
-using MessengerX.Domain.Entities.RefreshTokens;
+using MessengerX.Domain.Entities.Channels.Messages;
 using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.Domain.Entities.Accounts;
@@ -25,8 +25,8 @@ public partial class Account : BaseEntity
     public ICollection<Channel> Channels { get; set; } = [];
 
     [InverseProperty("ReadAccounts")]
-    public ICollection<Message> ReadMessages { get; set; } = [];
+    public ICollection<Message> ReadMessages { get; private set; } = [];
 
     [InverseProperty("Author")]
-    public ICollection<Message> Messages { get; set; } = [];
+    public ICollection<Message> Messages { get; private set; } = [];
 }

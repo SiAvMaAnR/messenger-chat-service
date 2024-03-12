@@ -1,4 +1,4 @@
-﻿using MessengerX.Domain.Entities.RefreshTokens;
+﻿using MessengerX.Domain.Entities.Accounts.RefreshTokens;
 using MessengerX.Persistence.DBContext;
 using MessengerX.Persistence.Repositories.Common;
 
