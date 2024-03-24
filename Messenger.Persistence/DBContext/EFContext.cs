@@ -1,8 +1,8 @@
 ﻿using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.Accounts.RefreshTokens;
 using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Entities.Messages;
-using MessengerX.Domain.Entities.RefreshTokens;
+using MessengerX.Domain.Entities.Channels.Messages;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Persistence.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;

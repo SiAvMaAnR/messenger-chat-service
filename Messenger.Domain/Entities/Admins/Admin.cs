@@ -5,7 +5,7 @@ namespace MessengerX.Domain.Entities.Admins;
 
 public partial class Admin : Account
 {
-    public bool IsActive { get; set; } = true;
+    public bool IsActive { get; private set; } = true;
 
     public Admin()
     {

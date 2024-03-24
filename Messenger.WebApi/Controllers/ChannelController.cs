@@ -56,7 +56,7 @@ public class ChannelController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPost("connect"), Authorize]
+    [HttpPost("join"), Authorize]
     public async Task<IActionResult> ConnectToChannel(
         [FromBody] ChannelControllerConnectToChannelRequest request
     )
@@ -64,6 +64,20 @@ public class ChannelController : ControllerBase
         ChannelServiceConnectToChannelResponse response =
             await _channelService.ConnectToChannelAsync(
                 new ChannelServiceConnectToChannelRequest() { ChannelId = request.ChannelId }
+            );
+
+        return Ok(response);
+    }
+
+    // TEMP TEMPLATE
+    [HttpGet("public-channels"), Authorize]
+    public async Task<IActionResult> PublicChannels(
+        [FromBody] ChannelControllerCreatePrivateChannelRequest request
+    )
+    {
+        ChannelServiceCreatePrivateChannelResponse response =
+            await _channelService.CreatePrivateChannelAsync(
+                new ChannelServiceCreatePrivateChannelRequest() { Name = request.Name }
             );
 
         return Ok(response);

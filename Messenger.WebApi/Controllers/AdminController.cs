@@ -29,7 +29,7 @@ public class AdminController : ControllerBase
     [HttpGet("users"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
     public async Task<IActionResult> GetUsers([FromQuery] AdminControllerUsersRequest request)
     {
-        AdminServiceUsersResponse response = await _adminService.GetUsersAsync(
+        AdminServiceUsersResponse response = await _adminService.UsersAsync(
             new AdminServiceUsersRequest()
             {
                 Pagination = request.Pagination,
@@ -46,7 +46,7 @@ public class AdminController : ControllerBase
         [FromRoute] int id
     )
     {
-        AdminServiceUserResponse response = await _adminService.GetUserAsync(
+        AdminServiceUserResponse response = await _adminService.UserAsync(
             new AdminServiceUserRequest() { Id = id, IsLoadImage = request.IsLoadImage }
         );
 

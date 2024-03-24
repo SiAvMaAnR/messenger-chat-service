@@ -3,7 +3,7 @@ using System.Text.Json;
 using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.RefreshTokens;
+using MessengerX.Domain.Entities.Accounts.RefreshTokens;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
@@ -79,12 +79,7 @@ public class AuthService : BaseService, IAuthService
 
         DateTime expiryTime = DateTime.Now.AddMinutes(refreshTokenLifeTime);
 
-        var newRefreshToken = new RefreshToken()
-        {
-            Token = refreshToken,
-            ExpiryTime = expiryTime,
-            Account = account
-        };
+        var newRefreshToken = new RefreshToken(refreshToken, expiryTime, account.Id);
 
         await _unitOfWork.RefreshToken.AddAsync(newRefreshToken);
         await _unitOfWork.SaveChangesAsync();

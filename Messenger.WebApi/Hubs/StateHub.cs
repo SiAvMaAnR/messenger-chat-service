@@ -1,10 +1,10 @@
-﻿using Messenger.SignalR.Hubs.Common;
+﻿using Messenger.WebApi.Hubs.Common;
 using MessengerX.Application.Services.AccountService;
 using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.Domain.Shared.Constants.Common;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Messenger.SignalR.Hubs;
+namespace Messenger.WebApi.Hubs;
 
 public class StateHub(IAccountService accountService) : BaseHub, IHub
 {

@@ -1,4 +1,4 @@
-﻿using Messenger.SignalR.Hubs;
+﻿using Messenger.WebApi.Hubs;
 using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;

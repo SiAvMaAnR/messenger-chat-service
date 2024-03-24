@@ -13,15 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Domain", "Messenger.Domain\Messenger.Domain.csproj", "{38BC08E3-4FD8-48E8-A66A-4F971E0E5F3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.SignalR", "Messenger.SignalR\Messenger.SignalR.csproj", "{F7F7C3D0-0B3E-4A4D-BEB1-A4AD2DB5470B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Notifications", "Messenger.Notifications\Messenger.Notifications.csproj", "{DF22E5FC-C755-4FC8-B828-080C20B8B0FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Tests", "Messenger.Tests\Messenger.Tests.csproj", "{B6C294EA-1E5F-42DF-9652-5D060712AFB5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Utils", "Messenger.Utils\Messenger.Utils.csproj", "{36DE3220-14E5-45B9-B676-4C5067CEF43C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Scheduler", "Messenger.Scheduler\Messenger.Scheduler.csproj", "{DEF66894-D27D-481C-B915-D0F250CCCD1A}"
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
