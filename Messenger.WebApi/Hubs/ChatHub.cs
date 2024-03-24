@@ -1,10 +1,10 @@
-﻿using Messenger.SignalR.Hubs.Common;
+﻿using Messenger.WebApi.Hubs.Common;
 using MessengerX.Application.Services.ChannelService;
 using MessengerX.Application.Services.ChatService;
 using MessengerX.Application.Services.ChatService.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Messenger.SignalR.Hubs;
+namespace Messenger.WebApi.Hubs;
 
 public class ChatHub(IChatService chatService, IChannelService channelService) : BaseHub, IHub
 {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Messenger.SignalR.Hubs.Common;
+namespace Messenger.WebApi.Hubs.Common;
 
 public class BaseHub : Hub { }
