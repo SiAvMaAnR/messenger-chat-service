@@ -1,3 +1,32 @@
-﻿namespace MessengerX.Domain.Entities.Channels;
+﻿using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.Channels.Messages;
 
-public partial class Channel : IAggregateRoot { }
+namespace MessengerX.Domain.Entities.Channels;
+
+public partial class Channel : IAggregateRoot
+{
+    public Channel(string type)
+    {
+        Type = type;
+    }
+
+    public void AddAccount(Account account)
+    {
+        Accounts.Add(account);
+    }
+
+    public void AddAccounts(List<Account> accounts)
+    {
+        accounts.ForEach(Accounts.Add);
+    }
+
+    public void AddMessage(Message message)
+    {
+        Messages.Add(message);
+    }
+
+    public void UpdateLastActivity(Message message)
+    {
+        Messages.Add(message);
+    }
+}

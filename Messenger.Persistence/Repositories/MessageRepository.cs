@@ -1,4 +1,4 @@
-﻿using MessengerX.Domain.Entities.Messages;
+﻿using MessengerX.Domain.Entities.Channels.Messages;
 using MessengerX.Persistence.DBContext;
 using MessengerX.Persistence.Repositories.Common;
 

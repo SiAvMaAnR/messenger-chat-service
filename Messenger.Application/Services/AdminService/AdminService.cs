@@ -23,7 +23,7 @@ public class AdminService : BaseService, IAdminService
     )
         : base(unitOfWork, context, appSettings) { }
 
-    public async Task<AdminServiceUsersResponse> GetUsersAsync(AdminServiceUsersRequest request)
+    public async Task<AdminServiceUsersResponse> UsersAsync(AdminServiceUsersRequest request)
     {
         IEnumerable<User> users =
             await _unitOfWork.User.GetAllAsync()
@@ -46,7 +46,7 @@ public class AdminService : BaseService, IAdminService
         return new AdminServiceUsersResponse() { Meta = paginatedData.Meta, Users = adaptedUsers };
     }
 
-    public async Task<AdminServiceUserResponse> GetUserAsync(AdminServiceUserRequest request)
+    public async Task<AdminServiceUserResponse> UserAsync(AdminServiceUserRequest request)
     {
         User user =
             await _unitOfWork.User.GetAsync(user => user.Id == request.Id)
