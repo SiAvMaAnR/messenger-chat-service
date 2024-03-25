@@ -28,13 +28,7 @@ internal static partial class DefaultUsersSeed
         {
             Password password = PasswordOptions.CreatePasswordHash(admin.Password);
 
-            return new Admin()
-            {
-                Email = admin.Email,
-                Login = admin.Login,
-                PasswordHash = password.Hash,
-                PasswordSalt = password.Salt
-            };
+            return new Admin(admin.Email, admin.Login, password.Hash, password.Salt);
         });
 
         eFContext.Admins.AddRange(adminList);

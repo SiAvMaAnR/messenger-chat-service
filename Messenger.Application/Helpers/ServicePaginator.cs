@@ -3,10 +3,10 @@ using MessengerX.Domain.Shared.Models;
 
 namespace MessengerX.Application.Services.Helpers;
 
-public class PaginatorResponse<TEntity>
+public class PaginatorResponse<TEntity>(IEnumerable<TEntity> collection, MetaResponse meta)
 {
-    public MetaResponse Meta { get; set; } = null!;
-    public IEnumerable<TEntity> Collection { get; set; } = null!;
+    public IEnumerable<TEntity> Collection { get; set; } = collection;
+    public MetaResponse Meta { get; set; } = meta;
 }
 
 public static class ServicePaginator
@@ -25,16 +25,14 @@ public static class ServicePaginator
         IEnumerable<TEntity>? pagedCollection =
             pagination != null ? collection.Skip(pageNumber * pageSize).Take(pageSize) : collection;
 
-        return new PaginatorResponse<TEntity>
+        var meta = new MetaResponse()
         {
-            Collection = pagedCollection,
-            Meta = new MetaResponse()
-            {
-                ItemsCount = itemCount,
-                PagesCount = pagesCount,
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            },
+            ItemsCount = itemCount,
+            PagesCount = pagesCount,
+            PageNumber = pageNumber,
+            PageSize = pageSize
         };
+
+        return new PaginatorResponse<TEntity>(pagedCollection, meta);
     }
 }

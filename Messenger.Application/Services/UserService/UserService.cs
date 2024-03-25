@@ -105,12 +105,8 @@ public class UserService : BaseService, IUserService
 
         Password password = PasswordOptions.CreatePasswordHash(confirmation.Password);
 
-        var user = new User()
+        var user = new User(confirmation.Email, confirmation.Login, password.Hash, password.Salt)
         {
-            Login = confirmation.Login,
-            Email = confirmation.Email,
-            PasswordHash = password.Hash,
-            PasswordSalt = password.Salt,
             Birthday = confirmation.Birthday,
         };
 
@@ -146,8 +142,8 @@ public class UserService : BaseService, IUserService
             await _unitOfWork.User.GetAsync(user => user.Id == _userIdentity.Id)
             ?? throw new NotExistsException("User not found");
 
-        user.Login = request.Login;
-        user.Birthday = request.Birthday;
+        user.UpdateLogin(request.Login);
+        user.UpdateBirthday(request.Birthday);
 
         await _unitOfWork.User.UpdateAsync(user);
         await _unitOfWork.SaveChangesAsync();

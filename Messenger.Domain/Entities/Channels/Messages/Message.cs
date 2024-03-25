@@ -8,7 +8,7 @@ public partial class Message : BaseEntity
 {
     public string? Text { get; set; }
     public DateTime? ModifiedDate { get; set; }
-    public bool IsRead { get; } = false;
+    public bool IsRead { get; private set; } = false;
     public bool IsDelete { get; private set; } = false;
 
     [InverseProperty("ReadMessages")]
