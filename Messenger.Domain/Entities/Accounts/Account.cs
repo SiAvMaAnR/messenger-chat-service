@@ -10,18 +10,18 @@ namespace MessengerX.Domain.Entities.Accounts;
 [Table("Accounts")]
 public partial class Account : BaseEntity
 {
-    public string Login { get; set; } = null!;
-    public string Email { get; set; } = null!;
+    public string Login { get; private set; }
+    public string Email { get; private set; }
     public string Role { get; protected set; } = AccountRole.Public;
     public string? Image { get; set; }
     public string ActivityStatus { get; set; } = AccountStatus.Offline;
-    public ICollection<RefreshToken> RefreshTokens { get; set; } = [];
+    public ICollection<RefreshToken> RefreshTokens { get; private set; } = [];
 
     [JsonIgnore]
-    public byte[] PasswordHash { get; set; } = null!;
+    public byte[] PasswordHash { get; private set; }
 
     [JsonIgnore]
-    public byte[] PasswordSalt { get; set; } = null!;
+    public byte[] PasswordSalt { get; private set; }
     public ICollection<Channel> Channels { get; set; } = [];
 
     [InverseProperty("ReadAccounts")]

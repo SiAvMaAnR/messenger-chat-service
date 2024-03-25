@@ -28,12 +28,8 @@ internal static partial class DefaultUsersSeed
         {
             Password password = PasswordOptions.CreatePasswordHash(user.Password);
 
-            return new User()
+            return new User(user.Email, user.Login, password.Hash, password.Salt)
             {
-                Email = user.Email,
-                Login = user.Login,
-                PasswordHash = password.Hash,
-                PasswordSalt = password.Salt,
                 Birthday = new DateOnly(2002, 1, 9)
             };
         });

@@ -204,8 +204,7 @@ public class AuthService : BaseService, IAuthService
 
         Password password = PasswordOptions.CreatePasswordHash(request.Password);
 
-        account.PasswordHash = password.Hash;
-        account.PasswordSalt = password.Salt;
+        account.UpdatePassword(password.Hash, password.Salt);
 
         await _unitOfWork.Account.UpdateAsync(account);
         await _unitOfWork.SaveChangesAsync();

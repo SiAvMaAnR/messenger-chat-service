@@ -24,4 +24,9 @@ public partial class Message : IAggregateRoot
     {
         IsDelete = true;
     }
+
+    public void ReadMessage()
+    {
+        IsRead = true;
+    }
 }
