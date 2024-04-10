@@ -29,11 +29,9 @@ public class AdminService : BaseService, IAdminService
             await _unitOfWork.User.GetAllAsync()
             ?? throw new NotExistsException("Users not exists");
 
-        Pagination? pagination = request.Pagination;
-
         IOrderedEnumerable<User> sortedUsers = users.OrderBy(user => user.Id);
 
-        PaginatorResponse<User> paginatedData = sortedUsers.Pagination(pagination);
+        PaginatorResponse<User> paginatedData = sortedUsers.Pagination(request.Pagination);
 
         var adaptedUsers = paginatedData
             .Collection

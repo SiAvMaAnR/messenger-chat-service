@@ -6,7 +6,6 @@ using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
-using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
 using Microsoft.AspNetCore.Http;
 
@@ -31,11 +30,9 @@ public class ChatService : BaseService, IChatService
 
         ICollection<Channel> channels = account.Channels;
 
-        Pagination? pagination = request.Pagination;
-
         IOrderedEnumerable<Channel> sortedChannels = channels.OrderBy(channel => channel.Id);
 
-        PaginatorResponse<Channel> paginatedData = sortedChannels.Pagination(pagination);
+        PaginatorResponse<Channel> paginatedData = sortedChannels.Pagination(request.Pagination);
 
         var adaptedChannels = paginatedData
             .Collection
