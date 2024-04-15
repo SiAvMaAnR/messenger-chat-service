@@ -1,11 +1,11 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Text;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Shared.Models;
 
-namespace MessengerX.Infrastructure.AuthOptions;
+namespace MessengerX.Domain.Services.AuthService;
 
-public static class PasswordOptions
+public class AuthBS
 {
     public static Password CreatePasswordHash(string password)
     {

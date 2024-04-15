@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Interfaces.UnitOfWork;
+﻿using MessengerX.Application.Common;
+using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Infrastructure.AppSettings;
-using MessengerX.Infrastructure.UserIdentity;
 using Microsoft.AspNetCore.Http;
 
 namespace MessengerX.Application.Services.Common;

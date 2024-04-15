@@ -8,6 +8,7 @@ using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Interfaces.UnitOfWork;
+using MessengerX.Domain.Services.AuthService;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
@@ -47,7 +48,7 @@ public class AuthService : BaseService, IAuthService
                 ClientMessageSettings.Same
             );
 
-        bool isVerify = PasswordOptions.VerifyPasswordHash(
+        bool isVerify = AuthBS.VerifyPasswordHash(
             request.Password,
             new Password() { Hash = account.PasswordHash, Salt = account.PasswordSalt }
         );
@@ -58,8 +59,8 @@ public class AuthService : BaseService, IAuthService
         if (account is User { IsBanned: true })
             throw new AccessException("Account was banned", ClientMessageSettings.Same);
 
-        string refreshToken = TokenOptions.CreateRefreshToken();
-        string accessToken = TokenOptions.CreateAccessToken(
+        string refreshToken = AuthOptions.CreateRefreshToken();
+        string accessToken = AuthOptions.CreateAccessToken(
             [
                 new(ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new(ClaimTypes.Name, account.Login),
@@ -116,7 +117,7 @@ public class AuthService : BaseService, IAuthService
         if (account is User { IsBanned: true })
             throw new AccessException("Account was banned", ClientMessageSettings.Same);
 
-        string accessToken = TokenOptions.CreateAccessToken(
+        string accessToken = AuthOptions.CreateAccessToken(
             [
                 new(ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new(ClaimTypes.Name, account.Login),
@@ -202,7 +203,7 @@ public class AuthService : BaseService, IAuthService
             await _unitOfWork.Account.GetAsync(account => account.Id == resetToken.Id)
             ?? throw new NotExistsException("Account not exists");
 
-        Password password = PasswordOptions.CreatePasswordHash(request.Password);
+        Password password = AuthBS.CreatePasswordHash(request.Password);
 
         account.UpdatePassword(password.Hash, password.Salt);
 

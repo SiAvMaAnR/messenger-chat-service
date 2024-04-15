@@ -5,9 +5,9 @@ using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Interfaces.UnitOfWork;
+using MessengerX.Domain.Services.AuthService;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.AppSettings;
-using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Infrastructure.NotificationTemplates;
 using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
@@ -103,7 +103,7 @@ public class UserService : BaseService, IUserService
         if (await _unitOfWork.Account.AnyAsync(account => account.Email == confirmation.Email))
             throw new AlreadyExistsException("Account already exists", ClientMessageSettings.Same);
 
-        Password password = PasswordOptions.CreatePasswordHash(confirmation.Password);
+        Password password = AuthBS.CreatePasswordHash(confirmation.Password);
 
         var user = new User(confirmation.Email, confirmation.Login, password.Hash, password.Salt)
         {

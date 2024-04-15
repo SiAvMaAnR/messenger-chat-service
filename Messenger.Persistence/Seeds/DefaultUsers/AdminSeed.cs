@@ -1,6 +1,6 @@
 ﻿using MessengerX.Domain.Entities.Admins;
+using MessengerX.Domain.Services.AuthService;
 using MessengerX.Domain.Shared.Models;
-using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Persistence.DBContext;
 
 namespace MessengerX.Persistence.Seeds.DefaultUsers;
@@ -26,7 +26,7 @@ internal static partial class DefaultUsersSeed
 
         IEnumerable<Admin> adminList = admins.Select(admin =>
         {
-            Password password = PasswordOptions.CreatePasswordHash(admin.Password);
+            Password password = AuthBS.CreatePasswordHash(admin.Password);
 
             return new Admin(admin.Email, admin.Login, password.Hash, password.Salt);
         });

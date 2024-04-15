@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace MessengerX.Infrastructure.AuthOptions;
 
-public static class TokenOptions
+public static class AuthOptions
 {
     public static void Config(this JwtBearerOptions options, IConfiguration configuration)
     {
