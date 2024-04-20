@@ -1,4 +1,4 @@
-﻿using MessengerX.Domain.Interfaces.UnitOfWork;
+﻿using MessengerX.Domain.Common;
 
 namespace MessengerX.Persistence.UnitOfWork;
 

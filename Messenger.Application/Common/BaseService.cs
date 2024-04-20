@@ -1,6 +1,5 @@
 ﻿using MessengerX.Application.Common;
 using MessengerX.Domain.Common;
-using MessengerX.Domain.Interfaces.UnitOfWork;
 using Microsoft.AspNetCore.Http;
 
 namespace MessengerX.Application.Services.Common;

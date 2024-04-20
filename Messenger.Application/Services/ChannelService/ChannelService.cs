@@ -4,7 +4,6 @@ using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
-using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Shared.Constants.Common;
 using Microsoft.AspNetCore.Http;
 

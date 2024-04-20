@@ -4,7 +4,7 @@ using MessengerX.Application.Services.AuthService;
 using MessengerX.Application.Services.ChannelService;
 using MessengerX.Application.Services.ChatService;
 using MessengerX.Application.Services.UserService;
-using MessengerX.Domain.Interfaces.UnitOfWork;
+using MessengerX.Domain.Common;
 using MessengerX.Persistence.UnitOfWork;
 
 namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;

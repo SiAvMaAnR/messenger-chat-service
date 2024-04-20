@@ -8,7 +8,6 @@ using MessengerX.Domain.Entities.Accounts.RefreshTokens;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
-using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Services.AuthService;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Models;

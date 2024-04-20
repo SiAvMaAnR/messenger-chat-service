@@ -5,7 +5,6 @@ using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
-using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Services.AuthService;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.NotificationTemplates;
