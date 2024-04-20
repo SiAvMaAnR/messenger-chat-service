@@ -5,6 +5,7 @@ using MessengerX.Application.Services.ChannelService;
 using MessengerX.Application.Services.ChatService;
 using MessengerX.Application.Services.UserService;
 using MessengerX.Domain.Common;
+using MessengerX.Domain.Services;
 using MessengerX.Persistence.UnitOfWork;
 
 namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
@@ -23,6 +24,13 @@ public static partial class ServiceManagerExtension
         serviceCollection.AddScoped<IAdminService, AdminService>();
         serviceCollection.AddScoped<IChannelService, ChannelService>();
         serviceCollection.AddScoped<IChatService, ChatService>();
+
+        serviceCollection.AddScoped<UserBS>();
+        serviceCollection.AddScoped<AccountBS>();
+        serviceCollection.AddScoped<AuthBS>();
+        serviceCollection.AddScoped<AdminBS>();
+        serviceCollection.AddScoped<ChannelBS>();
+        serviceCollection.AddScoped<ChatBS>();
 
         return serviceCollection;
     }

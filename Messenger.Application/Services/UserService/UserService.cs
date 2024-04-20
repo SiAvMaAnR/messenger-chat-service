@@ -4,8 +4,7 @@ using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
-using MessengerX.Domain.Exceptions.Common;
-using MessengerX.Domain.Services.AuthService;
+using MessengerX.Domain.Services;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Infrastructure.NotificationTemplates;
 using MessengerX.Notifications.Email;
@@ -19,29 +18,28 @@ public class UserService : BaseService, IUserService
 {
     private readonly IDataProtectionProvider _protection;
     private readonly IEmailClient _emailClient;
+    private readonly UserBS _userBS;
 
     public UserService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
         IAppSettings appSettings,
         IDataProtectionProvider protection,
-        IEmailClient emailClient
+        IEmailClient emailClient,
+        UserBS userBS
     )
         : base(unitOfWork, context, appSettings)
     {
         _protection = protection;
         _emailClient = emailClient;
+        _userBS = userBS;
     }
 
     public async Task<UserServiceRegistrationResponse> RegistrationAsync(
         UserServiceRegistrationRequest request
     )
     {
-        if (await _unitOfWork.Account.AnyAsync(account => account.Email == request.Email))
-            throw new AlreadyExistsException(
-                "Account already exists",
-                "Account with this email already exists"
-            );
+        await _userBS.CheckExistenceByEmailAsync(request.Email);
 
         string baseUrl = _appSettings.Client.BaseUrl;
 
@@ -96,22 +94,7 @@ public class UserService : BaseService, IUserService
             JsonSerializer.Deserialize<Confirmation>(confirmationJson)
             ?? throw new InvalidConfirmationException("Invalid confirmation");
 
-        if (confirmation.ExpirationDate < DateTime.Now)
-            throw new ExpiredException("Confirmation has expired", ClientMessageSettings.Same);
-
-        if (await _unitOfWork.Account.AnyAsync(account => account.Email == confirmation.Email))
-            throw new AlreadyExistsException("Account already exists", ClientMessageSettings.Same);
-
-        Password password = AuthBS.CreatePasswordHash(confirmation.Password);
-
-        var user = new User(confirmation.Email, confirmation.Login, password.Hash, password.Salt)
-        {
-            Birthday = confirmation.Birthday,
-        };
-
-        await _unitOfWork.User.AddAsync(user);
-
-        await _unitOfWork.SaveChangesAsync();
+        await _userBS.ConfirmRegistrationAsync(confirmation);
 
         return new UserServiceConfirmationResponse()
         {
@@ -123,7 +106,7 @@ public class UserService : BaseService, IUserService
     public async Task<UserServiceProfileResponse> GetProfileAsync()
     {
         User user =
-            await _unitOfWork.User.GetAsync(user => user.Id == _userIdentity.Id)
+            await _userBS.GetUserByIdAsync(_userIdentity.Id)
             ?? throw new NotExistsException("User not found");
 
         return new UserServiceProfileResponse()
@@ -138,14 +121,10 @@ public class UserService : BaseService, IUserService
     public async Task<UserServiceUpdateResponse> UpdateAsync(UserServiceUpdateRequest request)
     {
         User user =
-            await _unitOfWork.User.GetAsync(user => user.Id == _userIdentity.Id)
+            await _userBS.GetUserByIdAsync(_userIdentity.Id)
             ?? throw new NotExistsException("User not found");
 
-        user.UpdateLogin(request.Login);
-        user.UpdateBirthday(request.Birthday);
-
-        await _unitOfWork.User.UpdateAsync(user);
-        await _unitOfWork.SaveChangesAsync();
+        await _userBS.UpdateAsync(user, request.Login, request.Birthday);
 
         return new UserServiceUpdateResponse() { IsSuccess = true };
     }

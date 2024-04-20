@@ -6,6 +6,7 @@ using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
+using MessengerX.Domain.Services;
 using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;
 
@@ -13,22 +14,29 @@ namespace MessengerX.Application.Services.UserService;
 
 public class AdminService : BaseService, IAdminService
 {
+    private readonly AdminBS _adminBS;
+    private readonly UserBS _userBS;
+
     public AdminService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
-        IAppSettings appSettings
+        IAppSettings appSettings,
+        AdminBS adminBS,
+        UserBS userBS
     )
-        : base(unitOfWork, context, appSettings) { }
+        : base(unitOfWork, context, appSettings)
+    {
+        _adminBS = adminBS;
+        _userBS = userBS;
+    }
 
     public async Task<AdminServiceUsersResponse> UsersAsync(AdminServiceUsersRequest request)
     {
-        IEnumerable<User> users =
-            await _unitOfWork.User.GetAllAsync()
-            ?? throw new NotExistsException("Users not exists");
+        IEnumerable<User> users = await _userBS.GetUsersAsync();
 
-        IOrderedEnumerable<User> sortedUsers = users.OrderBy(user => user.Id);
-
-        PaginatorResponse<User> paginatedData = sortedUsers.Pagination(request.Pagination);
+        PaginatorResponse<User> paginatedData = users
+            .OrderBy(user => user.Id)
+            .Pagination(request.Pagination);
 
         var adaptedUsers = paginatedData
             .Collection
@@ -44,7 +52,7 @@ public class AdminService : BaseService, IAdminService
     public async Task<AdminServiceUserResponse> UserAsync(AdminServiceUserRequest request)
     {
         User user =
-            await _unitOfWork.User.GetAsync(user => user.Id == request.Id)
+            await _userBS.GetUserByIdAsync(request.Id)
             ?? throw new NotExistsException("User not exists");
 
         byte[]? image = request.IsLoadImage ? await FileManager.ReadToBytesAsync(user.Image) : null;
@@ -65,7 +73,7 @@ public class AdminService : BaseService, IAdminService
     public async Task<AdminServiceProfileResponse> GetProfileAsync()
     {
         Admin admin =
-            await _unitOfWork.Admin.GetAsync(admin => admin.Id == _userIdentity.Id)
+            await _adminBS.GetAdminByIdAsync(_userIdentity.Id)
             ?? throw new NotExistsException("Admin not found");
 
         return new AdminServiceProfileResponse()
@@ -81,11 +89,10 @@ public class AdminService : BaseService, IAdminService
     )
     {
         User user =
-            await _unitOfWork.User.GetAsync(user => user.Id == request.UserId)
+            await _userBS.GetUserByIdAsync(request.UserId)
             ?? throw new NotExistsException("User not found");
 
-        user.UpdateIsBanned(true);
-        await _unitOfWork.SaveChangesAsync();
+        await _userBS.BlockUserAsync(user);
 
         return new AdminServiceBlockUserResponse() { IsSuccess = true };
     }
@@ -95,11 +102,10 @@ public class AdminService : BaseService, IAdminService
     )
     {
         User user =
-            await _unitOfWork.User.GetAsync(user => user.Id == request.UserId)
+            await _userBS.GetUserByIdAsync(request.UserId)
             ?? throw new NotExistsException("User not found");
 
-        user.UpdateIsBanned(false);
-        await _unitOfWork.SaveChangesAsync();
+        await _userBS.UnblockUserAsync(user);
 
         return new AdminServiceUnblockUserResponse() { IsSuccess = true };
     }

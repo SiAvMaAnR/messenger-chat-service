@@ -1,12 +1,81 @@
+﻿using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using MessengerX.Domain.Common;
+using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.Accounts.RefreshTokens;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
+using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Models;
 
-namespace MessengerX.Domain.Services.AuthService;
+namespace MessengerX.Domain.Services;
 
-public class AuthBS
+public class AuthBS : DomainService
 {
+    public AuthBS(IAppSettings appSettings, IUnitOfWork unitOfWork)
+        : base(appSettings, unitOfWork) { }
+
+    public async Task<RefreshToken?> GetRefreshTokenAsync(string? refreshToken)
+    {
+        return await _unitOfWork.RefreshToken.GetAsync(refresh => refresh.Token == refreshToken);
+    }
+
+    public async Task<RefreshToken> AddRefreshTokenAsync(Account account, string refreshToken)
+    {
+        double refreshTokenLifeTime = double.Parse(_appSettings.Auth.RefreshTokenLifeTime);
+
+        DateTime expiryTime = DateTime.Now.AddMinutes(refreshTokenLifeTime);
+
+        var newRefreshToken = new RefreshToken(refreshToken, expiryTime, account.Id);
+
+        await _unitOfWork.RefreshToken.AddAsync(newRefreshToken);
+        await _unitOfWork.SaveChangesAsync();
+
+        return newRefreshToken;
+    }
+
+    public async Task UpdatePasswordAsync(Account account, string password)
+    {
+        Password newPassword = CreatePasswordHash(password);
+
+        account.UpdatePassword(newPassword.Hash, newPassword.Salt);
+
+        await _unitOfWork.Account.UpdateAsync(account);
+        await _unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task DeleteRefreshTokenAsync(RefreshToken refreshToken)
+    {
+        await _unitOfWork.RefreshToken.DeleteAsync(refreshToken);
+        await _unitOfWork.SaveChangesAsync();
+    }
+
+    public Dictionary<string, string> GetTokenParams()
+    {
+        var tokenParams = new Dictionary<string, string>()
+        {
+            { TokenClaim.SecretKey, _appSettings.Common.SecretKey },
+            { TokenClaim.Audience, _appSettings.Auth.Audience },
+            { TokenClaim.Issuer, _appSettings.Auth.Issuer },
+            { TokenClaim.AccessTokenLifeTime, _appSettings.Auth.AccessTokenLifeTime },
+        };
+
+        return tokenParams;
+    }
+
+    public static List<Claim> GetClaims(Account account)
+    {
+        List<Claim> claims =
+        [
+            new(ClaimTypes.NameIdentifier, account.Id.ToString()),
+            new(ClaimTypes.Name, account.Login),
+            new(ClaimTypes.Email, account.Email),
+            new(ClaimTypes.Role, account.Role)
+        ];
+
+        return claims;
+    }
+
     public static Password CreatePasswordHash(string password)
     {
         try

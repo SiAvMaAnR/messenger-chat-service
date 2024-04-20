@@ -1,4 +1,4 @@
-using MessengerX.Domain.Shared.Settings;
+﻿using MessengerX.Domain.Shared.Settings;
 
 namespace MessengerX.Domain.Common;
 

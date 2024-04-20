@@ -1,5 +1,5 @@
 ﻿using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Services.AuthService;
+using MessengerX.Domain.Services;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Persistence.DBContext;
 
