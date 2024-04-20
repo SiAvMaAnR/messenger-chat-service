@@ -1,4 +1,5 @@
-﻿using MessengerX.Infrastructure.AppSettings;
+﻿using MessengerX.Domain.Common;
+using MessengerX.Infrastructure.AppSettings;
 
 namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
 

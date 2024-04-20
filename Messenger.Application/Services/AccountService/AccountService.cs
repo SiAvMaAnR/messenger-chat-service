@@ -1,9 +1,9 @@
 ﻿using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.Application.Services.Common;
+using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
-using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;
 

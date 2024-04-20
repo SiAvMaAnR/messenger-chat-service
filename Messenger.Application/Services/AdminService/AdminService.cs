@@ -2,13 +2,11 @@
 using MessengerX.Application.Services.AdminService.Adapters;
 using MessengerX.Application.Services.AdminService.Models;
 using MessengerX.Application.Services.Common;
-using MessengerX.Application.Services.Helpers;
+using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
-using MessengerX.Domain.Shared.Models;
-using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;
 

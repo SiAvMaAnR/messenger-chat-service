@@ -2,6 +2,7 @@
 using System.Text.Json;
 using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.Common;
+using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Accounts.RefreshTokens;
 using MessengerX.Domain.Entities.Users;
@@ -11,7 +12,6 @@ using MessengerX.Domain.Interfaces.UnitOfWork;
 using MessengerX.Domain.Services.AuthService;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Models;
-using MessengerX.Infrastructure.AppSettings;
 using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Infrastructure.NotificationTemplates;
 using MessengerX.Notifications.Email;

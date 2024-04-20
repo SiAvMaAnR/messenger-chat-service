@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Shared.Settings;
+using MessengerX.Domain.Shared.Settings;
 
-namespace MessengerX.Infrastructure.AppSettings;
+namespace MessengerX.Domain.Common;
 
 public interface IAppSettings
 {

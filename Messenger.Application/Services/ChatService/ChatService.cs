@@ -1,12 +1,11 @@
 ﻿using MessengerX.Application.Services.ChatService.Adapters;
 using MessengerX.Application.Services.ChatService.Models;
 using MessengerX.Application.Services.Common;
-using MessengerX.Application.Services.Helpers;
+using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Interfaces.UnitOfWork;
-using MessengerX.Infrastructure.AppSettings;
 using Microsoft.AspNetCore.Http;
 
 namespace MessengerX.Application.Services.ChatService;
