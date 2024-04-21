@@ -17,4 +17,7 @@ public interface IChannelService : IBaseService
     Task<ChannelServiceConnectToChannelResponse> ConnectToChannelAsync(
         ChannelServiceConnectToChannelRequest request
     );
+    Task<ChannelServicePublicChannelsResponse> PublicChannelsAsync(
+        ChannelServicePublicChannelsRequest request
+    );
 }

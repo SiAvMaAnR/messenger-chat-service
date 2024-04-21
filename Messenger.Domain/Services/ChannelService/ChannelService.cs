@@ -94,4 +94,23 @@ public class ChannelBS : DomainService
         channel.AddAccount(account);
         await _unitOfWork.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<Channel>> PublicChannelsAsync(string? searchField)
+    {
+        IEnumerable<Channel>? channels = await _unitOfWork
+            .Channel
+            .GetAllAsync(
+                channel =>
+                    channel.Type == ChannelType.Public
+                    && (
+                        searchField == null
+                        || channel.Name != null && channel.Name.Contains(searchField)
+                    )
+            );
+
+        if (channels == null)
+            throw new NotExistsException("Channels not exists");
+
+        return channels;
+    }
 }

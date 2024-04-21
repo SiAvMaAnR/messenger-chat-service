@@ -1,6 +1,8 @@
 ﻿using MessengerX.Application.Services.ChannelService.Models;
+using MessengerX.Application.Services.ChatService.Adapters;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
+using MessengerX.Domain.Entities.Channels;
 using MessengerX.Domain.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -58,5 +60,27 @@ public class ChannelService : BaseService, IChannelService
         await _channelBS.ConnectToChannelAsync(_userIdentity.Id, request.ChannelId);
 
         return new ChannelServiceConnectToChannelResponse() { IsSuccess = true };
+    }
+
+    public async Task<ChannelServicePublicChannelsResponse> PublicChannelsAsync(
+        ChannelServicePublicChannelsRequest request
+    )
+    {
+        IEnumerable<Channel> channels = await _channelBS.PublicChannelsAsync(request.SearchField);
+
+        IOrderedEnumerable<Channel> sortedChannels = channels.OrderBy(channel => channel.Id);
+
+        PaginatorResponse<Channel> paginatedData = sortedChannels.Pagination(request.Pagination);
+
+        var adaptedChannels = paginatedData
+            .Collection
+            .Select(channel => new ChannelServiceChannelAdapter(channel))
+            .ToList();
+
+        return new ChannelServicePublicChannelsResponse()
+        {
+            Meta = paginatedData.Meta,
+            Channels = adaptedChannels
+        };
     }
 }

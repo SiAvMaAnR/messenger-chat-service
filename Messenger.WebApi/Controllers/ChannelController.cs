@@ -69,16 +69,18 @@ public class ChannelController : ControllerBase
         return Ok(response);
     }
 
-    // TEMP TEMPLATE
     [HttpGet("public-channels"), Authorize]
-    public async Task<IActionResult> PublicChannels(
-        [FromBody] ChannelControllerCreatePrivateChannelRequest request
+    public async Task<IActionResult> GetPublicChannels(
+        [FromQuery] ChannelControllerPublicChannelsRequest request
     )
     {
-        ChannelServiceCreatePrivateChannelResponse response =
-            await _channelService.CreatePrivateChannelAsync(
-                new ChannelServiceCreatePrivateChannelRequest() { Name = request.Name }
-            );
+        ChannelServicePublicChannelsResponse response = await _channelService.PublicChannelsAsync(
+            new ChannelServicePublicChannelsRequest()
+            {
+                SearchField = request.SearchField,
+                Pagination = request.Pagination
+            }
+        );
 
         return Ok(response);
     }
