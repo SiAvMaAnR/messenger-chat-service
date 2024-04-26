@@ -5,11 +5,6 @@ namespace MessengerX.Domain.Entities.Channels;
 
 public partial class Channel : IAggregateRoot
 {
-    public Channel(string type)
-    {
-        Type = type;
-    }
-
     public void AddAccount(Account account)
     {
         Accounts.Add(account);

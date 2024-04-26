@@ -4,12 +4,6 @@ namespace MessengerX.Domain.Entities.Channels.Messages;
 
 public partial class Message : IAggregateRoot
 {
-    public Message(int authorId, int channelId)
-    {
-        AuthorId = authorId;
-        ChannelId = channelId;
-    }
-
     public void AddChildMessage(Message message)
     {
         ChildMessages.Add(message);
