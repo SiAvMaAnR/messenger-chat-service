@@ -1,6 +1,8 @@
-﻿public abstract class ValueObject
+﻿namespace Messenger.Domain.ValueObjects;
+
+public abstract class BaseValueObject
 {
-    public static bool operator ==(ValueObject? a, ValueObject? b)
+    public static bool operator ==(BaseValueObject? a, BaseValueObject? b)
     {
         if (a is null && b is null)
         {
@@ -15,12 +17,13 @@
         return a.Equals(b);
     }
 
-    public static bool operator !=(ValueObject? a, ValueObject? b) => !(a == b);
+    public static bool operator !=(BaseValueObject? a, BaseValueObject? b) => !(a == b);
 
-    public virtual bool Equals(ValueObject? other) => other is not null && ValuesAreEqual(other);
+    public virtual bool Equals(BaseValueObject? other) =>
+        other is not null && ValuesAreEqual(other);
 
     public override bool Equals(object? obj) =>
-        obj is ValueObject valueObject && ValuesAreEqual(valueObject);
+        obj is BaseValueObject valueObject && ValuesAreEqual(valueObject);
 
     public override int GetHashCode() =>
         GetAtomicValues()
@@ -31,6 +34,6 @@
 
     protected abstract IEnumerable<object> GetAtomicValues();
 
-    private bool ValuesAreEqual(ValueObject valueObject) =>
+    private bool ValuesAreEqual(BaseValueObject valueObject) =>
         GetAtomicValues().SequenceEqual(valueObject.GetAtomicValues());
 }

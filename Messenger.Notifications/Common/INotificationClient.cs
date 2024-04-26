@@ -4,5 +4,5 @@ namespace MessengerX.Notifications.Common;
 
 public interface INotificationClient
 {
-    Task SendAsync(Message message);
+    Task SendAsync(EmailMessage message);
 }

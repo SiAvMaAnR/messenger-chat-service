@@ -19,7 +19,7 @@ public class EmailClient : IEmailClient
         _smtpConfig = smtpConfig;
     }
 
-    public async Task SendAsync(Message message)
+    public async Task SendAsync(EmailMessage message)
     {
         MimeMessage emailMessage = CreateMessage(message);
 
@@ -29,7 +29,7 @@ public class EmailClient : IEmailClient
         await DisconnectAsync();
     }
 
-    private MimeMessage CreateMessage(Message message)
+    private MimeMessage CreateMessage(EmailMessage message)
     {
         var emailMessage = new MimeMessage()
         {

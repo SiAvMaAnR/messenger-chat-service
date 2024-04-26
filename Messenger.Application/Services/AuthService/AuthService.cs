@@ -144,10 +144,10 @@ public class AuthService : BaseService, IAuthService
 
         EmailTemplate template = NotificationTemplate.ResetToken(resetPasswordLink);
 
-        var message = new Message()
+        var message = new EmailMessage()
         {
-            From = new Address(baseUrl, smtpEmail),
-            To = new Address(account.Login, account.Email),
+            From = new EmailAddress(baseUrl, smtpEmail),
+            To = new EmailAddress(account.Login, account.Email),
             Subject = template.Subject,
             Content = template.Content
         };

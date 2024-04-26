@@ -69,10 +69,10 @@ public class UserService : BaseService, IUserService
 
         EmailTemplate template = NotificationTemplate.Registration(confirmationLink);
 
-        var message = new Message()
+        var message = new EmailMessage()
         {
-            From = new Address(baseUrl, smtpEmail),
-            To = new Address(request.Login, request.Email),
+            From = new EmailAddress(baseUrl, smtpEmail),
+            To = new EmailAddress(request.Login, request.Email),
             Subject = template.Subject,
             Content = template.Content
         };
