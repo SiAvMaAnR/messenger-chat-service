@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using MessengerX.Domain.Entities;
-using MessengerX.Domain.Interfaces.Repository;
 using MessengerX.Persistence.DBContext;
 using MessengerX.Persistence.QueryableExtension;
 using Microsoft.EntityFrameworkCore;

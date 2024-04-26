@@ -1,6 +1,6 @@
 ﻿using MessengerX.Domain.Entities.Users;
+using MessengerX.Domain.Services;
 using MessengerX.Domain.Shared.Models;
-using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Persistence.DBContext;
 
 namespace MessengerX.Persistence.Seeds.DefaultUsers;
@@ -26,7 +26,7 @@ internal static partial class DefaultUsersSeed
 
         IEnumerable<User> userList = users.Select(user =>
         {
-            Password password = PasswordOptions.CreatePasswordHash(user.Password);
+            Password password = AuthBS.CreatePasswordHash(user.Password);
 
             return new User(user.Email, user.Login, password.Hash, password.Salt)
             {

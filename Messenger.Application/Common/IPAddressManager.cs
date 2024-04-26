@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace MessengerX.Infrastructure.IPAddressManager;
+namespace MessengerX.Application.Common;
 
 public class IPAddressManager
 {

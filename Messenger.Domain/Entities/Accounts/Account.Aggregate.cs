@@ -6,14 +6,6 @@ namespace MessengerX.Domain.Entities.Accounts;
 
 public partial class Account : IAggregateRoot
 {
-    public Account(string email, string login, byte[] passwordHash, byte[] passwordSalt)
-    {
-        Email = email;
-        Login = login;
-        PasswordHash = passwordHash;
-        PasswordSalt = passwordSalt;
-    }
-
     public void UpdateLogin(string login)
     {
         Login = login;

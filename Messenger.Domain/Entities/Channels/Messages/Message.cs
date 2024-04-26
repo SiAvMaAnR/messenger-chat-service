@@ -6,6 +6,11 @@ namespace MessengerX.Domain.Entities.Channels.Messages;
 [Table("Messages")]
 public partial class Message : BaseEntity
 {
+    public Message(int authorId, int channelId)
+    {
+        AuthorId = authorId;
+        ChannelId = channelId;
+    }
     public string? Text { get; set; }
     public DateTime? ModifiedDate { get; set; }
     public bool IsRead { get; private set; } = false;

@@ -1,20 +1,19 @@
-﻿using System.Security.Claims;
-using System.Text.Json;
+﻿using System.Text.Json;
+using MessengerX.Application.Other.AuthOptions;
 using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.Common;
+using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Accounts.RefreshTokens;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
-using MessengerX.Domain.Interfaces.UnitOfWork;
-using MessengerX.Domain.Shared.Constants.Common;
+using MessengerX.Domain.Services;
 using MessengerX.Domain.Shared.Models;
-using MessengerX.Infrastructure.AppSettings;
-using MessengerX.Infrastructure.AuthOptions;
-using MessengerX.Infrastructure.NotificationTemplates;
+using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
+using MessengerX.Notifications.NotificationTemplates;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 
@@ -24,30 +23,36 @@ public class AuthService : BaseService, IAuthService
 {
     private readonly IDataProtectionProvider _protection;
     private readonly IEmailClient _emailClient;
+    private readonly AuthBS _authBS;
+    private readonly AccountBS _accountBS;
 
     public AuthService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
         IAppSettings appSettings,
         IDataProtectionProvider protection,
-        IEmailClient emailClient
+        IEmailClient emailClient,
+        AuthBS authBS,
+        AccountBS accountBS
     )
         : base(unitOfWork, context, appSettings)
     {
         _protection = protection;
         _emailClient = emailClient;
+        _authBS = authBS;
+        _accountBS = accountBS;
     }
 
     public async Task<AuthServiceLoginResponse> LoginAsync(AuthServiceLoginRequest request)
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(account => account.Email == request.Email)
+            await _accountBS.GetAccountByEmailAsync(request.Email)
             ?? throw new InvalidCredentialsException(
                 "Invalid credentials",
                 ClientMessageSettings.Same
             );
 
-        bool isVerify = PasswordOptions.VerifyPasswordHash(
+        bool isVerify = AuthBS.VerifyPasswordHash(
             request.Password,
             new Password() { Hash = account.PasswordHash, Salt = account.PasswordSalt }
         );
@@ -58,37 +63,19 @@ public class AuthService : BaseService, IAuthService
         if (account is User { IsBanned: true })
             throw new AccessException("Account was banned", ClientMessageSettings.Same);
 
-        string refreshToken = TokenOptions.CreateRefreshToken();
-        string accessToken = TokenOptions.CreateAccessToken(
-            [
-                new(ClaimTypes.NameIdentifier, account.Id.ToString()),
-                new(ClaimTypes.Name, account.Login),
-                new(ClaimTypes.Email, account.Email),
-                new(ClaimTypes.Role, account.Role)
-            ],
-            new Dictionary<string, string>()
-            {
-                { TokenClaim.SecretKey, _appSettings.Common.SecretKey },
-                { TokenClaim.Audience, _appSettings.Auth.Audience },
-                { TokenClaim.Issuer, _appSettings.Auth.Issuer },
-                { TokenClaim.AccessTokenLifeTime, _appSettings.Auth.AccessTokenLifeTime },
-            }
+        string refreshToken = AuthOptions.CreateRefreshToken();
+        string accessToken = AuthOptions.CreateAccessToken(
+            AuthBS.GetClaims(account),
+            _authBS.GetTokenParams()
         );
 
-        double refreshTokenLifeTime = double.Parse(_appSettings.Auth.RefreshTokenLifeTime);
-
-        DateTime expiryTime = DateTime.Now.AddMinutes(refreshTokenLifeTime);
-
-        var newRefreshToken = new RefreshToken(refreshToken, expiryTime, account.Id);
-
-        await _unitOfWork.RefreshToken.AddAsync(newRefreshToken);
-        await _unitOfWork.SaveChangesAsync();
+        RefreshToken newRefreshToken = await _authBS.AddRefreshTokenAsync(account, refreshToken);
 
         return new AuthServiceLoginResponse()
         {
             AccessToken = accessToken,
             RefreshToken = refreshToken,
-            RefreshTokenExp = expiryTime
+            RefreshTokenExp = newRefreshToken.ExpiryTime
         };
     }
 
@@ -97,7 +84,7 @@ public class AuthService : BaseService, IAuthService
     )
     {
         RefreshToken refreshToken =
-            await _unitOfWork.RefreshToken.GetAsync(token => token.Token == request.RefreshToken)
+            await _authBS.GetRefreshTokenAsync(request.RefreshToken)
             ?? throw new InvalidCredentialsException(
                 "Invalid refresh token",
                 ClientMessageSettings.Same
@@ -107,7 +94,7 @@ public class AuthService : BaseService, IAuthService
             throw new ExpiredException("Expired refresh token", ClientMessageSettings.Same);
 
         Account account =
-            await _unitOfWork.Account.GetAsync(account => account.Id == refreshToken.AccountId)
+            await _accountBS.GetAccountByIdAsync(refreshToken.AccountId)
             ?? throw new InvalidCredentialsException(
                 "Account not exists",
                 ClientMessageSettings.Default
@@ -116,20 +103,9 @@ public class AuthService : BaseService, IAuthService
         if (account is User { IsBanned: true })
             throw new AccessException("Account was banned", ClientMessageSettings.Same);
 
-        string accessToken = TokenOptions.CreateAccessToken(
-            [
-                new(ClaimTypes.NameIdentifier, account.Id.ToString()),
-                new(ClaimTypes.Name, account.Login),
-                new(ClaimTypes.Email, account.Email),
-                new(ClaimTypes.Role, account.Role)
-            ],
-            new Dictionary<string, string>()
-            {
-                { TokenClaim.SecretKey, _appSettings.Common.SecretKey },
-                { TokenClaim.Audience, _appSettings.Auth.Audience },
-                { TokenClaim.Issuer, _appSettings.Auth.Issuer },
-                { TokenClaim.AccessTokenLifeTime, _appSettings.Auth.AccessTokenLifeTime },
-            }
+        string accessToken = AuthOptions.CreateAccessToken(
+            AuthBS.GetClaims(account),
+            _authBS.GetTokenParams()
         );
 
         return new AuthServiceRefreshTokenResponse() { AccessToken = accessToken };
@@ -140,7 +116,7 @@ public class AuthService : BaseService, IAuthService
     )
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(account => account.Email == request.Email)
+            await _accountBS.GetAccountByEmailAsync(request.Email)
             ?? throw new NotExistsException("Account not exists");
 
         string baseUrl = _appSettings.Client.BaseUrl;
@@ -168,10 +144,10 @@ public class AuthService : BaseService, IAuthService
 
         EmailTemplate template = NotificationTemplate.ResetToken(resetPasswordLink);
 
-        var message = new Message()
+        var message = new EmailMessage()
         {
-            From = new Address(baseUrl, smtpEmail),
-            To = new Address(account.Login, account.Email),
+            From = new EmailAddress(baseUrl, smtpEmail),
+            To = new EmailAddress(account.Login, account.Email),
             Subject = template.Subject,
             Content = template.Content
         };
@@ -199,15 +175,10 @@ public class AuthService : BaseService, IAuthService
             throw new ExpiredException("Reset token has expired");
 
         Account account =
-            await _unitOfWork.Account.GetAsync(account => account.Id == resetToken.Id)
+            await _accountBS.GetAccountByIdAsync(resetToken.Id)
             ?? throw new NotExistsException("Account not exists");
 
-        Password password = PasswordOptions.CreatePasswordHash(request.Password);
-
-        account.UpdatePassword(password.Hash, password.Salt);
-
-        await _unitOfWork.Account.UpdateAsync(account);
-        await _unitOfWork.SaveChangesAsync();
+        await _authBS.UpdatePasswordAsync(account, request.Password);
 
         return new AuthServiceResetPasswordResponse() { IsSuccess = true };
     }
@@ -217,7 +188,7 @@ public class AuthService : BaseService, IAuthService
     )
     {
         RefreshToken refreshToken =
-            await _unitOfWork.RefreshToken.GetAsync(token => token.Token == request.RefreshToken)
+            await _authBS.GetRefreshTokenAsync(request.RefreshToken)
             ?? throw new InvalidCredentialsException(
                 "Invalid refresh token",
                 ClientMessageSettings.Same
@@ -226,8 +197,7 @@ public class AuthService : BaseService, IAuthService
         if (refreshToken.ExpiryTime < DateTime.Now)
             throw new ExpiredException("Expired refresh token", ClientMessageSettings.Same);
 
-        await _unitOfWork.RefreshToken.DeleteAsync(refreshToken);
-        await _unitOfWork.SaveChangesAsync();
+        await _authBS.DeleteRefreshTokenAsync(refreshToken);
 
         return new AuthServiceRevokeTokenResponse() { IsSuccess = true };
     }

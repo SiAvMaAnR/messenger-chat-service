@@ -1,4 +1,4 @@
-﻿using MessengerX.Infrastructure.AuthOptions;
+﻿using MessengerX.Application.Other.AuthOptions;
 using MessengerX.Persistence.DBContext;
 using MessengerX.WebApi.ApiConfigurations.Other;
 using MessengerX.WebApi.Common;

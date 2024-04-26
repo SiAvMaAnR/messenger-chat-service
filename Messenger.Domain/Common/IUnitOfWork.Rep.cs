@@ -5,7 +5,7 @@ using MessengerX.Domain.Entities.Channels;
 using MessengerX.Domain.Entities.Channels.Messages;
 using MessengerX.Domain.Entities.Users;
 
-namespace MessengerX.Domain.Interfaces.UnitOfWork;
+namespace MessengerX.Domain.Common;
 
 public partial interface IUnitOfWork
 {

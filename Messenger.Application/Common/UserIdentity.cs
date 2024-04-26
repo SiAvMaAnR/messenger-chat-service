@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 
-namespace MessengerX.Infrastructure.UserIdentity;
+namespace MessengerX.Application.Common;
 
 public class UserIdentity
 {

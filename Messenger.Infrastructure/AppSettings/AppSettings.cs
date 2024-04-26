@@ -1,4 +1,5 @@
-﻿using MessengerX.Domain.Shared.Settings;
+﻿using MessengerX.Domain.Common;
+using MessengerX.Domain.Shared.Settings;
 using Microsoft.Extensions.Options;
 
 namespace MessengerX.Infrastructure.AppSettings;

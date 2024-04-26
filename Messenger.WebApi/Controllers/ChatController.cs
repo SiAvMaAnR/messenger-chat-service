@@ -21,7 +21,11 @@ public class ChatController : ControllerBase
     public async Task<IActionResult> GetChannels([FromQuery] ChatControllerChannelsRequest request)
     {
         ChatServiceChannelsResponse response = await _chatService.ChannelsAsync(
-            new ChatServiceChannelsRequest() { Pagination = request.Pagination, }
+            new ChatServiceChannelsRequest()
+            {
+                SearchField = request.SearchField,
+                Pagination = request.Pagination
+            }
         );
 
         return Ok(response);

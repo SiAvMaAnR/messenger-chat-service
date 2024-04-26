@@ -1,7 +1,7 @@
 ﻿using MessengerX.Domain.Entities;
 using MessengerX.Domain.Shared.Models;
 
-namespace MessengerX.Application.Services.Helpers;
+namespace MessengerX.Application.Services.Common;
 
 public class PaginatorResponse<TEntity>(IEnumerable<TEntity> collection, MetaResponse meta)
 {
