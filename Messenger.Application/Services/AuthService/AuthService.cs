@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using MessengerX.Application.Other.AuthOptions;
 using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
@@ -9,10 +10,10 @@ using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Exceptions.Common;
 using MessengerX.Domain.Services;
 using MessengerX.Domain.Shared.Models;
-using MessengerX.Infrastructure.AuthOptions;
-using MessengerX.Infrastructure.NotificationTemplates;
+using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
+using MessengerX.Notifications.NotificationTemplates;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 

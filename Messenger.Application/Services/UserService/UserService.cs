@@ -6,9 +6,10 @@ using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions.BusinessExceptions;
 using MessengerX.Domain.Services;
 using MessengerX.Domain.Shared.Models;
-using MessengerX.Infrastructure.NotificationTemplates;
+using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
+using MessengerX.Notifications.NotificationTemplates;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 

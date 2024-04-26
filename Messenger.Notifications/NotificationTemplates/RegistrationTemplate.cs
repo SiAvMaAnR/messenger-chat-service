@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Shared.Models;
+﻿using MessengerX.Notifications.Common;
 
-namespace MessengerX.Infrastructure.NotificationTemplates;
+namespace MessengerX.Notifications.NotificationTemplates;
 
 public static partial class NotificationTemplate
 {
