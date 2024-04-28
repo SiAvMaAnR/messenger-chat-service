@@ -3,7 +3,7 @@ services:
   backend-aspnet:
     image: samarkinivan/messenger-server:latest
     container_name: messenger-server
-    restart: always
+    restart: on-failure
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       DB_HOST: database-mssql
@@ -11,13 +11,15 @@ services:
       - "8080:8080"
     depends_on:
       - database-mssql
+      - rabbitmq
+      - redis
     volumes:
       - ./.meta/server/uploads:/Messenger.Persistence/Uploads
 
   database-mssql:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:latest
     container_name: messenger-database
-    restart: always
+    restart: on-failure
     user: root
     environment:
       ACCEPT_EULA: Y
@@ -28,6 +30,27 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - ./.meta/db/data:/var/opt/mssql/data
-      - ./.meta/db/log:/var/opt/mssql/log
-      - ./.meta/db/secrets:/var/opt/mssql/secrets
+      - ./.meta/mssql/data:/var/opt/mssql/data
+      - ./.meta/mssql/log:/var/opt/mssql/log
+      - ./.meta/mssql/secrets:/var/opt/mssql/secrets
+
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: messenger-rabbit-mq
+    restart: on-failure
+    ports:
+      - 5672:5672
+
+  redis:
+    image: redis:latest
+    container_name: messenger-redis
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: password
+      REDIS_PORT: 6379
+      REDIS_DATABASES: 16
+    volumes:
+      - ./.meta/redis/data:/root/redis
+      - ./.meta/redis/conf:/usr/local/etc/redis/redis.conf
