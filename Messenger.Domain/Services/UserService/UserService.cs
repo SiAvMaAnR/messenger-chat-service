@@ -1,7 +1,6 @@
 ﻿using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions.BusinessExceptions;
-using MessengerX.Domain.Exceptions.Common;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Shared.Models;
 
 namespace MessengerX.Domain.Services;
@@ -18,18 +17,14 @@ public class UserBS : DomainService
 
     public async Task<IEnumerable<User>> GetUsersAsync()
     {
-        return await _unitOfWork.User.GetAllAsync()
-            ?? throw new NotExistsException("Users not exists");
+        return await _unitOfWork.User.GetAllAsync() ?? throw new NotExistsException("Users");
     }
 
     public async Task CheckExistenceByEmailAsync(string email)
     {
         if (await _unitOfWork.Account.AnyAsync(account => account.Email == email))
         {
-            throw new AlreadyExistsException(
-                "Account already exists",
-                "Account with this email already exists"
-            );
+            throw new AlreadyExistsException("Account with this email already exists");
         }
     }
 
@@ -48,10 +43,10 @@ public class UserBS : DomainService
     public async Task ConfirmRegistrationAsync(Confirmation confirmation)
     {
         if (confirmation.ExpirationDate < DateTime.Now)
-            throw new ExpiredException("Confirmation has expired", ClientMessageSettings.Same);
+            throw new OperationNotAllowedException("Confirmation has expired");
 
         if (await _unitOfWork.Account.AnyAsync(account => account.Email == confirmation.Email))
-            throw new AlreadyExistsException("Account already exists", ClientMessageSettings.Same);
+            throw new AlreadyExistsException("Account already exists");
 
         Password password = AuthBS.CreatePasswordHash(confirmation.Password);
 

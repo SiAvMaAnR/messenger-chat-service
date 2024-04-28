@@ -1,7 +1,7 @@
 ﻿using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Exceptions.BusinessExceptions;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.Domain.Services;

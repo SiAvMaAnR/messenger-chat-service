@@ -4,7 +4,7 @@ using System.Text;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Accounts.RefreshTokens;
-using MessengerX.Domain.Exceptions.BusinessExceptions;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Models;
 
@@ -90,7 +90,7 @@ public class AuthBS : DomainService
         }
         catch (Exception)
         {
-            throw new PasswordException("Failed to create hash password");
+            throw new FailedToCreatePasswordException();
         }
     }
 
@@ -104,7 +104,7 @@ public class AuthBS : DomainService
         }
         catch (Exception)
         {
-            throw new PasswordException("Failed to verify hash password");
+            throw new FailedToVerifyPasswordException();
         }
     }
 }

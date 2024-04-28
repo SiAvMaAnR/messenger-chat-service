@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using MessengerX.Domain.Exceptions.BusinessExceptions;
+using MessengerX.Domain.Exceptions;
 
 namespace MessengerX.Application.Common;
 
@@ -16,7 +16,7 @@ public class UserIdentity
     public void Update(ClaimsPrincipal? claimsPrincipal)
     {
         ClaimsPrincipal =
-            claimsPrincipal ?? throw new NotExistsException("ClaimsPrincipal is null");
+            claimsPrincipal ?? throw new NotExistsException("ClaimsPrincipal is null", true);
 
         if (int.TryParse(ClaimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
         {

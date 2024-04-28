@@ -1,6 +1,5 @@
-﻿using MessengerX.Domain.Exceptions.ApiExceptions;
+﻿using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Exceptions.Common;
-using MessengerX.Domain.Exceptions.StatusCode;
 using MessengerX.WebApi.Common;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +18,9 @@ public class ErrorController : ControllerBase
 
         Exception exception = exceptionHandlerFeature.Error;
 
-        string? clientMessage = (exception as BaseException)?.ClientMessage;
+        var businessException = exception as BusinessException;
+        string? clientMessage = businessException?.ClientMessage;
+        BusinessStatusCode? businessStatusCode = businessException?.BusinessStatusCode;
 
         object errorInfo = envName switch
         {
@@ -27,6 +28,7 @@ public class ErrorController : ControllerBase
                 => new
                 {
                     clientMessage,
+                    businessStatusCode,
                     exception.Message,
                     exception.Source,
                     exception.StackTrace,
@@ -35,20 +37,13 @@ public class ErrorController : ControllerBase
                     exception.HelpLink,
                     exception.HResult,
                 },
-            _ => new { clientMessage }
+            _ => new { clientMessage, businessStatusCode }
         };
 
-        int statusCode = exception switch
-        {
-            BadRequestException => (int)ApiStatusCode.BadRequest,
-            UnauthorizedException => (int)ApiStatusCode.Unauthorized,
-            NotFoundException => (int)ApiStatusCode.NotFound,
-            ForbiddenException => (int)ApiStatusCode.Forbidden,
-            InternalServerException => (int)ApiStatusCode.InternalServer,
-            _ => (int)ApiStatusCode.InternalServer
-        };
+        ApiStatusCode statusCode =
+            (exception as BusinessException)?.ApiStatusCode ?? ApiStatusCode.InternalServer;
 
-        return StatusCode(statusCode, errorInfo);
+        return StatusCode((int)statusCode, errorInfo);
     }
 
     [Route("Production")]

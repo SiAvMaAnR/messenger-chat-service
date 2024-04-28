@@ -1,10 +1,8 @@
-﻿using MessengerX.Domain.Exceptions.StatusCode;
-
-namespace MessengerX.Domain.Exceptions.Common;
+﻿namespace MessengerX.Domain.Exceptions.Common;
 
 public interface IException
 {
-    ApiStatusCode Status { get; }
-    string Type { get; }
+    ApiStatusCode ApiStatusCode { get; }
+    BusinessStatusCode BusinessStatusCode { get; }
     string? ClientMessage { get; }
 }

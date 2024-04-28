@@ -1,4 +1,4 @@
-using Messenger.Domain.ValueObjects;
+﻿using Messenger.Domain.ValueObjects;
 
 public sealed class Address : BaseValueObject
 {
