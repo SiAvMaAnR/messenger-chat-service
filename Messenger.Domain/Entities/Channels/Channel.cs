@@ -16,4 +16,5 @@ public partial class Channel : BaseEntity
     public DateTime LastActivity { get; private set; } = DateTime.Now;
     public ICollection<Account> Accounts { get; private set; } = [];
     public ICollection<Message> Messages { get; private set; } = [];
+    public string? Image { get; set; }
 }

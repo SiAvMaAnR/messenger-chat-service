@@ -1,5 +1,6 @@
 ﻿using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels.Messages;
+using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.Domain.Entities.Channels;
 
@@ -23,5 +24,13 @@ public partial class Channel : IAggregateRoot
     public void UpdateLastActivity(Message message)
     {
         Messages.Add(message);
+    }
+
+    public void UpdateImage(string? image)
+    {
+        if (Type == ChannelType.Private || Type == ChannelType.Public)
+        {
+            Image = image;
+        }
     }
 }

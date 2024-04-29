@@ -84,4 +84,18 @@ public class ChannelController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpGet("channels"), Authorize]
+    public async Task<IActionResult> GetChannels([FromQuery] ChannelControllerChannelsRequest request)
+    {
+        ChannelServiceChannelsResponse response = await _channelService.AccountChannelsAsync(
+            new ChannelServiceChannelsRequest()
+            {
+                SearchField = request.SearchField,
+                Pagination = request.Pagination
+            }
+        );
+
+        return Ok(response);
+    }
 }

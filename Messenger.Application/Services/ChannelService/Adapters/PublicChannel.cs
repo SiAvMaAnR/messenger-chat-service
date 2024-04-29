@@ -6,11 +6,11 @@ using MessengerX.Persistence.Extensions;
 
 namespace MessengerX.Application.Services.ChatService.Adapters;
 
-public class ChannelServiceChannelAdapter : ChannelServiceChannelResponsePayload
+public class ChannelServicePublicChannelAdapter : ChannelServicePublicChannelResponsePayload
 {
     private readonly string? _imagePath;
 
-    public ChannelServiceChannelAdapter(Channel channel, int? authorId)
+    public ChannelServicePublicChannelAdapter(Channel channel, int? authorId)
     {
         if (Type == ChannelType.Direct)
         {

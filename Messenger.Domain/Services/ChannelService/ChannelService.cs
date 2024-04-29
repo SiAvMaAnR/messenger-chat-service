@@ -34,7 +34,7 @@ public class ChannelBS : DomainService
             );
 
         if (isExistsSameDirectChannel)
-            throw new AlreadyExistsException("This channel name already exists");
+            throw new AlreadyExistsException("This channel already exists");
 
         var channel = new Channel(ChannelType.Direct);
 
