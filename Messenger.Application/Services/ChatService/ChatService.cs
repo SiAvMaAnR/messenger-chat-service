@@ -28,7 +28,7 @@ public class ChatService : BaseService, IChatService
 
         ICollection<Channel> channels = account.Channels;
 
-        IOrderedEnumerable<Channel> sortedChannels = channels.OrderBy(channel => channel.Id);
+        IOrderedEnumerable<Channel> sortedChannels = channels.OrderByDescending(channel => channel.LastActivity);
 
         PaginatorResponse<Channel> paginatedData = sortedChannels.Pagination(request.Pagination);
 
