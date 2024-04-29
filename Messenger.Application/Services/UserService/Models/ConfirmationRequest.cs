@@ -2,5 +2,5 @@
 
 public class UserServiceConfirmationRequest
 {
-    public string Confirmation { get; set; } = null!;
+    public required string Confirmation { get; set; }
 }

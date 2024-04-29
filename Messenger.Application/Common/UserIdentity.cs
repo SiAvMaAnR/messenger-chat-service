@@ -6,7 +6,7 @@ namespace MessengerX.Application.Common;
 public class UserIdentity
 {
     public int? Id { get; private set; } = null;
-    public ClaimsPrincipal ClaimsPrincipal { get; private set; } = null!;
+    public ClaimsPrincipal? ClaimsPrincipal { get; private set; }
 
     public UserIdentity(ClaimsPrincipal? claimsPrincipal)
     {

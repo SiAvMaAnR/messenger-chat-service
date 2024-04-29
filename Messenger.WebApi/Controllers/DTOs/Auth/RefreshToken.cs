@@ -6,5 +6,5 @@ namespace MessengerX.WebApi.Controllers.Models.Auth;
 public class AuthControllerRefreshTokenRequest
 {
     [MaxLength(MaxLength.RefreshToken)]
-    public string RefreshToken { get; set; } = null!;
+    public required string RefreshToken { get; set; }
 }

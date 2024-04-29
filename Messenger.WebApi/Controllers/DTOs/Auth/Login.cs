@@ -6,8 +6,8 @@ namespace MessengerX.WebApi.Controllers.Models.Auth;
 public class AuthControllerLoginRequest
 {
     [EmailAddress, MaxLength(MaxLength.Email)]
-    public string Email { get; set; } = null!;
+    public required string Email { get; set; }
 
     [MaxLength(MaxLength.Password)]
-    public string Password { get; set; } = null!;
+    public required string Password { get; set; }
 }

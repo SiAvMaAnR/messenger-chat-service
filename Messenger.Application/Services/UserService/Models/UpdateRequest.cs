@@ -2,6 +2,6 @@
 
 public class UserServiceUpdateRequest
 {
-    public string Login { get; set; } = null!;
+    public required string Login { get; set; }
     public DateOnly? Birthday { get; set; }
 }

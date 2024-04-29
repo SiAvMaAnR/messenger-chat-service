@@ -2,6 +2,6 @@
 
 public class EmailTemplate
 {
-    public string Subject { get; set; } = null!;
-    public string Content { get; set; } = null!;
+    public required string Subject { get; set; }
+    public required string Content { get; set; }
 }

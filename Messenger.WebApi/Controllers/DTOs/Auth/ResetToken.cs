@@ -6,5 +6,5 @@ namespace MessengerX.WebApi.Controllers.Models.Auth;
 public class AuthControllerResetTokenRequest
 {
     [EmailAddress, MaxLength(MaxLength.Email)]
-    public string Email { get; set; } = null!;
+    public required string Email { get; set; }
 }

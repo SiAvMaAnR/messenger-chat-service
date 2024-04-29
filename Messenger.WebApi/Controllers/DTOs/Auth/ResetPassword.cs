@@ -6,8 +6,8 @@ namespace MessengerX.WebApi.Controllers.Models.Auth;
 public class AuthControllerResetPasswordRequest
 {
     [MaxLength(MaxLength.ResetToken)]
-    public string ResetToken { get; set; } = null!;
+    public required string ResetToken { get; set; }
 
     [MaxLength(MaxLength.Password)]
-    public string Password { get; set; } = null!;
+    public required string Password { get; set; }
 }

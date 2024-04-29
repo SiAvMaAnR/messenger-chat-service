@@ -3,5 +3,5 @@
 public class ClientSettings
 {
     public const string Path = "Client";
-    public string BaseUrl { get; set; } = null!;
+    public required string BaseUrl { get; set; }
 }

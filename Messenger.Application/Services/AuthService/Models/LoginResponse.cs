@@ -2,7 +2,7 @@
 
 public class AuthServiceLoginResponse
 {
-    public string AccessToken { get; set; } = null!;
-    public string RefreshToken { get; set; } = null!;
+    public required string AccessToken { get; set; }
+    public required string RefreshToken { get; set; }
     public DateTime RefreshTokenExp { get; set; }
 }

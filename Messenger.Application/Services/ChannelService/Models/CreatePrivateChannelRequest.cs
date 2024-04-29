@@ -2,5 +2,5 @@
 
 public class ChannelServiceCreatePrivateChannelRequest
 {
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 }

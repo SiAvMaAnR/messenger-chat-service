@@ -6,12 +6,12 @@ namespace MessengerX.WebApi.Controllers.Models.User;
 public class UserControllerRegistrationRequest
 {
     [MaxLength(MaxLength.Login)]
-    public string Login { get; set; } = null!;
+    public required string Login { get; set; }
 
     [EmailAddress, MaxLength(MaxLength.Email)]
-    public string Email { get; set; } = null!;
+    public required string Email { get; set; }
 
     [MaxLength(MaxLength.Password)]
-    public string Password { get; set; } = null!;
+    public required string Password { get; set; }
     public DateOnly? Birthday { get; set; }
 }
