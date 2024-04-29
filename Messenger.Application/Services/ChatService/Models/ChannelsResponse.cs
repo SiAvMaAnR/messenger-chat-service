@@ -4,6 +4,7 @@ namespace MessengerX.Application.Services.ChatService.Models;
 
 public class ChatServiceChannelResponsePayload
 {
+    public int Id { get; set; }
     public string? Name { get; set; }
     public string? Type { get; set; }
     public DateTime LastActivity { get; set; }
