@@ -2,27 +2,26 @@
 
 #nullable disable
 
-namespace Messenger.Persistence.Migrations
+namespace Messenger.Persistence.Migrations;
+
+/// <inheritdoc />
+public partial class AddImageToChannel : Migration
 {
     /// <inheritdoc />
-    public partial class AddImageToChannel : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<string>(
-                name: "Image",
-                table: "Channels",
-                type: "nvarchar(max)",
-                nullable: true);
-        }
+        migrationBuilder.AddColumn<string>(
+            name: "Image",
+            table: "Channels",
+            type: "nvarchar(max)",
+            nullable: true);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "Image",
-                table: "Channels");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            name: "Image",
+            table: "Channels");
     }
 }

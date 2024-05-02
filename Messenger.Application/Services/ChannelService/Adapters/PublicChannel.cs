@@ -6,12 +6,16 @@ using MessengerX.Persistence.Extensions;
 
 namespace MessengerX.Application.Services.ChatService.Adapters;
 
-public class ChannelServicePublicChannelAdapter : ChannelServicePublicChannelResponsePayload
+public class ChannelServicePublicChannelAdapter : ChannelServicePublicChannelResponseData
 {
     private readonly string? _imagePath;
 
     public ChannelServicePublicChannelAdapter(Channel channel, int? authorId)
     {
+        Id = channel.Id;
+        Type = channel.Type;
+        LastActivity = channel.LastActivity;
+
         if (Type == ChannelType.Direct)
         {
             Account? chatPartner = channel
@@ -29,10 +33,6 @@ public class ChannelServicePublicChannelAdapter : ChannelServicePublicChannelRes
             _imagePath = channel.Image;
             Name = channel.Name;
         }
-
-        Id = channel.Id;
-        Type = channel.Type;
-        LastActivity = channel.LastActivity;
     }
 
     public async Task LoadImageAsync()

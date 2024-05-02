@@ -2,7 +2,7 @@
 
 namespace MessengerX.Application.Services.AdminService.Models;
 
-public class AdminServiceUserResponsePayload
+public class AdminServiceUserResponseData
 {
     public int Id { get; set; }
     public string? Login { get; set; }
@@ -19,5 +19,5 @@ public class AdminServiceUserResponsePayload
 public class AdminServiceUsersResponse
 {
     public MetaResponse? Meta { get; set; }
-    public IEnumerable<AdminServiceUserResponsePayload>? Users { get; set; }
+    public IEnumerable<AdminServiceUserResponseData>? Users { get; set; }
 }

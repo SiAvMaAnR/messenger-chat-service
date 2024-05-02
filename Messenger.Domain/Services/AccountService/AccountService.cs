@@ -17,4 +17,12 @@ public class AccountBS : DomainService
     {
         return await _unitOfWork.Account.GetAsync(account => account.Email == email);
     }
+
+    public async Task UpdateImageAsync(Account account, string? image)
+    {
+        account.UpdateImage(image);
+
+        _unitOfWork.Account.Update(account);
+        await _unitOfWork.SaveChangesAsync();
+    }
 }

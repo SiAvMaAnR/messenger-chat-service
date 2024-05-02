@@ -40,13 +40,13 @@ public class AuthBS : DomainService
 
         account.UpdatePassword(newPassword.Hash, newPassword.Salt);
 
-        await _unitOfWork.Account.UpdateAsync(account);
+        _unitOfWork.Account.Update(account);
         await _unitOfWork.SaveChangesAsync();
     }
 
     public async Task DeleteRefreshTokenAsync(RefreshToken refreshToken)
     {
-        await _unitOfWork.RefreshToken.DeleteAsync(refreshToken);
+        _unitOfWork.RefreshToken.Delete(refreshToken);
         await _unitOfWork.SaveChangesAsync();
     }
 

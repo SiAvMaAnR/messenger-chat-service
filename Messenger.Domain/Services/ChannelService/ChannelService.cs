@@ -97,9 +97,9 @@ public class ChannelBS : DomainService
 
     public async Task<IEnumerable<Channel>> PublicChannelsAsync(string? searchField)
     {
-        IEnumerable<Channel>? channels = await _unitOfWork
+        IEnumerable<Channel>? channels = _unitOfWork
             .Channel
-            .GetAllAsync(
+            .GetAll(
                 channel =>
                     channel.Type == ChannelType.Public
                     && (
@@ -111,6 +111,30 @@ public class ChannelBS : DomainService
         if (channels == null)
             throw new NotExistsException("Channels not exists");
 
-        return channels;
+        return await Task.FromResult(channels);
+    }
+
+    public async Task<IEnumerable<Channel>> AccountChannelsAsync(
+        int? accountId,
+        string? searchField
+    )
+    {
+        IEnumerable<Channel>? channels = _unitOfWork
+            .Channel
+            .GetAll(
+                channel =>
+                    channel.Accounts.Any(account => account.Id == accountId)
+                    && (
+                        searchField == null
+                        || channel.Name != null && channel.Name.Contains(searchField)
+                    ),
+                channel => channel.Accounts,
+                channel => channel.Messages
+            );
+
+        if (channels == null)
+            throw new NotExistsException("Channels not exists");
+
+        return await Task.FromResult(channels);
     }
 }

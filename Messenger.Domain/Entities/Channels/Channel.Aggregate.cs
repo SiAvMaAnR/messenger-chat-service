@@ -21,6 +21,11 @@ public partial class Channel : IAggregateRoot
         Messages.Add(message);
     }
 
+    public Message? GetLastMessage()
+    {
+        return Messages.LastOrDefault();
+    }
+
     public void UpdateLastActivity(Message message)
     {
         Messages.Add(message);

@@ -2,7 +2,7 @@
 
 namespace MessengerX.Application.Services.ChannelService.Models;
 
-public class ChannelServicePublicChannelResponsePayload
+public class ChannelServicePublicChannelResponseData
 {
     public int Id { get; set; }
     public string? Name { get; set; }
@@ -14,5 +14,5 @@ public class ChannelServicePublicChannelResponsePayload
 public class ChannelServicePublicChannelsResponse
 {
     public MetaResponse? Meta { get; set; }
-    public IEnumerable<ChannelServicePublicChannelResponsePayload>? Channels { get; set; }
+    public IEnumerable<ChannelServicePublicChannelResponseData>? Channels { get; set; }
 }

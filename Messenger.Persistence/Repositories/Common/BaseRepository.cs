@@ -21,14 +21,14 @@ public class BaseRepository<TEntity> : IAsyncRepository<TEntity>
         await _dbSet.AddAsync(entity);
     }
 
-    public virtual async Task UpdateAsync(TEntity entity)
+    public virtual void Update(TEntity entity)
     {
-        await Task.FromResult(_dbSet.Update(entity));
+        _dbSet.Update(entity);
     }
 
-    public virtual async Task DeleteAsync(TEntity entity)
+    public virtual void Delete(TEntity entity)
     {
-        await Task.FromResult(_dbSet.Remove(entity));
+        _dbSet.Remove(entity);
     }
 
     public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
@@ -44,31 +44,29 @@ public class BaseRepository<TEntity> : IAsyncRepository<TEntity>
         return await _dbSet.MultipleInclude(includeProperties).FirstOrDefaultAsync(predicate);
     }
 
-    public virtual async Task<IEnumerable<TEntity>?> GetAllAsync(
-        Expression<Func<TEntity, bool>> predicate
-    )
+    public virtual IEnumerable<TEntity>? GetAll(Expression<Func<TEntity, bool>> predicate)
     {
-        return await Task.FromResult(_dbSet.Where(predicate));
+        return _dbSet.Where(predicate).AsNoTracking();
     }
 
-    public virtual async Task<IEnumerable<TEntity>?> GetAllAsync()
+    public virtual IEnumerable<TEntity>? GetAll()
     {
-        return await Task.FromResult(_dbSet);
+        return _dbSet.AsNoTracking();
     }
 
-    public virtual async Task<IEnumerable<TEntity>?> GetAllAsync(
+    public virtual IEnumerable<TEntity>? GetAll(
         params Expression<Func<TEntity, object>>[] includeProperties
     )
     {
-        return await Task.FromResult(_dbSet.MultipleInclude(includeProperties));
+        return _dbSet.MultipleInclude(includeProperties).AsNoTracking();
     }
 
-    public virtual async Task<IEnumerable<TEntity>?> GetAllAsync(
+    public virtual IEnumerable<TEntity>? GetAll(
         Expression<Func<TEntity, bool>> predicate,
         params Expression<Func<TEntity, object>>[] includeProperties
     )
     {
-        return await Task.FromResult(_dbSet.MultipleInclude(includeProperties).Where(predicate));
+        return _dbSet.MultipleInclude(includeProperties).Where(predicate).AsNoTracking();
     }
 
     public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
@@ -81,8 +79,8 @@ public class BaseRepository<TEntity> : IAsyncRepository<TEntity>
         return await _dbSet.AllAsync(predicate);
     }
 
-    public virtual async Task<IQueryable<TEntity>> CustomAsync()
+    public virtual IQueryable<TEntity> QueryBuilder()
     {
-        return await Task.FromResult(_dbSet);
+        return _dbSet;
     }
 }

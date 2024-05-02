@@ -15,9 +15,9 @@ public class UserBS : DomainService
         return await _unitOfWork.User.GetAsync(user => user.Id == id);
     }
 
-    public async Task<IEnumerable<User>> GetUsersAsync()
+    public IEnumerable<User> GetUsers()
     {
-        return await _unitOfWork.User.GetAllAsync() ?? throw new NotExistsException("Users");
+        return _unitOfWork.User.GetAll() ?? throw new NotExistsException("Users");
     }
 
     public async Task CheckExistenceByEmailAsync(string email)
@@ -64,7 +64,7 @@ public class UserBS : DomainService
         user.UpdateLogin(login);
         user.UpdateBirthday(birthday);
 
-        await _unitOfWork.User.UpdateAsync(user);
+        _unitOfWork.User.Update(user);
         await _unitOfWork.SaveChangesAsync();
     }
 }

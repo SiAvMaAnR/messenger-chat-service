@@ -2,7 +2,6 @@
 using MessengerX.Application.Services.ChatService.Adapters;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels;
 using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
@@ -85,15 +84,17 @@ public class ChannelService : BaseService, IChannelService
         };
     }
 
-    public async Task<ChannelServiceChannelsResponse> AccountChannelsAsync(ChannelServiceChannelsRequest request)
+    public async Task<ChannelServiceChannelsResponse> AccountChannelsAsync(
+        ChannelServiceChannelsRequest request
+    )
     {
-        Account account =
-            await _unitOfWork
-                .Account
-                .GetAsync(account => account.Id == _userIdentity.Id, account => account.Channels)
-            ?? throw new NotExistsException("Account not found");
+        IEnumerable<Channel> channels = await _channelBS.AccountChannelsAsync(
+            _userIdentity.Id,
+            request.SearchField
+        );
 
-        ICollection<Channel> channels = account.Channels;
+        if (channels == null)
+            throw new NotExistsException("Channels not found");
 
         IOrderedEnumerable<Channel> sortedChannels = channels.OrderByDescending(
             channel => channel.LastActivity

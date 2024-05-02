@@ -12,9 +12,8 @@ public static partial class QueryableExtension
     )
         where TEntity : BaseEntity
     {
-        return includeProperties.Aggregate(
-            dbSet,
-            (current, includeProperty) => current.Include(includeProperty)
-        );
+        return includeProperties
+            .Aggregate(dbSet, (current, includeProperty) => current.Include(includeProperty))
+            .AsSplitQuery();
     }
 }

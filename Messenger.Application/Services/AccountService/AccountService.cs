@@ -3,6 +3,7 @@ using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Exceptions;
+using MessengerX.Domain.Services;
 using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;
 
@@ -10,12 +11,18 @@ namespace MessengerX.Application.Services.AccountService;
 
 public class AccountService : BaseService, IAccountService
 {
+    private readonly AccountBS _accountBS;
+
     public AccountService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
-        IAppSettings appSettings
+        IAppSettings appSettings,
+        AccountBS accountBS
     )
-        : base(unitOfWork, context, appSettings) { }
+        : base(unitOfWork, context, appSettings)
+    {
+        _accountBS = accountBS;
+    }
 
     public async Task<AccountServiceUploadImageResponse> UploadImageAsync(
         AccountServiceUploadImageRequest request
@@ -31,10 +38,9 @@ public class AccountService : BaseService, IAccountService
         {
             request.File.CopyTo(stream);
             string? image = await stream.ToArray().WriteToFileAsync(imagePath, account.Email);
-            account.UpdateImage(image);
+
+            await _accountBS.UpdateImageAsync(account, image);
         }
-        await _unitOfWork.Account.UpdateAsync(account);
-        await _unitOfWork.SaveChangesAsync();
 
         return new AccountServiceUploadImageResponse() { IsSuccess = true };
     }
@@ -60,7 +66,7 @@ public class AccountService : BaseService, IAccountService
 
         account.UpdateActivityStatus(request.ActivityStatus);
 
-        await _unitOfWork.Account.UpdateAsync(account);
+        _unitOfWork.Account.Update(account);
         await _unitOfWork.SaveChangesAsync();
 
         return new AccountServiceUpdateStatusResponse() { IsSuccess = true };
