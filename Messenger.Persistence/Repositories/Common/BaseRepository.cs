@@ -78,9 +78,4 @@ public class BaseRepository<TEntity> : IAsyncRepository<TEntity>
     {
         return await _dbSet.AllAsync(predicate);
     }
-
-    public virtual IQueryable<TEntity> QueryBuilder()
-    {
-        return _dbSet;
-    }
 }

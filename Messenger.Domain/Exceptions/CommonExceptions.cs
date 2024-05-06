@@ -77,7 +77,6 @@ public class SomethingWentWrongException : BusinessException
     { }
 }
 
-
 public class IncorrectConfigException : BusinessException
 {
     public IncorrectConfigException(string reason = "none", bool isDefaultClientMessage = false)

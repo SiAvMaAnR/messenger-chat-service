@@ -22,7 +22,7 @@ public class ChannelServiceChannelAdapter : ChannelServiceChannelResponseData
         LastMessage = new ChannelServiceLastMessageResponseData()
         {
             Author = lastMessage?.Author?.Login,
-            Text = lastMessage?.Text
+            Content = lastMessage?.Text
         };
 
         if (Type == ChannelType.Direct)

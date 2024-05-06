@@ -16,7 +16,7 @@ public partial class Message : IAggregateRoot
 
     public void DeleteMessage()
     {
-        IsDelete = true;
+        IsDeleted = true;
     }
 
     public void ReadMessage()

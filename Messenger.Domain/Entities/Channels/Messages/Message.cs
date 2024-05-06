@@ -4,17 +4,18 @@ using MessengerX.Domain.Entities.Accounts;
 namespace MessengerX.Domain.Entities.Channels.Messages;
 
 [Table("Messages")]
-public partial class Message : BaseEntity
+public partial class Message : BaseEntity, ISoftDeleted
 {
     public Message(int authorId, int channelId)
     {
         AuthorId = authorId;
         ChannelId = channelId;
     }
+
     public string? Text { get; set; }
     public DateTime? ModifiedDate { get; set; }
     public bool IsRead { get; private set; } = false;
-    public bool IsDelete { get; private set; } = false;
+    public bool IsDeleted { get; private set; } = false;
 
     [InverseProperty("ReadMessages")]
     public ICollection<Account> ReadAccounts { get; } = [];

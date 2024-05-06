@@ -22,5 +22,4 @@ public interface IAsyncRepository<TEntity>
     );
     Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
     Task<bool> AllAsync(Expression<Func<TEntity, bool>> predicate);
-    IQueryable<TEntity> QueryBuilder();
 }

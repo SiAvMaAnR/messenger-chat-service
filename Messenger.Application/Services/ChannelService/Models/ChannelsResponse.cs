@@ -4,7 +4,7 @@ namespace MessengerX.Application.Services.ChannelService.Models;
 
 public class ChannelServiceLastMessageResponseData
 {
-    public string? Text { get; set; }
+    public string? Content { get; set; }
     public string? Author { get; set; }
 }
 
