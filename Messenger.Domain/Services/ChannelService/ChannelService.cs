@@ -15,11 +15,11 @@ public class ChannelBS : DomainService
     {
         Account? firstAccount = await _unitOfWork
             .Account
-            .GetAsync(account => account.Id == firstAccountId);
+            .GetAsync(new AccountByIdSpec(firstAccountId));
 
         Account? secondAccount = await _unitOfWork
             .Account
-            .GetAsync(account => account.Id == secondAccountId);
+            .GetAsync(new AccountByIdSpec(secondAccountId));
 
         if (firstAccount == null || secondAccount == null)
             throw new NotExistsException("Account not found");
@@ -47,7 +47,7 @@ public class ChannelBS : DomainService
     public async Task CreatePrivateChannelAsync(int? accountId, string channelName)
     {
         Account myAccount =
-            await _unitOfWork.Account.GetAsync(account => account.Id == accountId)
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
             ?? throw new NotExistsException("Account not found");
 
         if (await _unitOfWork.Channel.AnyAsync(channel => channel.Name == channelName))
@@ -64,7 +64,7 @@ public class ChannelBS : DomainService
     public async Task CreatePublicChannelAsync(int? accountId, string channelName)
     {
         Account myAccount =
-            await _unitOfWork.Account.GetAsync(account => account.Id == accountId)
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
             ?? throw new NotExistsException("Account not found");
 
         if (await _unitOfWork.Channel.AnyAsync(channel => channel.Name == channelName))
@@ -81,11 +81,11 @@ public class ChannelBS : DomainService
     public async Task ConnectToChannelAsync(int? accountId, int channelId)
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(account => account.Id == accountId)
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
             ?? throw new NotExistsException("Account not found");
 
         Channel channel =
-            await _unitOfWork.Channel.GetAsync(channel => channel.Id == channelId)
+            await _unitOfWork.Channel.GetAsync(new ChannelByIdSpec(channelId))
             ?? throw new NotExistsException("Channel not found");
 
         if (channel.Type != ChannelType.Public || channel.Accounts.Contains(account))
@@ -97,21 +97,14 @@ public class ChannelBS : DomainService
 
     public async Task<IEnumerable<Channel>> PublicChannelsAsync(string? searchField)
     {
-        IEnumerable<Channel>? channels = _unitOfWork
+        IEnumerable<Channel>? channels = await _unitOfWork
             .Channel
-            .GetAll(
-                channel =>
-                    channel.Type == ChannelType.Public
-                    && (
-                        searchField == null
-                        || channel.Name != null && channel.Name.Contains(searchField)
-                    )
-            );
+            .GetAllAsync(new PublicChannelsSpec(searchField));
 
         if (channels == null)
             throw new NotExistsException("Channels not exists");
 
-        return await Task.FromResult(channels);
+        return channels;
     }
 
     public async Task<IEnumerable<Channel>> AccountChannelsAsync(
@@ -119,22 +112,13 @@ public class ChannelBS : DomainService
         string? searchField
     )
     {
-        IEnumerable<Channel>? channels = _unitOfWork
+        IEnumerable<Channel>? channels = await _unitOfWork
             .Channel
-            .GetAll(
-                channel =>
-                    channel.Accounts.Any(account => account.Id == accountId)
-                    && (
-                        searchField == null
-                        || channel.Name != null && channel.Name.Contains(searchField)
-                    ),
-                channel => channel.Accounts,
-                channel => channel.Messages
-            );
+            .GetAllAsync(new AccountChannelsSpec(accountId, searchField));
 
         if (channels == null)
             throw new NotExistsException("Channels not exists");
 
-        return await Task.FromResult(channels);
+        return channels;
     }
 }

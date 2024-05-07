@@ -1,7 +1,7 @@
 ﻿using MessengerX.Application.Services.ChannelService.Models;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Entities.Channels.Messages;
+using MessengerX.Domain.Entities.Messages;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Persistence.Extensions;
 

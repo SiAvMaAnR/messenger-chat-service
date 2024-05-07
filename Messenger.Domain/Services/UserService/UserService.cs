@@ -12,12 +12,12 @@ public class UserBS : DomainService
 
     public async Task<User?> GetUserByIdAsync(int? id)
     {
-        return await _unitOfWork.User.GetAsync(user => user.Id == id);
+        return await _unitOfWork.User.GetAsync(new UserByIdSpec(id));
     }
 
-    public IEnumerable<User> GetUsers()
+    public async Task<IEnumerable<User>> GetUsersAsync()
     {
-        return _unitOfWork.User.GetAll() ?? throw new NotExistsException("Users");
+        return await _unitOfWork.User.GetAllAsync() ?? throw new NotExistsException("Users");
     }
 
     public async Task CheckExistenceByEmailAsync(string email)

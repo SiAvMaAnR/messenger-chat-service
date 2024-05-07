@@ -4,7 +4,7 @@ using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Accounts.RefreshTokens;
+using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;

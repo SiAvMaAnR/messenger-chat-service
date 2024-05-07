@@ -1,6 +1,6 @@
 namespace MessengerX.Domain.Entities;
 
-public interface ISoftDeleted
+public interface ISoftDelete
 {
     bool IsDeleted { get; }
 }

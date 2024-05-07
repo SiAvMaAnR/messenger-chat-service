@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Entities.Accounts.RefreshTokens;
-using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Entities.Channels.Messages;
+﻿using MessengerX.Domain.Entities.Channels;
+using MessengerX.Domain.Entities.Messages;
+using MessengerX.Domain.Entities.RefreshTokens;
 
 namespace MessengerX.Domain.Entities.Accounts;
 

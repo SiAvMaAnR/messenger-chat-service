@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.Channels;
 
-namespace MessengerX.Domain.Entities.Channels.Messages;
+namespace MessengerX.Domain.Entities.Messages;
 
 [Table("Messages")]
-public partial class Message : BaseEntity, ISoftDeleted
+public partial class Message : BaseEntity, ISoftDelete
 {
     public Message(int authorId, int channelId)
     {

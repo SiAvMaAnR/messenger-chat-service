@@ -32,7 +32,7 @@ public class AdminService : BaseService, IAdminService
 
     public async Task<AdminServiceUsersResponse> UsersAsync(AdminServiceUsersRequest request)
     {
-        IEnumerable<User> users = _userBS.GetUsers();
+        IEnumerable<User> users = await _userBS.GetUsersAsync();
 
         PaginatorResponse<User> paginatedData = users
             .OrderBy(user => user.Id)

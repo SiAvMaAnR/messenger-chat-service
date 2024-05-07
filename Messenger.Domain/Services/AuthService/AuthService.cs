@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Accounts.RefreshTokens;
+using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Models;
@@ -17,7 +17,7 @@ public class AuthBS : DomainService
 
     public async Task<RefreshToken?> GetRefreshTokenAsync(string? refreshToken)
     {
-        return await _unitOfWork.RefreshToken.GetAsync(refresh => refresh.Token == refreshToken);
+        return await _unitOfWork.RefreshToken.GetAsync(new RefreshTokenByTokenSpec(refreshToken));
     }
 
     public async Task<RefreshToken> AddRefreshTokenAsync(Account account, string refreshToken)

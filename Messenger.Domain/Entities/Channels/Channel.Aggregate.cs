@@ -1,5 +1,5 @@
 ﻿using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Channels.Messages;
+using MessengerX.Domain.Entities.Messages;
 using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.Domain.Entities.Channels;
