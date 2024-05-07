@@ -11,7 +11,7 @@ public class ChannelBS : DomainService
     public ChannelBS(IAppSettings appSettings, IUnitOfWork unitOfWork)
         : base(appSettings, unitOfWork) { }
 
-    public async Task CreateDirectChannelAsync(int? firstAccountId, int? secondAccountId)
+    public async Task CreateDirectChannelAsync(int firstAccountId, int secondAccountId)
     {
         Account? firstAccount = await _unitOfWork
             .Account
@@ -44,7 +44,7 @@ public class ChannelBS : DomainService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task CreatePrivateChannelAsync(int? accountId, string channelName)
+    public async Task CreatePrivateChannelAsync(int accountId, string channelName)
     {
         Account myAccount =
             await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
@@ -61,7 +61,7 @@ public class ChannelBS : DomainService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task CreatePublicChannelAsync(int? accountId, string channelName)
+    public async Task CreatePublicChannelAsync(int accountId, string channelName)
     {
         Account myAccount =
             await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
@@ -78,7 +78,7 @@ public class ChannelBS : DomainService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task ConnectToChannelAsync(int? accountId, int channelId)
+    public async Task ConnectToChannelAsync(int accountId, int channelId)
     {
         Account account =
             await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))

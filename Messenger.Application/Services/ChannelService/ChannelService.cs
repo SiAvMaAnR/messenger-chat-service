@@ -28,7 +28,7 @@ public class ChannelService : BaseService, IChannelService
         ChannelServiceCreateDirectChannelRequest request
     )
     {
-        await _channelBS.CreateDirectChannelAsync(_userIdentity.Id, request.AccountId);
+        await _channelBS.CreateDirectChannelAsync(UserId, request.AccountId);
 
         return new ChannelServiceCreateDirectChannelResponse() { IsSuccess = true };
     }
@@ -37,7 +37,7 @@ public class ChannelService : BaseService, IChannelService
         ChannelServiceCreatePrivateChannelRequest request
     )
     {
-        await _channelBS.CreatePrivateChannelAsync(_userIdentity.Id, request.Name);
+        await _channelBS.CreatePrivateChannelAsync(UserId, request.Name);
 
         return new ChannelServiceCreatePrivateChannelResponse() { IsSuccess = true };
     }
@@ -46,7 +46,7 @@ public class ChannelService : BaseService, IChannelService
         ChannelServiceCreatePublicChannelRequest request
     )
     {
-        await _channelBS.CreatePublicChannelAsync(_userIdentity.Id, request.Name);
+        await _channelBS.CreatePublicChannelAsync(UserId, request.Name);
 
         return new ChannelServiceCreatePublicChannelResponse() { IsSuccess = true };
     }
@@ -55,7 +55,7 @@ public class ChannelService : BaseService, IChannelService
         ChannelServiceConnectToChannelRequest request
     )
     {
-        await _channelBS.ConnectToChannelAsync(_userIdentity.Id, request.ChannelId);
+        await _channelBS.ConnectToChannelAsync(UserId, request.ChannelId);
 
         return new ChannelServiceConnectToChannelResponse() { IsSuccess = true };
     }

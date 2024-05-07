@@ -4,12 +4,12 @@ namespace MessengerX.Domain.Entities.Accounts;
 
 public class AccountByIdSpec : Specification<Account>
 {
-    public AccountByIdSpec(int? id)
+    public AccountByIdSpec(int id)
         : base((account) => account.Id == id) { }
 }
 
 public class AccountByEmailSpec : Specification<Account>
 {
-    public AccountByEmailSpec(string? email)
+    public AccountByEmailSpec(string email)
         : base((account) => account.Email == email) { }
 }

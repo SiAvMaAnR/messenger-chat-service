@@ -19,11 +19,14 @@ public class ChannelServiceChannelAdapter : ChannelServiceChannelResponseData
 
         Message? lastMessage = channel.GetLastMessage();
 
-        LastMessage = new ChannelServiceLastMessageResponseData()
+        if (lastMessage != null)
         {
-            Author = lastMessage?.Author?.Login,
-            Content = lastMessage?.Text
-        };
+            LastMessage = new ChannelServiceLastMessageResponseData()
+            {
+                Author = lastMessage.Author?.Login,
+                Content = lastMessage.Text
+            };
+        }
 
         if (Type == ChannelType.Direct)
         {

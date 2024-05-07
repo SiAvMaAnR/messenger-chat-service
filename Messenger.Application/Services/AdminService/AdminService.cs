@@ -89,7 +89,7 @@ public class AdminService : BaseService, IAdminService
     )
     {
         User user =
-            await _userBS.GetUserByIdAsync(request.UserId)
+            await _userBS.GetUserByIdAsync(request.UserId, true)
             ?? throw new NotExistsException("User not found");
 
         await _userBS.BlockUserAsync(user);
@@ -102,7 +102,7 @@ public class AdminService : BaseService, IAdminService
     )
     {
         User user =
-            await _userBS.GetUserByIdAsync(request.UserId)
+            await _userBS.GetUserByIdAsync(request.UserId, true)
             ?? throw new NotExistsException("User not found");
 
         await _userBS.UnblockUserAsync(user);

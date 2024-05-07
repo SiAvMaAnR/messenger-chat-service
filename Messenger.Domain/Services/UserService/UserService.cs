@@ -10,9 +10,9 @@ public class UserBS : DomainService
     public UserBS(IAppSettings appSettings, IUnitOfWork unitOfWork)
         : base(appSettings, unitOfWork) { }
 
-    public async Task<User?> GetUserByIdAsync(int? id)
+    public async Task<User?> GetUserByIdAsync(int id, bool isTracking = false)
     {
-        return await _unitOfWork.User.GetAsync(new UserByIdSpec(id));
+        return await _unitOfWork.User.GetAsync(new UserByIdSpec(id, isTracking));
     }
 
     public async Task<IEnumerable<User>> GetUsersAsync()

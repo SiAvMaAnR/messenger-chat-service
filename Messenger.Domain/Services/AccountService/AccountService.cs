@@ -8,12 +8,12 @@ public class AccountBS : DomainService
     public AccountBS(IAppSettings appSettings, IUnitOfWork unitOfWork)
         : base(appSettings, unitOfWork) { }
 
-    public async Task<Account?> GetAccountByIdAsync(int? id)
+    public async Task<Account?> GetAccountByIdAsync(int id)
     {
         return await _unitOfWork.Account.GetAsync(new AccountByIdSpec(id));
     }
 
-    public async Task<Account?> GetAccountByEmailAsync(string? email)
+    public async Task<Account?> GetAccountByEmailAsync(string email)
     {
         return await _unitOfWork.Account.GetAsync(new AccountByEmailSpec(email));
     }
