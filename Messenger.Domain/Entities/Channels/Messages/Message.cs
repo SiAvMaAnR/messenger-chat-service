@@ -1,20 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.Channels;
 
-namespace MessengerX.Domain.Entities.Channels.Messages;
+namespace MessengerX.Domain.Entities.Messages;
 
 [Table("Messages")]
-public partial class Message : BaseEntity
+public partial class Message : BaseEntity, ISoftDelete
 {
     public Message(int authorId, int channelId)
     {
         AuthorId = authorId;
         ChannelId = channelId;
     }
+
     public string? Text { get; set; }
     public DateTime? ModifiedDate { get; set; }
     public bool IsRead { get; private set; } = false;
-    public bool IsDelete { get; private set; } = false;
+    public bool IsDeleted { get; private set; } = false;
 
     [InverseProperty("ReadMessages")]
     public ICollection<Account> ReadAccounts { get; } = [];

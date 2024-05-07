@@ -2,6 +2,6 @@
 
 public class Password
 {
-    public byte[] Salt { get; set; } = null!;
-    public byte[] Hash { get; set; } = null!;
+    public required byte[] Salt { get; set; }
+    public required byte[] Hash { get; set; }
 }

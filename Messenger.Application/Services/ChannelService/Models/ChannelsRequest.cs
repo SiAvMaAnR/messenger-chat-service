@@ -1,8 +1,8 @@
 ﻿using MessengerX.Domain.Shared.Models;
 
-namespace MessengerX.Application.Services.ChatService.Models;
+namespace MessengerX.Application.Services.ChannelService.Models;
 
-public class ChatServiceChannelsRequest
+public class ChannelServiceChannelsRequest
 {
     public string? SearchField { get; set; }
     public Pagination? Pagination { get; set; }

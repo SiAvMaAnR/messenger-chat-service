@@ -2,6 +2,6 @@
 
 public class AuthServiceResetPasswordRequest
 {
-    public string ResetToken { get; set; } = null!;
-    public string Password { get; set; } = null!;
+    public required string ResetToken { get; set; }
+    public required string Password { get; set; }
 }

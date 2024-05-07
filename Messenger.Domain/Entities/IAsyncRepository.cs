@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using MessengerX.Domain.Specification;
 
 namespace MessengerX.Domain.Entities;
 
@@ -6,23 +7,25 @@ public interface IAsyncRepository<TEntity>
     where TEntity : BaseEntity
 {
     Task AddAsync(TEntity entity);
-    Task UpdateAsync(TEntity entity);
-    Task DeleteAsync(TEntity entity);
-    Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate);
-    Task<TEntity?> GetAsync(
-        Expression<Func<TEntity, bool>> predicate,
-        params Expression<Func<TEntity, object>>[] includeProperties
-    );
-    Task<IEnumerable<TEntity>?> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
-    Task<IEnumerable<TEntity>?> GetAllAsync();
-    Task<IEnumerable<TEntity>?> GetAllAsync(
-        params Expression<Func<TEntity, object>>[] includeProperties
-    );
-    Task<IEnumerable<TEntity>?> GetAllAsync(
-        Expression<Func<TEntity, bool>> predicate,
-        params Expression<Func<TEntity, object>>[] includeProperties
-    );
+    void Update(TEntity entity);
+    void Delete(TEntity entity);
+
+    // Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate);
+    // Task<TEntity?> GetAsync(
+    //     Expression<Func<TEntity, bool>> predicate,
+    //     params Expression<Func<TEntity, object>>[] includeProperties
+    // );
+
+    // IEnumerable<TEntity>? GetAll(Expression<Func<TEntity, bool>> predicate);
+    // IEnumerable<TEntity>? GetAll();
+    // IEnumerable<TEntity>? GetAll(params Expression<Func<TEntity, object>>[] includeProperties);
+    // IEnumerable<TEntity>? GetAll(
+    //     Expression<Func<TEntity, bool>> predicate,
+    //     params Expression<Func<TEntity, object>>[] includeProperties
+    // );
+
+    Task<TEntity?> GetAsync(ISingleSpecification<TEntity> specification);
+    Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity>? specification = null);
     Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
     Task<bool> AllAsync(Expression<Func<TEntity, bool>> predicate);
-    Task<IQueryable<TEntity>> CustomAsync();
 }

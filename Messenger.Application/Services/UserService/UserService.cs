@@ -3,7 +3,7 @@ using MessengerX.Application.Services.Common;
 using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions.BusinessExceptions;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Notifications.Common;
@@ -93,7 +93,7 @@ public class UserService : BaseService, IUserService
 
         Confirmation confirmation =
             JsonSerializer.Deserialize<Confirmation>(confirmationJson)
-            ?? throw new InvalidConfirmationException("Invalid confirmation");
+            ?? throw new InvalidConfirmationException();
 
         await _userBS.ConfirmRegistrationAsync(confirmation);
 

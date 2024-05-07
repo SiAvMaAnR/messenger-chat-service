@@ -3,6 +3,7 @@ using MessengerX.Application.Services.ChatService.Adapters;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Channels;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -10,19 +11,16 @@ namespace MessengerX.Application.Services.ChannelService;
 
 public class ChannelService : BaseService, IChannelService
 {
-    private readonly AccountBS _accountBS;
     private readonly ChannelBS _channelBS;
 
     public ChannelService(
         IUnitOfWork unitOfWork,
         IHttpContextAccessor context,
         IAppSettings appSettings,
-        AccountBS accountBS,
         ChannelBS channelBS
     )
         : base(unitOfWork, context, appSettings)
     {
-        _accountBS = accountBS;
         _channelBS = channelBS;
     }
 
@@ -74,10 +72,44 @@ public class ChannelService : BaseService, IChannelService
 
         var adaptedChannels = paginatedData
             .Collection
-            .Select(channel => new ChannelServiceChannelAdapter(channel))
+            .Select(channel => new ChannelServicePublicChannelAdapter(channel, _userIdentity.Id))
             .ToList();
 
+        await Task.WhenAll(adaptedChannels.Select(channel => channel.LoadImageAsync()));
+
         return new ChannelServicePublicChannelsResponse()
+        {
+            Meta = paginatedData.Meta,
+            Channels = adaptedChannels
+        };
+    }
+
+    public async Task<ChannelServiceChannelsResponse> AccountChannelsAsync(
+        ChannelServiceChannelsRequest request
+    )
+    {
+        IEnumerable<Channel> channels = await _channelBS.AccountChannelsAsync(
+            _userIdentity.Id,
+            request.SearchField
+        );
+
+        if (channels == null)
+            throw new NotExistsException("Channels not found");
+
+        IOrderedEnumerable<Channel> sortedChannels = channels.OrderByDescending(
+            channel => channel.LastActivity
+        );
+
+        PaginatorResponse<Channel> paginatedData = sortedChannels.Pagination(request.Pagination);
+
+        var adaptedChannels = paginatedData
+            .Collection
+            .Select(channel => new ChannelServiceChannelAdapter(channel, _userIdentity.Id))
+            .ToList();
+
+        await Task.WhenAll(adaptedChannels.Select(channel => channel.LoadImageAsync()));
+
+        return new ChannelServiceChannelsResponse()
         {
             Meta = paginatedData.Meta,
             Channels = adaptedChannels

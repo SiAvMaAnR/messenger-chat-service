@@ -4,7 +4,7 @@ using MessengerX.Persistence.Extensions;
 
 namespace MessengerX.Application.Services.AdminService.Adapters;
 
-public class AdminServiceUserAdapter : AdminServiceUserResponsePayload
+public class AdminServiceUserAdapter : AdminServiceUserResponseData
 {
     private readonly string? _imagePath;
 

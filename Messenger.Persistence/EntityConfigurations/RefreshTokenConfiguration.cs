@@ -1,4 +1,4 @@
-﻿using MessengerX.Domain.Entities.Accounts.RefreshTokens;
+﻿using MessengerX.Domain.Entities.RefreshTokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

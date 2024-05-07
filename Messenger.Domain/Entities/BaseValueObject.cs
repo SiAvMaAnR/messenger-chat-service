@@ -1,4 +1,4 @@
-﻿namespace Messenger.Domain.ValueObjects;
+﻿namespace Messenger.Domain.Entities;
 
 public abstract class BaseValueObject
 {

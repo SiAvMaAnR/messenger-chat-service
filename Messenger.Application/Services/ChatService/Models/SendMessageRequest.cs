@@ -3,5 +3,5 @@
 public class ChatServiceSendMessageRequest
 {
     public int ChannelId { get; set; }
-    public string Message { get; set; } = null!;
+    public required string Message { get; set; }
 }

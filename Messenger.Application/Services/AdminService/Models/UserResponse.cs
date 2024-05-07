@@ -3,9 +3,9 @@
 public class AdminServiceUserResponse
 {
     public int Id { get; set; }
-    public string Login { get; set; } = null!;
-    public string Email { get; set; } = null!;
-    public string Role { get; set; } = null!;
+    public required string Login { get; set; }
+    public required string Email { get; set; }
+    public required string Role { get; set; }
     public byte[]? Image { get; set; }
     public DateOnly? Birthday { get; set; }
     public DateTime? CreatedAt { get; set; }

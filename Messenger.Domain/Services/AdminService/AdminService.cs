@@ -10,6 +10,6 @@ public class AdminBS : DomainService
 
     public async Task<Admin?> GetAdminByIdAsync(int? id)
     {
-        return await _unitOfWork.Admin.GetAsync(admin => admin.Id == id);
+        return await _unitOfWork.Admin.GetAsync(new AdminByIdSpec(id));
     }
 }

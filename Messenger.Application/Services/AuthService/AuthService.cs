@@ -4,10 +4,9 @@ using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Accounts.RefreshTokens;
+using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions.BusinessExceptions;
-using MessengerX.Domain.Exceptions.Common;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
 using MessengerX.Domain.Shared.Models;
 using MessengerX.Notifications.Common;
@@ -47,10 +46,7 @@ public class AuthService : BaseService, IAuthService
     {
         Account account =
             await _accountBS.GetAccountByEmailAsync(request.Email)
-            ?? throw new InvalidCredentialsException(
-                "Invalid credentials",
-                ClientMessageSettings.Same
-            );
+            ?? throw new InvalidCredentialsException("Invalid email or password");
 
         bool isVerify = AuthBS.VerifyPasswordHash(
             request.Password,
@@ -58,10 +54,10 @@ public class AuthService : BaseService, IAuthService
         );
 
         if (!isVerify)
-            throw new InvalidCredentialsException("Wrong password", ClientMessageSettings.Same);
+            throw new InvalidCredentialsException("Wrong password");
 
         if (account is User { IsBanned: true })
-            throw new AccessException("Account was banned", ClientMessageSettings.Same);
+            throw new OperationNotAllowedException("Account was banned");
 
         string refreshToken = AuthOptions.CreateRefreshToken();
         string accessToken = AuthOptions.CreateAccessToken(
@@ -85,23 +81,17 @@ public class AuthService : BaseService, IAuthService
     {
         RefreshToken refreshToken =
             await _authBS.GetRefreshTokenAsync(request.RefreshToken)
-            ?? throw new InvalidCredentialsException(
-                "Invalid refresh token",
-                ClientMessageSettings.Same
-            );
+            ?? throw new InvalidCredentialsException("Invalid refresh token");
 
         if (refreshToken.ExpiryTime < DateTime.Now)
-            throw new ExpiredException("Expired refresh token", ClientMessageSettings.Same);
+            throw new OperationNotAllowedException("Expired refresh token");
 
         Account account =
             await _accountBS.GetAccountByIdAsync(refreshToken.AccountId)
-            ?? throw new InvalidCredentialsException(
-                "Account not exists",
-                ClientMessageSettings.Default
-            );
+            ?? throw new InvalidCredentialsException("Invalid refresh token");
 
         if (account is User { IsBanned: true })
-            throw new AccessException("Account was banned", ClientMessageSettings.Same);
+            throw new OperationNotAllowedException("Account was banned");
 
         string accessToken = AuthOptions.CreateAccessToken(
             AuthBS.GetClaims(account),
@@ -172,7 +162,7 @@ public class AuthService : BaseService, IAuthService
             ?? throw new IncorrectDataException("Incorrect reset token");
 
         if (resetToken.ExpirationDate < DateTime.Now)
-            throw new ExpiredException("Reset token has expired");
+            throw new OperationNotAllowedException("Reset token has expired");
 
         Account account =
             await _accountBS.GetAccountByIdAsync(resetToken.Id)
@@ -189,13 +179,10 @@ public class AuthService : BaseService, IAuthService
     {
         RefreshToken refreshToken =
             await _authBS.GetRefreshTokenAsync(request.RefreshToken)
-            ?? throw new InvalidCredentialsException(
-                "Invalid refresh token",
-                ClientMessageSettings.Same
-            );
+            ?? throw new InvalidCredentialsException("Invalid refresh token");
 
         if (refreshToken.ExpiryTime < DateTime.Now)
-            throw new ExpiredException("Expired refresh token", ClientMessageSettings.Same);
+            throw new OperationNotAllowedException("Expired refresh token");
 
         await _authBS.DeleteRefreshTokenAsync(refreshToken);
 

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using MessengerX.Domain.Entities;
+using MessengerX.Domain.Specification;
 using MessengerX.Persistence.DBContext;
-using MessengerX.Persistence.QueryableExtension;
 using Microsoft.EntityFrameworkCore;
 
 namespace MessengerX.Persistence.Repositories.Common;
@@ -21,54 +21,64 @@ public class BaseRepository<TEntity> : IAsyncRepository<TEntity>
         await _dbSet.AddAsync(entity);
     }
 
-    public virtual async Task UpdateAsync(TEntity entity)
+    public virtual void Update(TEntity entity)
     {
-        await Task.FromResult(_dbSet.Update(entity));
+        _dbSet.Update(entity);
     }
 
-    public virtual async Task DeleteAsync(TEntity entity)
+    public virtual void Delete(TEntity entity)
     {
-        await Task.FromResult(_dbSet.Remove(entity));
+        _dbSet.Remove(entity);
     }
 
-    public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
+    // public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
+    // {
+    //     return await _dbSet.FirstOrDefaultAsync(predicate);
+    // }
+
+    // public virtual async Task<TEntity?> GetAsync(
+    //     Expression<Func<TEntity, bool>> predicate,
+    //     params Expression<Func<TEntity, object>>[] includeProperties
+    // )
+    // {
+    //     return await _dbSet.MultipleInclude(includeProperties).FirstOrDefaultAsync(predicate);
+    // }
+
+    // public virtual IEnumerable<TEntity>? GetAll(Expression<Func<TEntity, bool>> predicate)
+    // {
+    //     return _dbSet.Where(predicate).AsNoTracking();
+    // }
+
+    // public virtual IEnumerable<TEntity>? GetAll()
+    // {
+    //     return _dbSet.AsNoTracking();
+    // }
+
+    // public virtual IEnumerable<TEntity>? GetAll(
+    //     params Expression<Func<TEntity, object>>[] includeProperties
+    // )
+    // {
+    //     return _dbSet.MultipleInclude(includeProperties).AsNoTracking();
+    // }
+
+    // public virtual IEnumerable<TEntity>? GetAll(
+    //     Expression<Func<TEntity, bool>> predicate,
+    //     params Expression<Func<TEntity, object>>[] includeProperties
+    // )
+    // {
+    //     return _dbSet.MultipleInclude(includeProperties).Where(predicate).AsNoTracking();
+    // }
+
+    public virtual async Task<TEntity?> GetAsync(ISingleSpecification<TEntity> specification)
     {
-        return await _dbSet.FirstOrDefaultAsync(predicate);
+        return await _dbSet.GetQueryForOneAsync(specification);
     }
 
-    public virtual async Task<TEntity?> GetAsync(
-        Expression<Func<TEntity, bool>> predicate,
-        params Expression<Func<TEntity, object>>[] includeProperties
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
+        ISpecification<TEntity>? specification
     )
     {
-        return await _dbSet.MultipleInclude(includeProperties).FirstOrDefaultAsync(predicate);
-    }
-
-    public virtual async Task<IEnumerable<TEntity>?> GetAllAsync(
-        Expression<Func<TEntity, bool>> predicate
-    )
-    {
-        return await Task.FromResult(_dbSet.Where(predicate));
-    }
-
-    public virtual async Task<IEnumerable<TEntity>?> GetAllAsync()
-    {
-        return await Task.FromResult(_dbSet);
-    }
-
-    public virtual async Task<IEnumerable<TEntity>?> GetAllAsync(
-        params Expression<Func<TEntity, object>>[] includeProperties
-    )
-    {
-        return await Task.FromResult(_dbSet.MultipleInclude(includeProperties));
-    }
-
-    public virtual async Task<IEnumerable<TEntity>?> GetAllAsync(
-        Expression<Func<TEntity, bool>> predicate,
-        params Expression<Func<TEntity, object>>[] includeProperties
-    )
-    {
-        return await Task.FromResult(_dbSet.MultipleInclude(includeProperties).Where(predicate));
+        return await _dbSet.GetQueryForManyAsync(specification ?? new DefaultSpec<TEntity>());
     }
 
     public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
@@ -79,10 +89,5 @@ public class BaseRepository<TEntity> : IAsyncRepository<TEntity>
     public virtual async Task<bool> AllAsync(Expression<Func<TEntity, bool>> predicate)
     {
         return await _dbSet.AllAsync(predicate);
-    }
-
-    public virtual async Task<IQueryable<TEntity>> CustomAsync()
-    {
-        return await Task.FromResult(_dbSet);
     }
 }

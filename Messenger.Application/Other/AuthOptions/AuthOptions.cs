@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using MessengerX.Domain.Exceptions.ApiExceptions;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -23,7 +23,7 @@ public static class AuthOptions
         configuration.GetSection(AuthSettings.Path).Bind(authSettings);
 
         if (configuration == null)
-            throw new BadRequestException("Incorrect config");
+            throw new IncorrectDataException("Incorrect config", true);
 
         string? issuer = authSettings.Issuer;
         string? audience = authSettings.Audience;

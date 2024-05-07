@@ -1,6 +1,6 @@
 ﻿using MessengerX.Domain.Entities.Accounts;
 
-namespace MessengerX.Domain.Entities.Channels.Messages;
+namespace MessengerX.Domain.Entities.Messages;
 
 public partial class Message : IAggregateRoot
 {
@@ -16,7 +16,7 @@ public partial class Message : IAggregateRoot
 
     public void DeleteMessage()
     {
-        IsDelete = true;
+        IsDeleted = true;
     }
 
     public void ReadMessage()

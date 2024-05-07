@@ -2,8 +2,8 @@
 
 public class EmailMessage
 {
-    public EmailAddress From { get; set; } = null!;
-    public EmailAddress To { get; set; } = null!;
-    public string Subject { get; set; } = null!;
-    public string Content { get; set; } = null!;
+    public required EmailAddress From { get; set; }
+    public required EmailAddress To { get; set; }
+    public required string Subject { get; set; }
+    public required string Content { get; set; }
 }

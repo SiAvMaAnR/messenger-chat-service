@@ -1,3 +1,3 @@
-﻿namespace MessengerX.Domain.Entities.Channels.Messages;
+﻿namespace MessengerX.Domain.Entities.Messages;
 
 public interface IMessageRepository : IAsyncRepository<Message> { }

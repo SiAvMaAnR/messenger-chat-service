@@ -5,7 +5,7 @@ using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions.BusinessExceptions;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
 using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;

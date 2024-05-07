@@ -6,5 +6,5 @@ namespace MessengerX.WebApi.Controllers.Models.User;
 public class UserControllerConfirmationRequest
 {
     [MaxLength(MaxLength.Confirmation)]
-    public string Confirmation { get; set; } = null!;
+    public required string Confirmation { get; set; }
 }

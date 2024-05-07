@@ -2,5 +2,5 @@
 
 public class AuthServiceRefreshTokenRequest
 {
-    public string RefreshToken { get; set; } = null!;
+    public required string RefreshToken { get; set; }
 }

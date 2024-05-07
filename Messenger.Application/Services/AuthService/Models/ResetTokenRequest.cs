@@ -2,5 +2,5 @@
 
 public class AuthServiceResetTokenRequest
 {
-    public string Email { get; set; } = null!;
+    public required string Email { get; set; }
 }

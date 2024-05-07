@@ -1,13 +1,15 @@
-﻿namespace MessengerX.Domain.Exceptions.StatusCode;
+﻿namespace MessengerX.Domain.Exceptions;
 
 public enum BusinessStatusCode
 {
-    E001,
-    E002,
-    E003,
-    E004,
-    E005,
-    E006,
-    E007,
-    E008
+    CommonE001,
+    CommonE002,
+    CommonE003,
+    CommonE004,
+    CommonE005,
+    CommonE006,
+    AuthE001,
+    AuthE002,
+    AuthE003,
+    AuthE004,
 }

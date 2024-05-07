@@ -6,6 +6,6 @@ namespace MessengerX.WebApi.Controllers.Models.User;
 public class UserControllerUpdateInfoRequest
 {
     [MaxLength(MaxLength.Login)]
-    public string Login { get; set; } = null!;
+    public required string Login { get; set; }
     public DateOnly? Birthday { get; set; }
 }

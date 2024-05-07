@@ -3,8 +3,8 @@ using System.Security.Cryptography;
 using System.Text;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Accounts.RefreshTokens;
-using MessengerX.Domain.Exceptions.BusinessExceptions;
+using MessengerX.Domain.Entities.RefreshTokens;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Shared.Models;
 
@@ -17,7 +17,7 @@ public class AuthBS : DomainService
 
     public async Task<RefreshToken?> GetRefreshTokenAsync(string? refreshToken)
     {
-        return await _unitOfWork.RefreshToken.GetAsync(refresh => refresh.Token == refreshToken);
+        return await _unitOfWork.RefreshToken.GetAsync(new RefreshTokenByTokenSpec(refreshToken));
     }
 
     public async Task<RefreshToken> AddRefreshTokenAsync(Account account, string refreshToken)
@@ -40,13 +40,13 @@ public class AuthBS : DomainService
 
         account.UpdatePassword(newPassword.Hash, newPassword.Salt);
 
-        await _unitOfWork.Account.UpdateAsync(account);
+        _unitOfWork.Account.Update(account);
         await _unitOfWork.SaveChangesAsync();
     }
 
     public async Task DeleteRefreshTokenAsync(RefreshToken refreshToken)
     {
-        await _unitOfWork.RefreshToken.DeleteAsync(refreshToken);
+        _unitOfWork.RefreshToken.Delete(refreshToken);
         await _unitOfWork.SaveChangesAsync();
     }
 
@@ -90,7 +90,7 @@ public class AuthBS : DomainService
         }
         catch (Exception)
         {
-            throw new PasswordException("Failed to create hash password");
+            throw new FailedToCreatePasswordException();
         }
     }
 
@@ -104,7 +104,7 @@ public class AuthBS : DomainService
         }
         catch (Exception)
         {
-            throw new PasswordException("Failed to verify hash password");
+            throw new FailedToVerifyPasswordException();
         }
     }
 }
