@@ -25,6 +25,13 @@ public class AccountChannelsSpec : Specification<Channel>
                 && (
                     searchField == null
                     || channel.Name != null && channel.Name.Contains(searchField)
+                    || channel.Type == ChannelType.Direct
+                        && channel
+                            .Accounts
+                            .Any(
+                                account =>
+                                    account.Id != accountId && account.Login.Contains(searchField)
+                            )
                 )
         )
     {
