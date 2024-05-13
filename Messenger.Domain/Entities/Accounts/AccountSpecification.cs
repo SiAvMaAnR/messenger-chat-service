@@ -1,11 +1,14 @@
-using MessengerX.Domain.Specification;
+﻿using MessengerX.Domain.Specification;
 
 namespace MessengerX.Domain.Entities.Accounts;
 
 public class AccountByIdSpec : Specification<Account>
 {
     public AccountByIdSpec(int id)
-        : base((account) => account.Id == id) { }
+        : base((account) => account.Id == id)
+    {
+        ApplyTracking();
+    }
 }
 
 public class AccountByEmailSpec : Specification<Account>

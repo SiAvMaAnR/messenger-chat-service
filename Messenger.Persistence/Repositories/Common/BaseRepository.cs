@@ -31,44 +31,6 @@ public class BaseRepository<TEntity> : IAsyncRepository<TEntity>
         _dbSet.Remove(entity);
     }
 
-    // public virtual async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
-    // {
-    //     return await _dbSet.FirstOrDefaultAsync(predicate);
-    // }
-
-    // public virtual async Task<TEntity?> GetAsync(
-    //     Expression<Func<TEntity, bool>> predicate,
-    //     params Expression<Func<TEntity, object>>[] includeProperties
-    // )
-    // {
-    //     return await _dbSet.MultipleInclude(includeProperties).FirstOrDefaultAsync(predicate);
-    // }
-
-    // public virtual IEnumerable<TEntity>? GetAll(Expression<Func<TEntity, bool>> predicate)
-    // {
-    //     return _dbSet.Where(predicate).AsNoTracking();
-    // }
-
-    // public virtual IEnumerable<TEntity>? GetAll()
-    // {
-    //     return _dbSet.AsNoTracking();
-    // }
-
-    // public virtual IEnumerable<TEntity>? GetAll(
-    //     params Expression<Func<TEntity, object>>[] includeProperties
-    // )
-    // {
-    //     return _dbSet.MultipleInclude(includeProperties).AsNoTracking();
-    // }
-
-    // public virtual IEnumerable<TEntity>? GetAll(
-    //     Expression<Func<TEntity, bool>> predicate,
-    //     params Expression<Func<TEntity, object>>[] includeProperties
-    // )
-    // {
-    //     return _dbSet.MultipleInclude(includeProperties).Where(predicate).AsNoTracking();
-    // }
-
     public virtual async Task<TEntity?> GetAsync(ISingleSpecification<TEntity> specification)
     {
         return await _dbSet.GetQueryForOneAsync(specification);

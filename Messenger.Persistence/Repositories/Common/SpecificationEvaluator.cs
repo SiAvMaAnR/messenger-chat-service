@@ -1,4 +1,4 @@
-using MessengerX.Domain.Entities;
+﻿using MessengerX.Domain.Entities;
 using MessengerX.Domain.Specification;
 using Microsoft.EntityFrameworkCore;
 

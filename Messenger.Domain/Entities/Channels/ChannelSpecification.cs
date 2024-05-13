@@ -1,4 +1,4 @@
-using MessengerX.Domain.Shared.Constants.Common;
+﻿using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Specification;
 
 namespace MessengerX.Domain.Entities.Channels;
@@ -13,7 +13,8 @@ public class PublicChannelsSpec : Specification<Channel>
                     searchField == null
                     || channel.Name != null && channel.Name.Contains(searchField)
                 )
-        ) { }
+        )
+    { }
 }
 
 public class AccountChannelsSpec : Specification<Channel>

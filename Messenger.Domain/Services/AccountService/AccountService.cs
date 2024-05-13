@@ -1,5 +1,6 @@
 ﻿using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Exceptions;
 
 namespace MessengerX.Domain.Services;
 
@@ -24,5 +25,10 @@ public class AccountBS : DomainService
 
         _unitOfWork.Account.Update(account);
         await _unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<Account>> GetAccountsAsync()
+    {
+        return await _unitOfWork.Account.GetAllAsync() ?? throw new NotExistsException("Accounts");
     }
 }

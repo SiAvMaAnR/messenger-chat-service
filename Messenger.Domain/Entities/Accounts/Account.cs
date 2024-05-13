@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Entities.Messages;
+using MessengerX.Domain.Entities.RefreshTokens;
+using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.Domain.Entities.Accounts;
 

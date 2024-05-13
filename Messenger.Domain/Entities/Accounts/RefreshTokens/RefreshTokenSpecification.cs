@@ -1,4 +1,4 @@
-using MessengerX.Domain.Entities.RefreshTokens;
+﻿using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Specification;
 
 namespace MessengerX.Domain.Entities.Accounts;

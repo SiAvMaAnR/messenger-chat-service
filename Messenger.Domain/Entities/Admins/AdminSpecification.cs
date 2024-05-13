@@ -1,4 +1,4 @@
-using MessengerX.Domain.Specification;
+﻿using MessengerX.Domain.Specification;
 
 namespace MessengerX.Domain.Entities.Admins;
 

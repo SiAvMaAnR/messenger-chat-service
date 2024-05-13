@@ -1,4 +1,5 @@
-﻿using MessengerX.Application.Services.AccountService.Models;
+﻿using MessengerX.Application.Services.AccountService.Adapters;
+using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
@@ -70,5 +71,30 @@ public class AccountService : BaseService, IAccountService
         await _unitOfWork.SaveChangesAsync();
 
         return new AccountServiceUpdateStatusResponse() { IsSuccess = true };
+    }
+
+    public async Task<AccountServiceAccountsResponse> AccountsAsync(
+        AccountServiceAccountsRequest request
+    )
+    {
+        IEnumerable<Account> accounts = await _accountBS.GetAccountsAsync();
+
+        PaginatorResponse<Account> paginatedData = accounts
+            .OrderBy(account => account.Id)
+            .Pagination(request.Pagination);
+
+        var adaptedAccounts = paginatedData
+            .Collection
+            .Select(account => new AccountServiceAccountAdapter(account))
+            .ToList();
+
+        if (request.IsLoadImage)
+            await Task.WhenAll(adaptedAccounts.Select(account => account.LoadImageAsync()));
+
+        return new AccountServiceAccountsResponse()
+        {
+            Meta = paginatedData.Meta,
+            Accounts = adaptedAccounts
+        };
     }
 }
