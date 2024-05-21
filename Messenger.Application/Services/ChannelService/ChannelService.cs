@@ -37,7 +37,7 @@ public class ChannelService : BaseService, IChannelService
         ChannelServiceCreatePrivateChannelRequest request
     )
     {
-        await _channelBS.CreatePrivateChannelAsync(UserId, request.Name);
+        await _channelBS.CreatePrivateChannelAsync(UserId, request.Name, request.Members);
 
         return new ChannelServiceCreatePrivateChannelResponse() { IsSuccess = true };
     }
@@ -46,7 +46,7 @@ public class ChannelService : BaseService, IChannelService
         ChannelServiceCreatePublicChannelRequest request
     )
     {
-        await _channelBS.CreatePublicChannelAsync(UserId, request.Name);
+        await _channelBS.CreatePublicChannelAsync(UserId, request.Name, request.Members);
 
         return new ChannelServiceCreatePublicChannelResponse() { IsSuccess = true };
     }

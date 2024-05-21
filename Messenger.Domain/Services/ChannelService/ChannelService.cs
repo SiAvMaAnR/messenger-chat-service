@@ -44,7 +44,11 @@ public class ChannelBS : DomainService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task CreatePrivateChannelAsync(int accountId, string channelName)
+    public async Task CreatePrivateChannelAsync(
+        int accountId,
+        string channelName,
+        IEnumerable<int> members
+    )
     {
         Account myAccount =
             await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
@@ -57,11 +61,21 @@ public class ChannelBS : DomainService
 
         channel.AddAccount(myAccount);
 
+        IEnumerable<Account> accounts = await _unitOfWork
+            .Account
+            .GetAllAsync(new AccountsByIdsSpec(members));
+
+        channel.AddAccounts(accounts.ToList());
+
         await _unitOfWork.Channel.AddAsync(channel);
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task CreatePublicChannelAsync(int accountId, string channelName)
+    public async Task CreatePublicChannelAsync(
+        int accountId,
+        string channelName,
+        IEnumerable<int> members
+    )
     {
         Account myAccount =
             await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
@@ -73,6 +87,12 @@ public class ChannelBS : DomainService
         var channel = new Channel(ChannelType.Public) { Name = channelName };
 
         channel.AddAccount(myAccount);
+
+        IEnumerable<Account> accounts = await _unitOfWork
+            .Account
+            .GetAllAsync(new AccountsByIdsSpec(members));
+
+        channel.AddAccounts(accounts.ToList());
 
         await _unitOfWork.Channel.AddAsync(channel);
         await _unitOfWork.SaveChangesAsync();

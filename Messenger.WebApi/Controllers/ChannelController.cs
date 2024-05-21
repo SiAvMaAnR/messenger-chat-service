@@ -37,7 +37,11 @@ public class ChannelController : ControllerBase
     {
         ChannelServiceCreatePublicChannelResponse response =
             await _channelService.CreatePublicChannelAsync(
-                new ChannelServiceCreatePublicChannelRequest() { Name = request.Name }
+                new ChannelServiceCreatePublicChannelRequest()
+                {
+                    Name = request.Name,
+                    Members = request.Members
+                }
             );
 
         return Ok(response);
@@ -50,7 +54,11 @@ public class ChannelController : ControllerBase
     {
         ChannelServiceCreatePrivateChannelResponse response =
             await _channelService.CreatePrivateChannelAsync(
-                new ChannelServiceCreatePrivateChannelRequest() { Name = request.Name }
+                new ChannelServiceCreatePrivateChannelRequest()
+                {
+                    Name = request.Name,
+                    Members = request.Members
+                }
             );
 
         return Ok(response);
@@ -86,7 +94,9 @@ public class ChannelController : ControllerBase
     }
 
     [HttpGet("account-channels"), Authorize]
-    public async Task<IActionResult> GetAccountChannels([FromQuery] ChannelControllerChannelsRequest request)
+    public async Task<IActionResult> GetAccountChannels(
+        [FromQuery] ChannelControllerChannelsRequest request
+    )
     {
         ChannelServiceChannelsResponse response = await _channelService.AccountChannelsAsync(
             new ChannelServiceChannelsRequest()

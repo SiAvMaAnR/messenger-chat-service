@@ -77,7 +77,7 @@ public class AccountService : BaseService, IAccountService
         AccountServiceAccountsRequest request
     )
     {
-        IEnumerable<Account> accounts = await _accountBS.GetAccountsAsync();
+        IEnumerable<Account> accounts = await _accountBS.GetAccountsAsync(request.SearchField);
 
         PaginatorResponse<Account> paginatedData = accounts
             .OrderBy(account => account.Id)

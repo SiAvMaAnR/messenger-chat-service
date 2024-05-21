@@ -44,7 +44,8 @@ public class AccountController : ControllerBase
             new AccountServiceAccountsRequest()
             {
                 Pagination = request.Pagination,
-                IsLoadImage = request.IsLoadImage
+                IsLoadImage = request.IsLoadImage,
+                SearchField = request.SearchField
             }
         );
 
