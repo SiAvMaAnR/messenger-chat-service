@@ -15,11 +15,11 @@ public class ChannelBS : DomainService
     {
         Account? firstAccount = await _unitOfWork
             .Account
-            .GetAsync(new AccountByIdSpec(firstAccountId));
+            .GetAsync(new AccountByIdSpec(firstAccountId, true));
 
         Account? secondAccount = await _unitOfWork
             .Account
-            .GetAsync(new AccountByIdSpec(secondAccountId));
+            .GetAsync(new AccountByIdSpec(secondAccountId, true));
 
         if (firstAccount == null || secondAccount == null)
             throw new NotExistsException("Account not found");
@@ -51,7 +51,7 @@ public class ChannelBS : DomainService
     )
     {
         Account myAccount =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId, true))
             ?? throw new NotExistsException("Account not found");
 
         if (await _unitOfWork.Channel.AnyAsync(channel => channel.Name == channelName))
@@ -78,7 +78,7 @@ public class ChannelBS : DomainService
     )
     {
         Account myAccount =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId, true))
             ?? throw new NotExistsException("Account not found");
 
         if (await _unitOfWork.Channel.AnyAsync(channel => channel.Name == channelName))
@@ -101,7 +101,7 @@ public class ChannelBS : DomainService
     public async Task ConnectToChannelAsync(int accountId, int channelId)
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId, true))
             ?? throw new NotExistsException("Account not found");
 
         Channel channel =

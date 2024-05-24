@@ -51,4 +51,12 @@ public class AccountController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpGet("profile"), Authorize]
+    public async Task<IActionResult> Profile()
+    {
+        AccountServiceProfileResponse response = await _accountService.GetProfileAsync();
+
+        return Ok(response);
+    }
 }

@@ -165,7 +165,7 @@ public class AuthService : BaseService, IAuthService
             throw new OperationNotAllowedException("Reset token has expired");
 
         Account account =
-            await _accountBS.GetAccountByIdAsync(resetToken.Id)
+            await _accountBS.GetAccountByIdAsync(resetToken.Id, true)
             ?? throw new NotExistsException("Account not exists");
 
         await _authBS.UpdatePasswordAsync(account, request.Password);

@@ -9,9 +9,9 @@ public class AccountBS : DomainService
     public AccountBS(IAppSettings appSettings, IUnitOfWork unitOfWork)
         : base(appSettings, unitOfWork) { }
 
-    public async Task<Account?> GetAccountByIdAsync(int id)
+    public async Task<Account?> GetAccountByIdAsync(int id, bool isTracking = false)
     {
-        return await _unitOfWork.Account.GetAsync(new AccountByIdSpec(id));
+        return await _unitOfWork.Account.GetAsync(new AccountByIdSpec(id, isTracking));
     }
 
     public async Task<Account?> GetAccountByEmailAsync(string email)

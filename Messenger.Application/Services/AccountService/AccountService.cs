@@ -3,6 +3,7 @@ using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
 using MessengerX.Persistence.Extensions;
@@ -30,7 +31,7 @@ public class AccountService : BaseService, IAccountService
     )
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(UserId))
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(UserId, true))
             ?? throw new NotExistsException("Account not found");
 
         string imagePath = _appSettings.FilePath.Image;
@@ -49,7 +50,7 @@ public class AccountService : BaseService, IAccountService
     public async Task<AccountServiceImageResponse> GetImageAsync()
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(UserId))
+            await _accountBS.GetAccountByIdAsync(UserId)
             ?? throw new NotExistsException("Account not found");
 
         byte[]? image = await FileManager.ReadToBytesAsync(account.Image);
@@ -62,7 +63,7 @@ public class AccountService : BaseService, IAccountService
     )
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(UserId))
+            await _accountBS.GetAccountByIdAsync(UserId)
             ?? throw new NotExistsException("Account not found");
 
         account.UpdateActivityStatus(request.ActivityStatus);
@@ -95,6 +96,21 @@ public class AccountService : BaseService, IAccountService
         {
             Meta = paginatedData.Meta,
             Accounts = adaptedAccounts
+        };
+    }
+
+    public async Task<AccountServiceProfileResponse> GetProfileAsync()
+    {
+        Account user =
+            await _accountBS.GetAccountByIdAsync(UserId)
+            ?? throw new NotExistsException("User not found");
+
+        return new AccountServiceProfileResponse()
+        {
+            Login = user.Login,
+            Email = user.Email,
+            Role = user.Role,
+            Birthday = (user as User)?.Birthday
         };
     }
 }

@@ -104,21 +104,6 @@ public class UserService : BaseService, IUserService
         };
     }
 
-    public async Task<UserServiceProfileResponse> GetProfileAsync()
-    {
-        User user =
-            await _userBS.GetUserByIdAsync(UserId)
-            ?? throw new NotExistsException("User not found");
-
-        return new UserServiceProfileResponse()
-        {
-            Login = user.Login,
-            Email = user.Email,
-            Role = user.Role,
-            Birthday = user.Birthday
-        };
-    }
-
     public async Task<UserServiceUpdateResponse> UpdateAsync(UserServiceUpdateRequest request)
     {
         User user =

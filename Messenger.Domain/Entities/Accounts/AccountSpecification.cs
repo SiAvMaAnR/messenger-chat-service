@@ -4,10 +4,13 @@ namespace MessengerX.Domain.Entities.Accounts;
 
 public class AccountByIdSpec : Specification<Account>
 {
-    public AccountByIdSpec(int id)
+    public AccountByIdSpec(int id, bool isTracking)
         : base((account) => account.Id == id)
     {
-        ApplyTracking();
+        if (isTracking)
+        {
+            ApplyTracking();
+        }
     }
 }
 

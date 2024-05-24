@@ -70,20 +70,6 @@ public class AdminService : BaseService, IAdminService
         };
     }
 
-    public async Task<AdminServiceProfileResponse> GetProfileAsync()
-    {
-        Admin admin =
-            await _adminBS.GetAdminByIdAsync(_userIdentity.Id)
-            ?? throw new NotExistsException("Admin not found");
-
-        return new AdminServiceProfileResponse()
-        {
-            Login = admin.Login,
-            Email = admin.Email,
-            Role = admin.Role,
-        };
-    }
-
     public async Task<AdminServiceBlockUserResponse> BlockUserAsync(
         AdminServiceBlockUserRequest request
     )

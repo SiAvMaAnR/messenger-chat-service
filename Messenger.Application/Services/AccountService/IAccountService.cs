@@ -12,6 +12,6 @@ public interface IAccountService : IBaseService
         AccountServiceUploadImageRequest request
     );
     Task<AccountServiceImageResponse> GetImageAsync();
-
     Task<AccountServiceAccountsResponse> AccountsAsync(AccountServiceAccountsRequest request);
+    Task<AccountServiceProfileResponse> GetProfileAsync();
 }

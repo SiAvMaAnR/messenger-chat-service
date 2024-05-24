@@ -9,5 +9,4 @@ public interface IAdminService : IBaseService
     Task<AdminServiceUserResponse> UserAsync(AdminServiceUserRequest request);
     Task<AdminServiceBlockUserResponse> BlockUserAsync(AdminServiceBlockUserRequest request);
     Task<AdminServiceUnblockUserResponse> UnblockUserAsync(AdminServiceUnblockUserRequest request);
-    Task<AdminServiceProfileResponse> GetProfileAsync();
 }

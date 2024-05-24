@@ -69,12 +69,4 @@ public class UserController : ControllerBase
 
         return Ok(response);
     }
-
-    [HttpGet("profile"), Authorize(Policy = AuthPolicy.OnlyUser)]
-    public async Task<IActionResult> Profile()
-    {
-        UserServiceProfileResponse response = await _userService.GetProfileAsync();
-
-        return Ok(response);
-    }
 }
