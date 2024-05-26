@@ -8,7 +8,7 @@ public class ChannelServiceLastMessageResponseData
     public string? Author { get; set; }
 }
 
-public class ChannelServiceChannelResponseData
+public class ChannelServiceAccountChannelResponseData
 {
     public int Id { get; set; }
     public string? Name { get; set; }
@@ -19,8 +19,8 @@ public class ChannelServiceChannelResponseData
 
 }
 
-public class ChannelServiceChannelsResponse
+public class ChannelServiceAccountChannelsResponse
 {
     public MetaResponse? Meta { get; set; }
-    public IEnumerable<ChannelServiceChannelResponseData>? Channels { get; set; }
+    public IEnumerable<ChannelServiceAccountChannelResponseData>? Channels { get; set; }
 }

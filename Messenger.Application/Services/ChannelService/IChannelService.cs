@@ -20,7 +20,10 @@ public interface IChannelService : IBaseService
     Task<ChannelServicePublicChannelsResponse> PublicChannelsAsync(
         ChannelServicePublicChannelsRequest request
     );
-    Task<ChannelServiceChannelsResponse> AccountChannelsAsync(
-        ChannelServiceChannelsRequest request
+    Task<ChannelServiceAccountChannelsResponse> AccountChannelsAsync(
+        ChannelServiceAccountChannelsRequest request
+    );
+    Task<ChannelServiceAccountChannelResponse> AccountChannelAsync(
+        ChannelServiceAccountChannelRequest request
     );
 }

@@ -23,6 +23,7 @@ public partial class Account : BaseEntity
     public string Role { get; protected set; } = AccountRole.Public;
     public string? Image { get; set; }
     public string ActivityStatus { get; set; } = AccountStatus.Offline;
+    public DateTime LastOnlineAt { get; set; }
     public ICollection<RefreshToken> RefreshTokens { get; private set; } = [];
 
     [JsonIgnore]

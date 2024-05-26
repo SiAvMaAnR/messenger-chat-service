@@ -84,17 +84,15 @@ public class ChannelService : BaseService, IChannelService
         };
     }
 
-    public async Task<ChannelServiceChannelsResponse> AccountChannelsAsync(
-        ChannelServiceChannelsRequest request
+    public async Task<ChannelServiceAccountChannelsResponse> AccountChannelsAsync(
+        ChannelServiceAccountChannelsRequest request
     )
     {
         IEnumerable<Channel> channels = await _channelBS.AccountChannelsAsync(
             _userIdentity.Id,
-            request.SearchField
+            request.SearchField,
+            request.ChannelType
         );
-
-        if (channels == null)
-            throw new NotExistsException("Channels not found");
 
         IOrderedEnumerable<Channel> sortedChannels = channels.OrderByDescending(
             channel => channel.LastActivity
@@ -104,15 +102,31 @@ public class ChannelService : BaseService, IChannelService
 
         var adaptedChannels = paginatedData
             .Collection
-            .Select(channel => new ChannelServiceChannelAdapter(channel, _userIdentity.Id))
+            .Select(channel => new ChannelServiceAccountChannelAdapter(channel, _userIdentity.Id))
             .ToList();
 
         await Task.WhenAll(adaptedChannels.Select(channel => channel.LoadImageAsync()));
 
-        return new ChannelServiceChannelsResponse()
+        return new ChannelServiceAccountChannelsResponse()
         {
             Meta = paginatedData.Meta,
             Channels = adaptedChannels
         };
+    }
+
+    public async Task<ChannelServiceAccountChannelResponse> AccountChannelAsync(
+        ChannelServiceAccountChannelRequest request
+    )
+    {
+        Channel channel = await _channelBS.AccountChannelAsync(_userIdentity.Id, request.Id);
+
+        var adaptedChannel = new ChannelServiceAccountChannelForOneAdapter(
+            channel,
+            _userIdentity.Id
+        );
+
+        await adaptedChannel.LoadImageAsync();
+
+        return adaptedChannel;
     }
 }

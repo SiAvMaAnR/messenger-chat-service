@@ -4,6 +4,11 @@ namespace MessengerX.Domain.Specification;
 
 public abstract partial class Specification<TEntity>
 {
+    protected virtual void ApplyCriteria(Expression<Func<TEntity, bool>> criteria)
+    {
+        Criteria = criteria;
+    }
+
     protected virtual void AddInclude(Expression<Func<TEntity, object>> includeExpression)
     {
         Includes.Add(includeExpression);

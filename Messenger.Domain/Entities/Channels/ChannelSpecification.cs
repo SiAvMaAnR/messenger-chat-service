@@ -13,16 +13,16 @@ public class PublicChannelsSpec : Specification<Channel>
                     searchField == null
                     || channel.Name != null && channel.Name.Contains(searchField)
                 )
-        )
-    { }
+        ) { }
 }
 
 public class AccountChannelsSpec : Specification<Channel>
 {
-    public AccountChannelsSpec(int? accountId, string? searchField)
+    public AccountChannelsSpec(int? accountId, string? searchField, string? channelType)
         : base(
-            channel =>
+            (channel) =>
                 channel.Accounts.Any(account => account.Id == accountId)
+                && (channelType == null || channel.Type == channelType)
                 && (
                     searchField == null
                     || channel.Name != null && channel.Name.Contains(searchField)
@@ -39,6 +39,18 @@ public class AccountChannelsSpec : Specification<Channel>
         AddInclude(channel => channel.Accounts);
         AddInclude(channel => channel.Messages);
         AddInclude("Messages.Author");
+    }
+}
+
+public class AccountChannelSpec : Specification<Channel>
+{
+    public AccountChannelSpec(int? accountId, int channelId)
+        : base(
+            (channel) =>
+                channel.Accounts.Any(account => account.Id == accountId) && channel.Id == channelId
+        )
+    {
+        AddInclude(channel => channel.Accounts);
     }
 }
 

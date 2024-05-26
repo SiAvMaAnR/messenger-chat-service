@@ -1,6 +1,7 @@
 ﻿using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Exceptions;
+using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.Domain.Services;
 
@@ -22,6 +23,14 @@ public class AccountBS : DomainService
     public async Task UpdateImageAsync(Account account, string? image)
     {
         account.UpdateImage(image);
+
+        _unitOfWork.Account.Update(account);
+        await _unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task UpdateActivityStatusAsync(Account account, string activityStatus)
+    {
+        account.UpdateActivityStatus(activityStatus);
 
         _unitOfWork.Account.Update(account);
         await _unitOfWork.SaveChangesAsync();

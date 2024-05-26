@@ -7,11 +7,11 @@ using MessengerX.Persistence.Extensions;
 
 namespace MessengerX.Application.Services.ChatService.Adapters;
 
-public class ChannelServiceChannelAdapter : ChannelServiceChannelResponseData
+public class ChannelServiceAccountChannelAdapter : ChannelServiceAccountChannelResponseData
 {
     private readonly string? _imagePath;
 
-    public ChannelServiceChannelAdapter(Channel channel, int? authorId)
+    public ChannelServiceAccountChannelAdapter(Channel channel, int? authorId)
     {
         Id = channel.Id;
         Type = channel.Type;
@@ -44,6 +44,43 @@ public class ChannelServiceChannelAdapter : ChannelServiceChannelResponseData
         {
             _imagePath = channel.Image;
             Name = channel.Name;
+        }
+    }
+
+    public async Task LoadImageAsync()
+    {
+        Image = await FileManager.ReadToBytesAsync(_imagePath);
+    }
+}
+
+public class ChannelServiceAccountChannelForOneAdapter : ChannelServiceAccountChannelResponse
+{
+    private readonly string? _imagePath;
+
+    public ChannelServiceAccountChannelForOneAdapter(Channel channel, int? authorId)
+    {
+        Id = channel.Id;
+        Type = channel.Type;
+        LastActivity = channel.LastActivity;
+
+        if (Type == ChannelType.Direct)
+        {
+            Account? chatPartner = channel
+                .Accounts
+                .FirstOrDefault(account => account.Id != authorId);
+
+            if (chatPartner != null)
+            {
+                _imagePath = chatPartner.Image;
+                Name = chatPartner.Login;
+                UserActivityStatus = chatPartner.ActivityStatus;
+            }
+        }
+        else
+        {
+            _imagePath = channel.Image;
+            Name = channel.Name;
+            MembersCount = channel.Accounts.Count;
         }
     }
 

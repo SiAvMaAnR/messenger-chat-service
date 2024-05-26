@@ -129,16 +129,29 @@ public class ChannelBS : DomainService
 
     public async Task<IEnumerable<Channel>> AccountChannelsAsync(
         int? accountId,
-        string? searchField
+        string? searchField,
+        string? channelType
     )
     {
         IEnumerable<Channel>? channels = await _unitOfWork
             .Channel
-            .GetAllAsync(new AccountChannelsSpec(accountId, searchField));
+            .GetAllAsync(new AccountChannelsSpec(accountId, searchField, channelType));
 
         if (channels == null)
             throw new NotExistsException("Channels not exists");
 
         return channels;
+    }
+
+    public async Task<Channel> AccountChannelAsync(int? accountId, int channelId)
+    {
+        Channel? channel = await _unitOfWork
+            .Channel
+            .GetAsync(new AccountChannelSpec(accountId, channelId));
+
+        if (channel == null)
+            throw new NotExistsException("Channel not exists");
+
+        return channel;
     }
 }

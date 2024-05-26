@@ -66,10 +66,7 @@ public class AccountService : BaseService, IAccountService
             await _accountBS.GetAccountByIdAsync(UserId)
             ?? throw new NotExistsException("Account not found");
 
-        account.UpdateActivityStatus(request.ActivityStatus);
-
-        _unitOfWork.Account.Update(account);
-        await _unitOfWork.SaveChangesAsync();
+        await _accountBS.UpdateActivityStatusAsync(account, request.ActivityStatus);
 
         return new AccountServiceUpdateStatusResponse() { IsSuccess = true };
     }

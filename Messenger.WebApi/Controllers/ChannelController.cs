@@ -95,15 +95,26 @@ public class ChannelController : ControllerBase
 
     [HttpGet("account-channels"), Authorize]
     public async Task<IActionResult> GetAccountChannels(
-        [FromQuery] ChannelControllerChannelsRequest request
+        [FromQuery] ChannelControllerAccountChannelsRequest request
     )
     {
-        ChannelServiceChannelsResponse response = await _channelService.AccountChannelsAsync(
-            new ChannelServiceChannelsRequest()
+        ChannelServiceAccountChannelsResponse response = await _channelService.AccountChannelsAsync(
+            new ChannelServiceAccountChannelsRequest()
             {
                 SearchField = request.SearchField,
+                ChannelType = request.ChannelType,
                 Pagination = request.Pagination
             }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpGet("account-channels/{id:int}"), Authorize]
+    public async Task<IActionResult> GetAccountChannel([FromRoute] int id)
+    {
+        ChannelServiceAccountChannelResponse response = await _channelService.AccountChannelAsync(
+            new ChannelServiceAccountChannelRequest() { Id = id }
         );
 
         return Ok(response);
