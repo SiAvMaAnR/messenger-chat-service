@@ -14,7 +14,7 @@ public static partial class ServiceManagerExtension
         IConfiguration config
     )
     {
-        string? connection = AppEnvironment.GetConnectionString(config);
+        string? connection = AppEnvironment.GetDBConnectionString(config);
 
         serviceCollection.AddOptions();
         serviceCollection.AddDbContext<EFContext>(options => options.UseSqlServer(connection));

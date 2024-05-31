@@ -2,6 +2,7 @@
 using MessengerX.Application.Services.ChannelService;
 using MessengerX.Application.Services.ChatService;
 using MessengerX.Application.Services.ChatService.Models;
+using MessengerX.WebApi.Hubs.Models.Chat;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Messenger.WebApi.Hubs;
@@ -23,10 +24,17 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
     }
 
     [Authorize]
-    public async Task SendMessageAsync(int channelId, string message)
+    public async Task SendMessageAsync(ChatHubSendMessageRequest request)
     {
-        await _chatService.SendMessageAsync(
-            new ChatServiceSendMessageRequest() { ChannelId = channelId, Message = message }
+        ChatServiceSendMessageResponse response = await _chatService.SendMessageAsync(
+            new ChatServiceSendMessageRequest()
+            {
+                ChannelId = request.ChannelId,
+                Message = request.Message
+            }
         );
+
+
+
     }
 }

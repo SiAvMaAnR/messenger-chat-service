@@ -3,7 +3,6 @@ using MessengerX.Application.Services.AdminService.Adapters;
 using MessengerX.Application.Services.AdminService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;

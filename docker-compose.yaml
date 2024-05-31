@@ -7,6 +7,9 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       DB_HOST: database-mssql
+      DB_PORT: 1433
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
     ports:
       - "8080:8080"
     depends_on:

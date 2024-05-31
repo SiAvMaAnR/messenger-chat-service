@@ -1,4 +1,4 @@
-using MessengerX.Application.Services.ChatService.Models;
+﻿using MessengerX.Application.Services.ChatService.Models;
 using MessengerX.Domain.Entities.Messages;
 
 namespace MessengerX.Application.Services.ChatService.Adapters;
