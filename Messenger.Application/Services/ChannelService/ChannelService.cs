@@ -3,7 +3,6 @@ using MessengerX.Application.Services.ChatService.Adapters;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
 using Microsoft.AspNetCore.Http;
 

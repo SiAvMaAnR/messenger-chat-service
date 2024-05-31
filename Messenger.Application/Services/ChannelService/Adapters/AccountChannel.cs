@@ -74,6 +74,7 @@ public class ChannelServiceAccountChannelForOneAdapter : ChannelServiceAccountCh
                 _imagePath = chatPartner.Image;
                 Name = chatPartner.Login;
                 UserActivityStatus = chatPartner.ActivityStatus;
+                UserLastOnlineAt = chatPartner.LastOnlineAt;
             }
         }
         else

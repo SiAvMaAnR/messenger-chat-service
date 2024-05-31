@@ -14,7 +14,7 @@ public abstract partial class Specification<TEntity> : ISpecification<TEntity>
     }
 
     public Expression<Func<TEntity, bool>>? Criteria { get; private set; }
-    public ICollection<Expression<Func<TEntity, object>>> Includes { get; } = [];
+    public ICollection<Expression<Func<TEntity, object?>>> Includes { get; } = [];
     public ICollection<string> IncludeStrings { get; } = [];
     public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }

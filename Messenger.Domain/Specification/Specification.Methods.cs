@@ -9,7 +9,7 @@ public abstract partial class Specification<TEntity>
         Criteria = criteria;
     }
 
-    protected virtual void AddInclude(Expression<Func<TEntity, object>> includeExpression)
+    protected virtual void AddInclude(Expression<Func<TEntity, object?>> includeExpression)
     {
         Includes.Add(includeExpression);
     }

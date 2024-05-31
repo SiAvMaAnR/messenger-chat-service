@@ -7,7 +7,7 @@ public interface ISingleSpecification<TEntity>
     where TEntity : BaseEntity
 {
     Expression<Func<TEntity, bool>>? Criteria { get; }
-    ICollection<Expression<Func<TEntity, object>>> Includes { get; }
+    ICollection<Expression<Func<TEntity, object?>>> Includes { get; }
     ICollection<string> IncludeStrings { get; }
     bool IsAsNoTracking { get; }
 }

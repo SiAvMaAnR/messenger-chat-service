@@ -1,7 +1,6 @@
 ﻿using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.Domain.Services;
 
