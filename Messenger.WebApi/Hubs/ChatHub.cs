@@ -22,6 +22,7 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
         await base.OnDisconnectedAsync(exception);
     }
 
+    [Authorize]
     public async Task SendMessageAsync(int channelId, string message)
     {
         await _chatService.SendMessageAsync(
