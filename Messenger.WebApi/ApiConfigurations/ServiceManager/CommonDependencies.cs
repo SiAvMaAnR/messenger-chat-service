@@ -30,6 +30,7 @@ public static partial class ServiceManagerExtension
         serviceCollection.AddSwaggerGen(options => options.Config());
         serviceCollection.AddDataProtection();
         serviceCollection.AddSignalR();
+        serviceCollection.AddHttpClient();
 
         return serviceCollection;
     }

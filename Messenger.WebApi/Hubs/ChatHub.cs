@@ -33,8 +33,5 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
                 Message = request.Message
             }
         );
-
-
-
     }
 }
