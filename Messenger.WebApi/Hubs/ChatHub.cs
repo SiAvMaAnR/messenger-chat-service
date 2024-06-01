@@ -4,6 +4,7 @@ using MessengerX.Application.Services.ChatService;
 using MessengerX.Application.Services.ChatService.Models;
 using MessengerX.WebApi.Hubs.Models.Chat;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Messenger.WebApi.Hubs;
 
@@ -33,5 +34,7 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
                 Message = request.Message
             }
         );
+
+        // Clients.Users(response.UserIds).SendAsync("Test", "temp");
     }
 }

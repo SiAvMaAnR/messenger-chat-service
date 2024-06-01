@@ -23,7 +23,7 @@ public static class AppEnvironment
         string? redisHost = Environment.GetEnvironmentVariable("REDIS_HOST");
         string? redisPort = Environment.GetEnvironmentVariable("REDIS_PORT");
 
-        string? connectionString = config.GetConnectionString("DBConnection");
+        string? connectionString = config.GetConnectionString("RedisConnection");
 
         if (connectionString == null)
             throw new Exception("Connection string is not correct (Redis)");

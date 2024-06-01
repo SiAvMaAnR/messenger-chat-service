@@ -1,3 +1,9 @@
-﻿namespace MessengerX.Application.Services.ChatService.Models;
+﻿using MessengerX.Domain.Entities.Messages;
 
-public class ChatServiceSendMessageResponse { }
+namespace MessengerX.Application.Services.ChatService.Models;
+
+public class ChatServiceSendMessageResponse
+{
+    public IEnumerable<int> UserIds { get; set; } = [];
+    public required Message Message { get; set; }
+}
