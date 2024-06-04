@@ -13,7 +13,8 @@ public class PublicChannelsSpec : Specification<Channel>
                     searchField == null
                     || channel.Name != null && channel.Name.Contains(searchField)
                 )
-        ) { }
+        )
+    { }
 }
 
 public class AccountChannelsSpec : Specification<Channel>

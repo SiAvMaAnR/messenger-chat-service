@@ -5,11 +5,7 @@ services:
     container_name: messenger-server
     restart: on-failure
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      DB_HOST: database-mssql
-      DB_PORT: 1433
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      ASPNETCORE_ENVIRONMENT: Production
     ports:
       - "8080:8080"
     depends_on:
