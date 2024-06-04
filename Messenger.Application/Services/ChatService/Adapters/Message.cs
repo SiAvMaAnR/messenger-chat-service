@@ -9,7 +9,7 @@ public class ChatServiceMessageAdapter : ChatServiceMessageResponseData
     {
         Id = message.Id;
         Text = message.Text;
-        ModifiedDate = message.ModifiedDate;
+        ModifiedAt = message.ModifiedAt;
         IsRead = message.IsRead;
         IsDeleted = message.IsDeleted;
     }

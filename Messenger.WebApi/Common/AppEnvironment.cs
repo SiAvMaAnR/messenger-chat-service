@@ -4,11 +4,15 @@ public static class AppEnvironment
 {
     internal const string Production = "Production";
     internal const string Development = "Development";
+    private const string DefaultDBHost = "localhost";
+    private const string DefaultDBPort = "1433";
+    private const string DefaultRedisHost = "localhost";
+    private const string DefaultRedisPort = "6379";
 
     public static string GetDBConnectionString(IConfiguration config)
     {
-        string? dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-        string? dbPort = Environment.GetEnvironmentVariable("DB_PORT");
+        string dbHost = Environment.GetEnvironmentVariable("DB_HOST") ?? DefaultDBHost;
+        string dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? DefaultDBPort;
 
         string? connectionString = config.GetConnectionString("DBConnection");
 
@@ -20,8 +24,8 @@ public static class AppEnvironment
 
     public static string GetRedisConnectionString(IConfiguration config)
     {
-        string? redisHost = Environment.GetEnvironmentVariable("REDIS_HOST");
-        string? redisPort = Environment.GetEnvironmentVariable("REDIS_PORT");
+        string redisHost = Environment.GetEnvironmentVariable("REDIS_HOST") ?? DefaultRedisHost;
+        string redisPort = Environment.GetEnvironmentVariable("REDIS_PORT") ?? DefaultRedisPort;
 
         string? connectionString = config.GetConnectionString("RedisConnection");
 

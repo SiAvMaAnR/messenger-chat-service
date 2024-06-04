@@ -18,7 +18,7 @@ public class ChatController : ControllerBase
     }
 
     [HttpGet("messages"), Authorize]
-    public async Task<IActionResult> GetAccountChannels(
+    public async Task<IActionResult> GetMessages(
         [FromQuery] ChatControllerMessagesRequest request
     )
     {

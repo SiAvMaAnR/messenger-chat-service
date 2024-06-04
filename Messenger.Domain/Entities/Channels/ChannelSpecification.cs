@@ -13,13 +13,12 @@ public class PublicChannelsSpec : Specification<Channel>
                     searchField == null
                     || channel.Name != null && channel.Name.Contains(searchField)
                 )
-        )
-    { }
+        ) { }
 }
 
 public class AccountChannelsSpec : Specification<Channel>
 {
-    public AccountChannelsSpec(int? accountId, string? searchField, string? channelType)
+    public AccountChannelsSpec(int accountId, string? searchField, string? channelType)
         : base(
             (channel) =>
                 channel.Accounts.Any(account => account.Id == accountId)
@@ -28,12 +27,7 @@ public class AccountChannelsSpec : Specification<Channel>
                     searchField == null
                     || channel.Name != null && channel.Name.Contains(searchField)
                     || channel.Type == ChannelType.Direct
-                        && channel
-                            .Accounts
-                            .Any(
-                                account =>
-                                    account.Id != accountId && account.Login.Contains(searchField)
-                            )
+                        && channel.Accounts.Any(account => account.Login.Contains(searchField))
                 )
         )
     {
@@ -45,13 +39,14 @@ public class AccountChannelsSpec : Specification<Channel>
 
 public class AccountChannelSpec : Specification<Channel>
 {
-    public AccountChannelSpec(int? accountId, int channelId)
+    public AccountChannelSpec(int accountId, int channelId)
         : base(
             (channel) =>
                 channel.Accounts.Any(account => account.Id == accountId) && channel.Id == channelId
         )
     {
         AddInclude(channel => channel.Accounts);
+        ApplyTracking();
     }
 }
 

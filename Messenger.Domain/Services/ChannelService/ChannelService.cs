@@ -128,7 +128,7 @@ public class ChannelBS : DomainService
     }
 
     public async Task<IEnumerable<Channel>> AccountChannelsAsync(
-        int? accountId,
+        int accountId,
         string? searchField,
         string? channelType
     )
@@ -143,7 +143,7 @@ public class ChannelBS : DomainService
         return channels;
     }
 
-    public async Task<Channel> AccountChannelAsync(int? accountId, int channelId)
+    public async Task<Channel> AccountChannelAsync(int accountId, int channelId)
     {
         Channel? channel = await _unitOfWork
             .Channel

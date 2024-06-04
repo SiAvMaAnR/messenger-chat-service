@@ -6,7 +6,7 @@ public class ChatServiceMessageResponseData
 {
     public int Id { get; set; }
     public string? Text { get; set; }
-    public DateTime? ModifiedDate { get; set; }
+    public DateTime? ModifiedAt { get; set; }
     public bool IsRead { get; set; }
     public bool IsDeleted { get; set; }
 }

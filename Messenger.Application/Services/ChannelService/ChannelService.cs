@@ -88,7 +88,7 @@ public class ChannelService : BaseService, IChannelService
     )
     {
         IEnumerable<Channel> channels = await _channelBS.AccountChannelsAsync(
-            _userIdentity.Id,
+            UserId,
             request.SearchField,
             request.ChannelType
         );
@@ -117,7 +117,7 @@ public class ChannelService : BaseService, IChannelService
         ChannelServiceAccountChannelRequest request
     )
     {
-        Channel channel = await _channelBS.AccountChannelAsync(_userIdentity.Id, request.Id);
+        Channel channel = await _channelBS.AccountChannelAsync(UserId, request.Id);
 
         var adaptedChannel = new ChannelServiceAccountChannelForOneAdapter(
             channel,

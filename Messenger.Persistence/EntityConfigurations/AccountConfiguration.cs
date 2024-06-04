@@ -12,6 +12,8 @@ internal class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.UseTphMappingStrategy();
         builder.HasIndex(account => account.Email).IsUnique();
         builder.Property(account => account.Email).IsRequired();
+        builder.HasIndex(account => account.Email);
+        builder.HasIndex(account => account.Login);
         builder.Property(account => account.PasswordHash).IsRequired();
         builder.Property(account => account.PasswordSalt).IsRequired();
         builder.Property(account => account.Role).IsRequired();

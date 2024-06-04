@@ -35,6 +35,6 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
             }
         );
 
-        // Clients.Users(response.UserIds).SendAsync("Test", "temp");
+        await Clients.Users(response.UserIds).SendAsync("SendMessageResponse", response.Message);
     }
 }

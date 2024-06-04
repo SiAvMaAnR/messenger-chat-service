@@ -52,7 +52,19 @@ public class ChatService : BaseService, IChatService
         ChatServiceSendMessageRequest request
     )
     {
-        await Task.Run(() => { });
-        throw new NotImplementedException();
+        var message = new Message(UserId, request.ChannelId) { Text = request.Message };
+
+        await _chatBS.AddMessageAsync(request.ChannelId, message);
+
+        IEnumerable<string> userIds = await _chatBS.GetUserIdsByChannelIdAsync(
+            UserId,
+            request.ChannelId
+        );
+
+        return new ChatServiceSendMessageResponse()
+        {
+            UserIds = userIds,
+            Message = new ChatServiceMessageAdapter(message)
+        };
     }
 }
