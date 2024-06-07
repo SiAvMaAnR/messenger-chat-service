@@ -13,3 +13,11 @@ public class UserByIdSpec : Specification<User>
         }
     }
 }
+
+public class UsersSpec : Specification<User>
+{
+    public UsersSpec()
+    {
+        ApplyOrderBy(user => user.Id);
+    }
+}

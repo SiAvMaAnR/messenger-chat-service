@@ -9,6 +9,9 @@ public class ChatServiceMessageResponseData
     public DateTime? ModifiedAt { get; set; }
     public bool IsRead { get; set; }
     public bool IsDeleted { get; set; }
+    public int AuthorId { get; set; }
+    public string? AuthorLogin { get; set; }
+    public int ChannelId { get; set; }
 }
 
 public class ChatServiceMessagesResponse

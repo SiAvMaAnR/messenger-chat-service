@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using MessengerX.Domain.Entities;
+using MessengerX.Domain.Shared.Models;
 
 namespace MessengerX.Domain.Specification;
 
@@ -19,8 +20,6 @@ public abstract partial class Specification<TEntity> : ISpecification<TEntity>
     public Expression<Func<TEntity, object>>? OrderBy { get; private set; }
     public Expression<Func<TEntity, object>>? OrderByDescending { get; private set; }
     public Expression<Func<TEntity, object>>? GroupBy { get; private set; }
-    public int Take { get; private set; }
-    public int Skip { get; private set; }
-    public bool IsPagingEnabled { get; private set; } = false;
+    public Pagination? Pagination { get; private set; }
     public bool IsAsNoTracking { get; private set; } = true;
 }

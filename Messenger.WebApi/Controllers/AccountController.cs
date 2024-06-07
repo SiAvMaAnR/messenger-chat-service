@@ -35,6 +35,16 @@ public class AccountController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet("accounts/{id:int}/image"), Authorize]
+    public async Task<IActionResult> GetAccountImage([FromRoute] int id)
+    {
+        AccountServiceAccountImageResponse response = await _accountService.GetAccountImageAsync(
+            new AccountServiceAccountImageRequest() { Id = id }
+        );
+
+        return Ok(response);
+    }
+
     [HttpGet("accounts"), Authorize]
     public async Task<IActionResult> GetAccounts(
         [FromQuery] AccountControllerAccountsRequest request

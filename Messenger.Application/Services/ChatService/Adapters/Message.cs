@@ -12,5 +12,8 @@ public class ChatServiceMessageAdapter : ChatServiceMessageResponseData
         ModifiedAt = message.ModifiedAt;
         IsRead = message.IsRead;
         IsDeleted = message.IsDeleted;
+        AuthorId = message.AuthorId;
+        AuthorLogin = message.Author?.Login;
+        ChannelId = message.ChannelId;
     }
 }

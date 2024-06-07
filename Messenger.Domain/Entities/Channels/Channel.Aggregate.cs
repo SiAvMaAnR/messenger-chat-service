@@ -23,7 +23,7 @@ public partial class Channel : IAggregateRoot
 
     public Message? GetLastMessage()
     {
-        return Messages.LastOrDefault();
+        return Messages.OrderByDescending(message => message.CreatedAt).FirstOrDefault();
     }
 
     public void UpdateLastActivity(Message message)

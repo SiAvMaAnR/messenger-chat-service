@@ -14,7 +14,9 @@ public class PublicChannelsSpec : Specification<Channel>
                     || channel.Name != null && channel.Name.Contains(searchField)
                 )
         )
-    { }
+    {
+        ApplyOrderBy(channel => channel.Id);
+    }
 }
 
 public class AccountChannelsSpec : Specification<Channel>
@@ -35,6 +37,7 @@ public class AccountChannelsSpec : Specification<Channel>
         AddInclude(channel => channel.Accounts);
         AddInclude(channel => channel.Messages);
         AddInclude("Messages.Author");
+        ApplyOrderByDescending(channel => channel.LastActivity);
     }
 }
 

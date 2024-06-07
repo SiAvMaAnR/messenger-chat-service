@@ -43,11 +43,6 @@ public static class SpecificationEvaluator
             query = query.GroupBy(specification.GroupBy).SelectMany(x => x);
         }
 
-        if (specification.IsPagingEnabled)
-        {
-            query = query.Skip(specification.Skip).Take(specification.Take);
-        }
-
         if (specification.IsAsNoTracking)
         {
             query = query.AsNoTracking();

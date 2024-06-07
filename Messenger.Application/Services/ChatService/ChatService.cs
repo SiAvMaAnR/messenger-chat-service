@@ -30,11 +30,7 @@ public class ChatService : BaseService, IChatService
             request.SearchField
         );
 
-        IOrderedEnumerable<Message> sortedMessages = messages.OrderByDescending(
-            message => message.CreatedAt
-        );
-
-        PaginatorResponse<Message> paginatedData = sortedMessages.Pagination(request.Pagination);
+        PaginatorResponse<Message> paginatedData = messages.Pagination(request.Pagination);
 
         var adaptedMessages = paginatedData
             .Collection

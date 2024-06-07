@@ -16,5 +16,7 @@ public class MessagesSpec : Specification<Message>
         )
     {
         AddInclude((message) => message.Channel);
+        AddInclude((message) => message.Author);
+        ApplyOrderByDescending((message) => message.CreatedAt);
     }
 }

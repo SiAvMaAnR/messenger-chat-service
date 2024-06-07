@@ -77,9 +77,7 @@ public class AccountService : BaseService, IAccountService
     {
         IEnumerable<Account> accounts = await _accountBS.GetAccountsAsync(request.SearchField);
 
-        PaginatorResponse<Account> paginatedData = accounts
-            .OrderBy(account => account.Id)
-            .Pagination(request.Pagination);
+        PaginatorResponse<Account> paginatedData = accounts.Pagination(request.Pagination);
 
         var adaptedAccounts = paginatedData
             .Collection
@@ -109,5 +107,12 @@ public class AccountService : BaseService, IAccountService
             Role = user.Role,
             Birthday = (user as User)?.Birthday
         };
+    }
+
+    public async Task<AccountServiceAccountImageResponse> GetAccountImageAsync(
+        AccountServiceAccountImageRequest request
+    )
+    {
+        return await Task.FromResult(new AccountServiceAccountImageResponse() { });
     }
 }

@@ -33,9 +33,7 @@ public class AdminService : BaseService, IAdminService
     {
         IEnumerable<User> users = await _userBS.GetUsersAsync();
 
-        PaginatorResponse<User> paginatedData = users
-            .OrderBy(user => user.Id)
-            .Pagination(request.Pagination);
+        PaginatorResponse<User> paginatedData = users.Pagination(request.Pagination);
 
         var adaptedUsers = paginatedData
             .Collection

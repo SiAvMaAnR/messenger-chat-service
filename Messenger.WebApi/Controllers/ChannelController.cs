@@ -64,7 +64,7 @@ public class ChannelController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPost("join"), Authorize]
+    [HttpPost("join-channel"), Authorize]
     public async Task<IActionResult> ConnectToChannel(
         [FromBody] ChannelControllerConnectToChannelRequest request
     )

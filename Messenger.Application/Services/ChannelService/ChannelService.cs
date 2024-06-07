@@ -65,9 +65,7 @@ public class ChannelService : BaseService, IChannelService
     {
         IEnumerable<Channel> channels = await _channelBS.PublicChannelsAsync(request.SearchField);
 
-        IOrderedEnumerable<Channel> sortedChannels = channels.OrderBy(channel => channel.Id);
-
-        PaginatorResponse<Channel> paginatedData = sortedChannels.Pagination(request.Pagination);
+        PaginatorResponse<Channel> paginatedData = channels.Pagination(request.Pagination);
 
         var adaptedChannels = paginatedData
             .Collection
@@ -93,11 +91,7 @@ public class ChannelService : BaseService, IChannelService
             request.ChannelType
         );
 
-        IOrderedEnumerable<Channel> sortedChannels = channels.OrderByDescending(
-            channel => channel.LastActivity
-        );
-
-        PaginatorResponse<Channel> paginatedData = sortedChannels.Pagination(request.Pagination);
+        PaginatorResponse<Channel> paginatedData = channels.Pagination(request.Pagination);
 
         var adaptedChannels = paginatedData
             .Collection

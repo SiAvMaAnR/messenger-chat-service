@@ -32,5 +32,8 @@ public class AccountByEmailSpec : Specification<Account>
 public class AccountsSpec : Specification<Account>
 {
     public AccountsSpec(string? searchField)
-        : base((account) => searchField == null || account.Login.Contains(searchField)) { }
+        : base((account) => searchField == null || account.Login.Contains(searchField))
+    {
+        ApplyOrderBy(account => account.Id);
+    }
 }
