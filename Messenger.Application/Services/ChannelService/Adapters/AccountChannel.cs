@@ -7,11 +7,11 @@ using MessengerX.Persistence.Extensions;
 
 namespace MessengerX.Application.Services.ChatService.Adapters;
 
-public class ChannelServiceAccountChannelAdapter : ChannelServiceAccountChannelResponseData
+public class ChannelServiceAccountChannelListAdapter : ChannelServiceAccountChannelResponseData
 {
     private readonly string? _imagePath;
 
-    public ChannelServiceAccountChannelAdapter(Channel channel, int? authorId)
+    public ChannelServiceAccountChannelListAdapter(Channel channel, int? authorId)
     {
         Id = channel.Id;
         Type = channel.Type;
@@ -53,15 +53,26 @@ public class ChannelServiceAccountChannelAdapter : ChannelServiceAccountChannelR
     }
 }
 
-public class ChannelServiceAccountChannelForOneAdapter : ChannelServiceAccountChannelResponse
+public class ChannelServiceAccountChannelAdapter : ChannelServiceAccountChannelResponse
 {
     private readonly string? _imagePath;
 
-    public ChannelServiceAccountChannelForOneAdapter(Channel channel, int? authorId)
+    public ChannelServiceAccountChannelAdapter(Channel channel, int? authorId)
     {
         Id = channel.Id;
         Type = channel.Type;
         LastActivity = channel.LastActivity;
+
+        Message? lastMessage = channel.GetLastMessage();
+
+        if (lastMessage != null)
+        {
+            LastMessage = new ChannelServiceLastMessageForOneResponseData()
+            {
+                Author = lastMessage.Author?.Login,
+                Content = lastMessage.Text
+            };
+        }
 
         if (Type == ChannelType.Direct)
         {

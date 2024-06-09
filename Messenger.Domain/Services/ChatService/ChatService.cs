@@ -32,6 +32,7 @@ public class ChatBS : DomainService
             throw new NotExistsException("Channel not exists");
 
         channel.AddMessage(message);
+        channel.UpdateLastActivity();
 
         await _unitOfWork.SaveChangesAsync();
     }

@@ -50,6 +50,9 @@ public class AccountChannelSpec : Specification<Channel>
         )
     {
         AddInclude(channel => channel.Accounts);
+        AddInclude(channel => channel.Messages);
+        AddInclude("Messages.Author");
+        ApplyOrderByDescending(channel => channel.LastActivity);
         ApplyTracking();
     }
 }

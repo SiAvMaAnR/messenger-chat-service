@@ -1,5 +1,11 @@
 ﻿namespace MessengerX.Application.Services.ChannelService.Models;
 
+public class ChannelServiceLastMessageForOneResponseData
+{
+    public string? Content { get; set; }
+    public string? Author { get; set; }
+}
+
 public class ChannelServiceAccountChannelResponse
 {
     public int Id { get; set; }
@@ -10,4 +16,5 @@ public class ChannelServiceAccountChannelResponse
     public string? UserActivityStatus { get; set; }
     public DateTime? UserLastOnlineAt { get; set; }
     public int? MembersCount { get; set; }
+    public ChannelServiceLastMessageForOneResponseData? LastMessage { get; set; }
 }

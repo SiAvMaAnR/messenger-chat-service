@@ -1,5 +1,6 @@
 ﻿using Messenger.WebApi.Hubs.Common;
 using MessengerX.Application.Services.ChannelService;
+using MessengerX.Application.Services.ChannelService.Models;
 using MessengerX.Application.Services.ChatService;
 using MessengerX.Application.Services.ChatService.Models;
 using MessengerX.WebApi.Hubs.Models.Chat;
@@ -22,6 +23,16 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         await base.OnDisconnectedAsync(exception);
+    }
+
+    [Authorize]
+    public async Task ChannelAsync(ChatHubChannelRequest request)
+    {
+        ChannelServiceAccountChannelResponse response = await _channelService.AccountChannelAsync(
+            new ChannelServiceAccountChannelRequest() { Id = request.ChannelId }
+        );
+
+        await Clients.Caller.SendAsync("ChannelResponse", response);
     }
 
     [Authorize]

@@ -26,9 +26,9 @@ public partial class Channel : IAggregateRoot
         return Messages.OrderByDescending(message => message.CreatedAt).FirstOrDefault();
     }
 
-    public void UpdateLastActivity(Message message)
+    public void UpdateLastActivity()
     {
-        Messages.Add(message);
+        LastActivity = DateTime.Now;
     }
 
     public void UpdateImage(string? image)
