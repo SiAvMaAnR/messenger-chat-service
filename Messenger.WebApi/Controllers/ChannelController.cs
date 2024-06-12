@@ -1,8 +1,10 @@
-﻿using MessengerX.Application.Services.ChannelService;
+﻿using Messenger.WebApi.Hubs;
+using MessengerX.Application.Services.ChannelService;
 using MessengerX.Application.Services.ChannelService.Models;
 using MessengerX.WebApi.Controllers.Models.Channel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace MessengerX.WebApi.Controllers;
 
@@ -11,10 +13,12 @@ namespace MessengerX.WebApi.Controllers;
 public class ChannelController : ControllerBase
 {
     private readonly IChannelService _channelService;
+    private readonly IHubContext<ChatHub> _chatHubContext;
 
-    public ChannelController(IChannelService channelService)
+    public ChannelController(IChannelService channelService, IHubContext<ChatHub> chatHubContext)
     {
         _channelService = channelService;
+        _chatHubContext = chatHubContext;
     }
 
     [HttpPost("create-direct"), Authorize]
@@ -118,5 +122,26 @@ public class ChannelController : ControllerBase
         );
 
         return Ok(response);
+    }
+
+    [HttpPost("setup-direct"), Authorize]
+    public async Task<IActionResult> SetUpDirectChannel(
+        [FromBody] ChannelControllerSetUpDirectChannelRequest request
+    )
+    {
+        ChannelServiceSetUpDirectChannelResponse response =
+            await _channelService.SetUpDirectChannelAsync(
+                new ChannelServiceSetUpDirectChannelRequest() { PartnerId = request.PartnerId }
+            );
+
+        if (response.IsNeedNotifyUsers)
+        {
+            await _chatHubContext
+                .Clients
+                .Users(response.UserIds)
+                .SendAsync("ChannelResponse", response.DirectChannel);
+        }
+
+        return Ok(response.DirectChannel?.Id);
     }
 }

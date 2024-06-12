@@ -11,7 +11,7 @@ public class ChannelBS : DomainService
     public ChannelBS(IAppSettings appSettings, IUnitOfWork unitOfWork)
         : base(appSettings, unitOfWork) { }
 
-    public async Task CreateDirectChannelAsync(int firstAccountId, int secondAccountId)
+    public async Task<Channel> CreateDirectChannelAsync(int firstAccountId, int secondAccountId)
     {
         Account? firstAccount = await _unitOfWork
             .Account
@@ -42,9 +42,11 @@ public class ChannelBS : DomainService
 
         await _unitOfWork.Channel.AddAsync(channel);
         await _unitOfWork.SaveChangesAsync();
+
+        return channel;
     }
 
-    public async Task CreatePrivateChannelAsync(
+    public async Task<Channel> CreatePrivateChannelAsync(
         int accountId,
         string channelName,
         IEnumerable<int> members
@@ -69,9 +71,11 @@ public class ChannelBS : DomainService
 
         await _unitOfWork.Channel.AddAsync(channel);
         await _unitOfWork.SaveChangesAsync();
+
+        return channel;
     }
 
-    public async Task CreatePublicChannelAsync(
+    public async Task<Channel> CreatePublicChannelAsync(
         int accountId,
         string channelName,
         IEnumerable<int> members
@@ -96,6 +100,8 @@ public class ChannelBS : DomainService
 
         await _unitOfWork.Channel.AddAsync(channel);
         await _unitOfWork.SaveChangesAsync();
+
+        return channel;
     }
 
     public async Task ConnectToChannelAsync(int accountId, int channelId)
@@ -151,6 +157,15 @@ public class ChannelBS : DomainService
 
         if (channel == null)
             throw new NotExistsException("Channel not exists");
+
+        return channel;
+    }
+
+    public async Task<Channel?> AccountDirectChannelAsync(int accountId, int partnerId)
+    {
+        Channel? channel = await _unitOfWork
+            .Channel
+            .GetAsync(new AccountDirectChannelSpec(accountId, partnerId));
 
         return channel;
     }

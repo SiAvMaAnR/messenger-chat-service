@@ -3,6 +3,7 @@ using MessengerX.Application.Services.ChatService.Adapters;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Channels;
+using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
 using Microsoft.AspNetCore.Http;
 
@@ -120,5 +121,51 @@ public class ChannelService : BaseService, IChannelService
         await adaptedChannel.LoadImageAsync();
 
         return adaptedChannel;
+    }
+
+    public async Task<ChannelServiceSetUpDirectChannelResponse> SetUpDirectChannelAsync(
+        ChannelServiceSetUpDirectChannelRequest request
+    )
+    {
+        Channel? channel = await _channelBS.AccountDirectChannelAsync(UserId, request.PartnerId);
+
+        Channel? directChannel;
+        bool isNeedNotify = false;
+
+        if (channel != null)
+        {
+            directChannel = channel;
+        }
+        else
+        {
+            Channel newChannel = await _channelBS.CreateDirectChannelAsync(
+                UserId,
+                request.PartnerId
+            );
+
+            directChannel = await _channelBS.AccountDirectChannelAsync(UserId, request.PartnerId);
+            isNeedNotify = true;
+        }
+
+        if (directChannel == null)
+            throw new NotExistsException("Channel not exists");
+
+        IEnumerable<string> userIds = directChannel
+            .Accounts
+            .Select(account => account.Id.ToString());
+
+        var adaptedChannel = new ChannelServiceDirectChannelAdapter(
+            directChannel,
+            _userIdentity.Id
+        );
+
+        await adaptedChannel.LoadImageAsync();
+
+        return new ChannelServiceSetUpDirectChannelResponse()
+        {
+            DirectChannel = adaptedChannel,
+            UserIds = userIds,
+            IsNeedNotifyUsers = isNeedNotify
+        };
     }
 }

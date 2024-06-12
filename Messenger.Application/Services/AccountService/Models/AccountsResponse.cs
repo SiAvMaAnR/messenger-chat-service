@@ -10,6 +10,7 @@ public class AccountServiceAccountResponseData
     public string? Role { get; set; }
     public bool? IsBanned { get; set; }
     public string? ActivityStatus { get; set; }
+    public DateTime LastOnlineAt { get; set; }
     public byte[]? Image { get; set; }
     public DateOnly? Birthday { get; set; }
     public DateTime? CreatedAt { get; set; }

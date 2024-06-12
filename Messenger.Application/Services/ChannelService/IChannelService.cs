@@ -26,4 +26,7 @@ public interface IChannelService : IBaseService
     Task<ChannelServiceAccountChannelResponse> AccountChannelAsync(
         ChannelServiceAccountChannelRequest request
     );
+    Task<ChannelServiceSetUpDirectChannelResponse> SetUpDirectChannelAsync(
+        ChannelServiceSetUpDirectChannelRequest request
+    );
 }

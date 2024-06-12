@@ -19,6 +19,7 @@ public class AccountServiceAccountAdapter : AccountServiceAccountResponseData
         Role = account.Role;
         IsBanned = (account as User)?.IsBanned;
         ActivityStatus = account.ActivityStatus;
+        LastOnlineAt = account.LastOnlineAt;
     }
 
     public async Task LoadImageAsync()

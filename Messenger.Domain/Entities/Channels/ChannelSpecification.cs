@@ -57,6 +57,20 @@ public class AccountChannelSpec : Specification<Channel>
     }
 }
 
+public class AccountDirectChannelSpec : Specification<Channel>
+{
+    public AccountDirectChannelSpec(int accountId, int consumerId)
+        : base(
+            (channel) =>
+                channel.Type == ChannelType.Direct
+                && channel.Accounts.Any(account => account.Id == accountId)
+                && channel.Accounts.Any(account => account.Id == consumerId)
+        )
+    {
+        AddInclude(channel => channel.Accounts);
+    }
+}
+
 public class ChannelByIdSpec : Specification<Channel>
 {
     public ChannelByIdSpec(int? id)
