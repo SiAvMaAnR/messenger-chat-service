@@ -72,6 +72,8 @@ public static class SpecificationEvaluator
             .IncludeStrings
             .Aggregate(query, (current, include) => current.Include(include));
 
+        query = query.AsSplitQuery();
+
         if (specification.IsAsNoTracking)
         {
             query = query.AsNoTracking();

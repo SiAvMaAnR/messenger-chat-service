@@ -35,9 +35,9 @@ public class AccountBS : DomainService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Account>> GetAccountsAsync(string? searchField)
+    public async Task<IEnumerable<Account>> GetAccountsAsync(int accountId, string? searchField)
     {
-        return await _unitOfWork.Account.GetAllAsync(new AccountsSpec(searchField))
+        return await _unitOfWork.Account.GetAllAsync(new AccountsSpec(accountId, searchField))
             ?? throw new NotExistsException("Accounts");
     }
 }
