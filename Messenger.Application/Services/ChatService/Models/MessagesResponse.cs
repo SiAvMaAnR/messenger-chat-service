@@ -12,6 +12,7 @@ public class ChatServiceMessageResponseData
     public int AuthorId { get; set; }
     public string? AuthorLogin { get; set; }
     public int ChannelId { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
 
 public class ChatServiceMessagesResponse

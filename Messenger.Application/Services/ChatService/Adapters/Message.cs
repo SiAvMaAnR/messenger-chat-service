@@ -15,5 +15,6 @@ public class ChatServiceMessageAdapter : ChatServiceMessageResponseData
         AuthorId = message.AuthorId;
         AuthorLogin = message.Author?.Login;
         ChannelId = message.ChannelId;
+        CreatedAt = message.CreatedAt;
     }
 }

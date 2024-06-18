@@ -1,4 +1,4 @@
-using MessengerX.Application.Services.ChannelService.Models;
+﻿using MessengerX.Application.Services.ChannelService.Models;
 using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels;
 using MessengerX.Domain.Entities.Messages;

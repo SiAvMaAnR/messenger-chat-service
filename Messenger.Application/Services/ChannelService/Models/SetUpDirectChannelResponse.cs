@@ -1,4 +1,4 @@
-namespace MessengerX.Application.Services.ChannelService.Models;
+﻿namespace MessengerX.Application.Services.ChannelService.Models;
 
 public class ChannelServiceDirectChannel
 {

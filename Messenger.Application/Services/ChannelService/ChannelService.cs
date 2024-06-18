@@ -2,9 +2,11 @@
 using MessengerX.Application.Services.ChatService.Adapters;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
+using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels;
 using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
+using MessengerX.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;
 
 namespace MessengerX.Application.Services.ChannelService;
@@ -167,5 +169,30 @@ public class ChannelService : BaseService, IChannelService
             UserIds = userIds,
             IsNeedNotifyUsers = isNeedNotify
         };
+    }
+
+    public async Task<ChannelServiceMemberImagesResponse> MemberImagesAsync(
+        ChannelServiceMemberImagesRequest request
+    )
+    {
+        Channel channel = await _channelBS.AccountChannelAsync(UserId, request.ChannelId);
+
+        ICollection<Account> accounts = channel.Accounts;
+
+        IEnumerable<Task<ChannelServiceMemberImageResponseData>> memberImageTasks = accounts.Select(
+            async (account) =>
+            {
+                byte[]? image = await FileManager.ReadToBytesAsync(account.Image);
+                return new ChannelServiceMemberImageResponseData()
+                {
+                    Id = account.Id,
+                    Image = image
+                };
+            }
+        );
+
+        ChannelServiceMemberImageResponseData[] memberImages = await Task.WhenAll(memberImageTasks);
+
+        return new ChannelServiceMemberImagesResponse() { MemberImages = memberImages };
     }
 }

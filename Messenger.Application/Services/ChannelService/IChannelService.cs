@@ -29,4 +29,7 @@ public interface IChannelService : IBaseService
     Task<ChannelServiceSetUpDirectChannelResponse> SetUpDirectChannelAsync(
         ChannelServiceSetUpDirectChannelRequest request
     );
+    Task<ChannelServiceMemberImagesResponse> MemberImagesAsync(
+        ChannelServiceMemberImagesRequest request
+    );
 }

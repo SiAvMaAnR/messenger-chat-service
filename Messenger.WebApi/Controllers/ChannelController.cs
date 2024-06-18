@@ -144,4 +144,16 @@ public class ChannelController : ControllerBase
 
         return Ok(response.DirectChannel?.Id);
     }
+
+    [HttpGet("member-images"), Authorize]
+    public async Task<IActionResult> GetMemberImages(
+        [FromQuery] ChannelControllerMemberImagesRequest request
+    )
+    {
+        ChannelServiceMemberImagesResponse response = await _channelService.MemberImagesAsync(
+            new ChannelServiceMemberImagesRequest() { ChannelId = request.ChannelId }
+        );
+
+        return Ok(response);
+    }
 }
