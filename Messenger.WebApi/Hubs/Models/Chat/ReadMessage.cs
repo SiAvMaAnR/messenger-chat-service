@@ -1,7 +1,7 @@
 ﻿namespace MessengerX.WebApi.Hubs.Models.Chat;
 
-public class ChatHubSendMessageRequest
+public class ChatHubReadMessageRequest
 {
     public required int ChannelId { get; set; }
-    public required string Message { get; set; }
+    public required int MessageId { get; set; }
 }

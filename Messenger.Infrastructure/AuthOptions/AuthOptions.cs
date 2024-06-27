@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 
-namespace MessengerX.Application.Other.AuthOptions;
+namespace MessengerX.Infrastructure.AuthOptions;
 
 public static class AuthOptions
 {

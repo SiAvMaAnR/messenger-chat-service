@@ -63,4 +63,25 @@ public class ChatService : BaseService, IChatService
             Message = new ChatServiceMessageAdapter(message)
         };
     }
+
+    public async Task<ChatServiceReadMessageResponse> ReadMessageAsync(
+        ChatServiceReadMessageRequest request
+    )
+    {
+        IEnumerable<Message> readMessages = await _chatBS.ReadMessagesAsync(
+            request.ChannelId,
+            request.MessageId
+        );
+
+        IEnumerable<string> userIds = await _chatBS.GetUserIdsByChannelIdAsync(
+            UserId,
+            request.ChannelId
+        );
+
+        return new ChatServiceReadMessageResponse()
+        {
+            ReadMessageIds = readMessages.Select(message => message.Id),
+            UserIds = userIds
+        };
+    }
 }

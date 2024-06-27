@@ -20,3 +20,25 @@ public class MessagesSpec : Specification<Message>
         ApplyOrderByDescending((message) => message.CreatedAt);
     }
 }
+
+public class UnreadMessagesSpec : Specification<Message>
+{
+    public UnreadMessagesSpec(int channelId, int lastMessageId)
+        : base(
+            (message) =>
+                message.ChannelId == channelId && message.Id <= lastMessageId && !message.IsRead
+        )
+    {
+        ApplyTracking();
+    }
+}
+
+public class MessageSpec : Specification<Message>
+{
+    public MessageSpec(int channelId, int messageId)
+        : base((message) => message.ChannelId == channelId && message.Id == messageId)
+    {
+        AddInclude((message) => message.Channel);
+        AddInclude((message) => message.Author);
+    }
+}

@@ -32,7 +32,7 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
             new ChannelServiceAccountChannelRequest() { Id = request.ChannelId }
         );
 
-        await Clients.Caller.SendAsync("ChannelResponse", response);
+        await Clients.Caller.SendAsync(ChatHubMethod.ChannelResponse, response);
     }
 
     [Authorize]
@@ -46,6 +46,24 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
             }
         );
 
-        await Clients.Users(response.UserIds).SendAsync("SendMessageResponse", response.Message);
+        await Clients
+            .Users(response.UserIds)
+            .SendAsync(ChatHubMethod.SendMessageResponse, response.Message);
+    }
+
+    [Authorize]
+    public async Task ReadMessageAsync(ChatHubReadMessageRequest request)
+    {
+        ChatServiceReadMessageResponse response = await _chatService.ReadMessageAsync(
+            new ChatServiceReadMessageRequest()
+            {
+                ChannelId = request.ChannelId,
+                MessageId = request.MessageId
+            }
+        );
+
+        await Clients
+            .Users(response.UserIds)
+            .SendAsync(ChatHubMethod.ReadMessageResponse, response.ReadMessageIds);
     }
 }

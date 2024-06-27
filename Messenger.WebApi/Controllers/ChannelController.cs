@@ -1,4 +1,5 @@
 ﻿using Messenger.WebApi.Hubs;
+using Messenger.WebApi.Hubs.Common;
 using MessengerX.Application.Services.ChannelService;
 using MessengerX.Application.Services.ChannelService.Models;
 using MessengerX.WebApi.Controllers.Models.Channel;
@@ -139,7 +140,7 @@ public class ChannelController : ControllerBase
             await _chatHubContext
                 .Clients
                 .Users(response.UserIds)
-                .SendAsync("ChannelResponse", response.DirectChannel);
+                .SendAsync(ChatHubMethod.ChannelResponse, response.DirectChannel);
         }
 
         return Ok(response.DirectChannel?.Id);

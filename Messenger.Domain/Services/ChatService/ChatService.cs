@@ -22,6 +22,39 @@ public class ChatBS : DomainService
         return messages;
     }
 
+    public async Task<Message> MessageAsync(int channelId, int messageId)
+    {
+        Message? message = await _unitOfWork
+            .Message
+            .GetAsync(new MessageSpec(channelId, messageId));
+
+        if (message == null)
+            throw new NotExistsException("Message not exists");
+
+        return message;
+    }
+
+    public async Task<IEnumerable<Message>> ReadMessagesAsync(int channelId, int lastMessageId)
+    {
+        IEnumerable<Message>? unreadMessages = await _unitOfWork
+            .Message
+            .GetAllAsync(new UnreadMessagesSpec(channelId, lastMessageId));
+
+        if (unreadMessages == null)
+            throw new NotExistsException("Messages not exists");
+
+        foreach (Message message in unreadMessages)
+        {
+            message.ReadMessage();
+        }
+
+        var readMessages = unreadMessages.ToList();
+
+        await _unitOfWork.SaveChangesAsync();
+
+        return readMessages;
+    }
+
     public async Task AddMessageAsync(int channelId, Message message)
     {
         Channel? channel = await _unitOfWork
