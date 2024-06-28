@@ -23,10 +23,13 @@ public class MessagesSpec : Specification<Message>
 
 public class UnreadMessagesSpec : Specification<Message>
 {
-    public UnreadMessagesSpec(int channelId, int lastMessageId)
+    public UnreadMessagesSpec(int channelId, int lastMessageId, int accountId)
         : base(
             (message) =>
-                message.ChannelId == channelId && message.Id <= lastMessageId && !message.IsRead
+                message.ChannelId == channelId
+                && message.Id <= lastMessageId
+                && !message.IsRead
+                && message.AuthorId != accountId
         )
     {
         ApplyTracking();

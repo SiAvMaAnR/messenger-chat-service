@@ -70,7 +70,8 @@ public class ChatService : BaseService, IChatService
     {
         IEnumerable<Message> readMessages = await _chatBS.ReadMessagesAsync(
             request.ChannelId,
-            request.MessageId
+            request.MessageId,
+            UserId
         );
 
         IEnumerable<string> userIds = await _chatBS.GetUserIdsByChannelIdAsync(

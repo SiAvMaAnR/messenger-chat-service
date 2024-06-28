@@ -1,4 +1,5 @@
 ﻿using MessengerX.Domain.Common;
+using MessengerX.Domain.Entities.Accounts;
 using MessengerX.Domain.Entities.Channels;
 using MessengerX.Domain.Entities.Messages;
 using MessengerX.Domain.Exceptions;
@@ -34,18 +35,27 @@ public class ChatBS : DomainService
         return message;
     }
 
-    public async Task<IEnumerable<Message>> ReadMessagesAsync(int channelId, int lastMessageId)
+    public async Task<IEnumerable<Message>> ReadMessagesAsync(
+        int channelId,
+        int lastMessageId,
+        int accountId
+    )
     {
         IEnumerable<Message>? unreadMessages = await _unitOfWork
             .Message
-            .GetAllAsync(new UnreadMessagesSpec(channelId, lastMessageId));
+            .GetAllAsync(new UnreadMessagesSpec(channelId, lastMessageId, accountId));
 
         if (unreadMessages == null)
             throw new NotExistsException("Messages not exists");
 
+        Account account =
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId, true))
+            ?? throw new NotExistsException("Account not found");
+
         foreach (Message message in unreadMessages)
         {
             message.ReadMessage();
+            message.AddReadAccounts(account);
         }
 
         var readMessages = unreadMessages.ToList();
