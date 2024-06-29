@@ -72,7 +72,7 @@ public class ChannelService : BaseService, IChannelService
 
         var adaptedChannels = paginatedData
             .Collection
-            .Select(channel => new ChannelServicePublicChannelAdapter(channel, _userIdentity.Id))
+            .Select(channel => new ChannelServicePublicChannelAdapter(channel, UserId))
             .ToList();
 
         await Task.WhenAll(adaptedChannels.Select(channel => channel.LoadImageAsync()));
@@ -98,9 +98,7 @@ public class ChannelService : BaseService, IChannelService
 
         var adaptedChannels = paginatedData
             .Collection
-            .Select(
-                channel => new ChannelServiceAccountChannelListAdapter(channel, _userIdentity.Id)
-            )
+            .Select(channel => new ChannelServiceAccountChannelListAdapter(channel, UserId))
             .ToList();
 
         await Task.WhenAll(adaptedChannels.Select(channel => channel.LoadImageAsync()));
@@ -118,7 +116,7 @@ public class ChannelService : BaseService, IChannelService
     {
         Channel channel = await _channelBS.AccountChannelAsync(UserId, request.Id);
 
-        var adaptedChannel = new ChannelServiceAccountChannelAdapter(channel, _userIdentity.Id);
+        var adaptedChannel = new ChannelServiceAccountChannelAdapter(channel, UserId);
 
         await adaptedChannel.LoadImageAsync();
 
@@ -156,10 +154,7 @@ public class ChannelService : BaseService, IChannelService
             .Accounts
             .Select(account => account.Id.ToString());
 
-        var adaptedChannel = new ChannelServiceDirectChannelAdapter(
-            directChannel,
-            _userIdentity.Id
-        );
+        var adaptedChannel = new ChannelServiceDirectChannelAdapter(directChannel, UserId);
 
         await adaptedChannel.LoadImageAsync();
 

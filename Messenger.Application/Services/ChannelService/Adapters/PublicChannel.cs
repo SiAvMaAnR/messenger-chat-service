@@ -10,7 +10,7 @@ public class ChannelServicePublicChannelAdapter : ChannelServicePublicChannelRes
 {
     private readonly string? _imagePath;
 
-    public ChannelServicePublicChannelAdapter(Channel channel, int? authorId)
+    public ChannelServicePublicChannelAdapter(Channel channel, int authorId)
     {
         Id = channel.Id;
         Type = channel.Type;

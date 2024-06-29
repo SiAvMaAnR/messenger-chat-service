@@ -8,7 +8,7 @@ public class ChannelServiceDirectChannelAdapter : ChannelServiceDirectChannel
 {
     private readonly string? _imagePath;
 
-    public ChannelServiceDirectChannelAdapter(Channel channel, int? authorId)
+    public ChannelServiceDirectChannelAdapter(Channel channel, int authorId)
     {
         Id = channel.Id;
         Type = channel.Type;

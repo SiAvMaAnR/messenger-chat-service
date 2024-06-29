@@ -26,6 +26,15 @@ public partial class Channel : IAggregateRoot
         return Messages.OrderByDescending(message => message.CreatedAt).FirstOrDefault();
     }
 
+    public int GetUnreadMessagesCount(int authorId)
+    {
+        return Messages.Count(
+            message =>
+                message.AuthorId != authorId
+                && message.ReadAccounts.All(account => account.Id != authorId)
+        );
+    }
+
     public void UpdateLastActivity()
     {
         LastActivity = DateTime.Now;

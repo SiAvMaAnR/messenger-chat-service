@@ -17,4 +17,5 @@ public class ChannelServiceAccountChannelResponse
     public DateTime? UserLastOnlineAt { get; set; }
     public int? MembersCount { get; set; }
     public ChannelServiceLastMessageForOneResponseData? LastMessage { get; set; }
+    public int UnreadMessagesCount { get; set; }
 }

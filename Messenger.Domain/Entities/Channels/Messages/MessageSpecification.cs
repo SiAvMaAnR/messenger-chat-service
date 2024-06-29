@@ -28,10 +28,11 @@ public class UnreadMessagesSpec : Specification<Message>
             (message) =>
                 message.ChannelId == channelId
                 && message.Id <= lastMessageId
-                && !message.IsRead
+                && message.ReadAccounts.All(account => account.Id != accountId)
                 && message.AuthorId != accountId
         )
     {
+        AddInclude((message) => message.ReadAccounts);
         ApplyTracking();
     }
 }

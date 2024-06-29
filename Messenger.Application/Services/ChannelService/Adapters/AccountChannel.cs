@@ -11,11 +11,12 @@ public class ChannelServiceAccountChannelListAdapter : ChannelServiceAccountChan
 {
     private readonly string? _imagePath;
 
-    public ChannelServiceAccountChannelListAdapter(Channel channel, int? authorId)
+    public ChannelServiceAccountChannelListAdapter(Channel channel, int authorId)
     {
         Id = channel.Id;
         Type = channel.Type;
         LastActivity = channel.LastActivity;
+        UnreadMessagesCount = channel.GetUnreadMessagesCount(authorId);
 
         Message? lastMessage = channel.GetLastMessage();
 
@@ -57,11 +58,12 @@ public class ChannelServiceAccountChannelAdapter : ChannelServiceAccountChannelR
 {
     private readonly string? _imagePath;
 
-    public ChannelServiceAccountChannelAdapter(Channel channel, int? authorId)
+    public ChannelServiceAccountChannelAdapter(Channel channel, int authorId)
     {
         Id = channel.Id;
         Type = channel.Type;
         LastActivity = channel.LastActivity;
+        UnreadMessagesCount = channel.GetUnreadMessagesCount(authorId);
 
         Message? lastMessage = channel.GetLastMessage();
 
