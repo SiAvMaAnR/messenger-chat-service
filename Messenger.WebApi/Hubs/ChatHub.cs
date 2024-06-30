@@ -65,5 +65,12 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
         await Clients
             .Users(response.UserIds)
             .SendAsync(ChatHubMethod.ReadMessageResponse, response.ReadMessageIds);
+
+        await Clients
+            .Caller
+            .SendAsync(
+                ChatHubMethod.ReadChannelResponse,
+                new { request.ChannelId, response.UnreadMessagesCount }
+            );
     }
 }

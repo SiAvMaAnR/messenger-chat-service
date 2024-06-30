@@ -93,4 +93,18 @@ public class ChatBS : DomainService
 
         return userIds;
     }
+
+    public async Task<int> GetUnreadMessagesCountAsync(int accountId, int channelId)
+    {
+        Channel? channel = await _unitOfWork
+            .Channel
+            .GetAsync(new AccountChannelSpec(accountId, channelId));
+
+        if (channel == null)
+            throw new NotExistsException("Channel not exists");
+
+        int unreadMessagesCount = channel.GetUnreadMessagesCount(accountId);
+
+        return unreadMessagesCount;
+    }
 }

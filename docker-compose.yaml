@@ -1,19 +1,18 @@
-version: "3"
 services:
-  backend-aspnet:
-    image: samarkinivan/messenger-server:latest
-    container_name: messenger-server
-    restart: on-failure
-    environment:
-      ASPNETCORE_ENVIRONMENT: Production
-    ports:
-      - "8080:8080"
-    depends_on:
-      - database-mssql
-      - rabbitmq
-      - redis
-    volumes:
-      - ./.meta/server/uploads:/Messenger.Persistence/Uploads
+  # backend-aspnet:
+  #   image: samarkinivan/messenger-server:latest
+  #   container_name: messenger-server
+  #   restart: on-failure
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: Production
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - database-mssql
+  #     - rabbitmq
+  #     - redis
+  #   volumes:
+  #     - ./.meta/server/uploads:/Messenger.Persistence/Uploads
 
   database-mssql:
     image: mcr.microsoft.com/mssql/server:latest

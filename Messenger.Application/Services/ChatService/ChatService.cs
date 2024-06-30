@@ -79,10 +79,16 @@ public class ChatService : BaseService, IChatService
             request.ChannelId
         );
 
+        int unreadMessagesCount = await _chatBS.GetUnreadMessagesCountAsync(
+            UserId,
+            request.ChannelId
+        );
+
         return new ChatServiceReadMessageResponse()
         {
             ReadMessageIds = readMessages.Select(message => message.Id),
-            UserIds = userIds
+            UserIds = userIds,
+            UnreadMessagesCount = unreadMessagesCount
         };
     }
 }
