@@ -1,22 +1,22 @@
 services:
-  # backend-aspnet:
-  #   image: samarkinivan/messenger-server:latest
-  #   container_name: messenger-server
-  #   restart: on-failure
-  #   environment:
-  #     ASPNETCORE_ENVIRONMENT: Production
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-  #     - database-mssql
-  #     - rabbitmq
-  #     - redis
-  #   volumes:
-  #     - ./.meta/server/uploads:/Messenger.Persistence/Uploads
+  backend-aspnet:
+    image: samarkinivan/chat-service:latest
+    container_name: chat-service
+    restart: on-failure
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database-mssql
+      - rabbitmq
+      - redis
+    volumes:
+      - ./.meta/server/uploads:/Messenger.Persistence/Uploads
 
   database-mssql:
     image: mcr.microsoft.com/mssql/server:latest
-    container_name: messenger-database
+    container_name: chat-service-db
     restart: on-failure
     user: root
     environment:
@@ -34,14 +34,14 @@ services:
 
   rabbitmq:
     image: rabbitmq:latest
-    container_name: messenger-rabbit-mq
+    container_name: chat-service-rabbit-mq
     restart: on-failure
     ports:
       - 5672:5672
 
   redis:
     image: redis:latest
-    container_name: messenger-redis
+    container_name: chat-service-redis
     restart: on-failure
     ports:
       - "6379:6379"

@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-  imageName="samarkinivan/messenger-server"
+  imageName="samarkinivan/chat-service"
 else
   imageName="$1"
 fi
 
 cd ../../
 
-dotnet format
+# dotnet format
 
 # build image from Dockerfile
 docker buildx build -t $imageName .
