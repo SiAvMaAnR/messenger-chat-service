@@ -1,4 +1,4 @@
-using MessengerX.Domain.Entities;
+﻿using MessengerX.Domain.Entities;
 using MessengerX.Domain.Specification;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,11 +43,6 @@ public static class SpecificationEvaluator
             query = query.GroupBy(specification.GroupBy).SelectMany(x => x);
         }
 
-        if (specification.IsPagingEnabled)
-        {
-            query = query.Skip(specification.Skip).Take(specification.Take);
-        }
-
         if (specification.IsAsNoTracking)
         {
             query = query.AsNoTracking();
@@ -76,6 +71,8 @@ public static class SpecificationEvaluator
         query = specification
             .IncludeStrings
             .Aggregate(query, (current, include) => current.Include(include));
+
+        query = query.AsSplitQuery();
 
         if (specification.IsAsNoTracking)
         {

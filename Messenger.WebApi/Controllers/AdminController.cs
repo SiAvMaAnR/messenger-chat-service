@@ -18,14 +18,6 @@ public class AdminController : ControllerBase
         _adminService = adminService;
     }
 
-    [HttpGet("profile"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
-    public async Task<IActionResult> Profile()
-    {
-        AdminServiceProfileResponse response = await _adminService.GetProfileAsync();
-
-        return Ok(response);
-    }
-
     [HttpGet("users"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
     public async Task<IActionResult> GetUsers([FromQuery] AdminControllerUsersRequest request)
     {

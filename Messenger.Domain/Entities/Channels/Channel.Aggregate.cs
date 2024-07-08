@@ -23,12 +23,21 @@ public partial class Channel : IAggregateRoot
 
     public Message? GetLastMessage()
     {
-        return Messages.LastOrDefault();
+        return Messages.OrderByDescending(message => message.CreatedAt).FirstOrDefault();
     }
 
-    public void UpdateLastActivity(Message message)
+    public int GetUnreadMessagesCount(int authorId)
     {
-        Messages.Add(message);
+        return Messages.Count(
+            message =>
+                message.AuthorId != authorId
+                && message.ReadAccounts.All(account => account.Id != authorId)
+        );
+    }
+
+    public void UpdateLastActivity()
+    {
+        LastActivity = DateTime.Now;
     }
 
     public void UpdateImage(string? image)

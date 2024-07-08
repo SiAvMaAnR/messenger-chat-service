@@ -1,10 +1,16 @@
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using MessengerX.Domain.Shared.Models;
 
 namespace MessengerX.Domain.Specification;
 
 public abstract partial class Specification<TEntity>
 {
-    protected virtual void AddInclude(Expression<Func<TEntity, object>> includeExpression)
+    protected virtual void ApplyCriteria(Expression<Func<TEntity, bool>> criteria)
+    {
+        Criteria = criteria;
+    }
+
+    protected virtual void AddInclude(Expression<Func<TEntity, object?>> includeExpression)
     {
         Includes.Add(includeExpression);
     }
@@ -14,11 +20,9 @@ public abstract partial class Specification<TEntity>
         IncludeStrings.Add(includeString);
     }
 
-    protected virtual void ApplyPaging(int skip, int take)
+    protected virtual void ApplyPaging(Pagination pagination)
     {
-        Skip = skip;
-        Take = take;
-        IsPagingEnabled = true;
+        Pagination = pagination;
     }
 
     protected virtual void ApplyOrderBy(Expression<Func<TEntity, object>> orderByExpression)

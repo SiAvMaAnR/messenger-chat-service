@@ -1,4 +1,7 @@
 ﻿using MessengerX.Application.Services.ChatService;
+using MessengerX.Application.Services.ChatService.Models;
+using MessengerX.WebApi.Controllers.Models.Chat;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessengerX.WebApi.Controllers;
@@ -12,5 +15,22 @@ public class ChatController : ControllerBase
     public ChatController(IChatService chatService)
     {
         _chatService = chatService;
+    }
+
+    [HttpGet("messages"), Authorize]
+    public async Task<IActionResult> GetMessages(
+        [FromQuery] ChatControllerMessagesRequest request
+    )
+    {
+        ChatServiceMessagesResponse response = await _chatService.MessagesAsync(
+            new ChatServiceMessagesRequest()
+            {
+                ChannelId = request.ChannelId,
+                SearchField = request.SearchField,
+                Pagination = request.Pagination
+            }
+        );
+
+        return Ok(response);
     }
 }

@@ -1,8 +1,11 @@
-﻿using MessengerX.Application.Services.ChannelService;
+﻿using Messenger.WebApi.Hubs;
+using Messenger.WebApi.Hubs.Common;
+using MessengerX.Application.Services.ChannelService;
 using MessengerX.Application.Services.ChannelService.Models;
 using MessengerX.WebApi.Controllers.Models.Channel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace MessengerX.WebApi.Controllers;
 
@@ -11,10 +14,12 @@ namespace MessengerX.WebApi.Controllers;
 public class ChannelController : ControllerBase
 {
     private readonly IChannelService _channelService;
+    private readonly IHubContext<ChatHub> _chatHubContext;
 
-    public ChannelController(IChannelService channelService)
+    public ChannelController(IChannelService channelService, IHubContext<ChatHub> chatHubContext)
     {
         _channelService = channelService;
+        _chatHubContext = chatHubContext;
     }
 
     [HttpPost("create-direct"), Authorize]
@@ -37,7 +42,11 @@ public class ChannelController : ControllerBase
     {
         ChannelServiceCreatePublicChannelResponse response =
             await _channelService.CreatePublicChannelAsync(
-                new ChannelServiceCreatePublicChannelRequest() { Name = request.Name }
+                new ChannelServiceCreatePublicChannelRequest()
+                {
+                    Name = request.Name,
+                    Members = request.Members
+                }
             );
 
         return Ok(response);
@@ -50,13 +59,17 @@ public class ChannelController : ControllerBase
     {
         ChannelServiceCreatePrivateChannelResponse response =
             await _channelService.CreatePrivateChannelAsync(
-                new ChannelServiceCreatePrivateChannelRequest() { Name = request.Name }
+                new ChannelServiceCreatePrivateChannelRequest()
+                {
+                    Name = request.Name,
+                    Members = request.Members
+                }
             );
 
         return Ok(response);
     }
 
-    [HttpPost("join"), Authorize]
+    [HttpPost("join-channel"), Authorize]
     public async Task<IActionResult> ConnectToChannel(
         [FromBody] ChannelControllerConnectToChannelRequest request
     )
@@ -86,14 +99,60 @@ public class ChannelController : ControllerBase
     }
 
     [HttpGet("account-channels"), Authorize]
-    public async Task<IActionResult> GetAccountChannels([FromQuery] ChannelControllerChannelsRequest request)
+    public async Task<IActionResult> GetAccountChannels(
+        [FromQuery] ChannelControllerAccountChannelsRequest request
+    )
     {
-        ChannelServiceChannelsResponse response = await _channelService.AccountChannelsAsync(
-            new ChannelServiceChannelsRequest()
+        ChannelServiceAccountChannelsResponse response = await _channelService.AccountChannelsAsync(
+            new ChannelServiceAccountChannelsRequest()
             {
                 SearchField = request.SearchField,
+                ChannelType = request.ChannelType,
                 Pagination = request.Pagination
             }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpGet("account-channels/{id:int}"), Authorize]
+    public async Task<IActionResult> GetAccountChannel([FromRoute] int id)
+    {
+        ChannelServiceAccountChannelResponse response = await _channelService.AccountChannelAsync(
+            new ChannelServiceAccountChannelRequest() { Id = id }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpPost("setup-direct"), Authorize]
+    public async Task<IActionResult> SetUpDirectChannel(
+        [FromBody] ChannelControllerSetUpDirectChannelRequest request
+    )
+    {
+        ChannelServiceSetUpDirectChannelResponse response =
+            await _channelService.SetUpDirectChannelAsync(
+                new ChannelServiceSetUpDirectChannelRequest() { PartnerId = request.PartnerId }
+            );
+
+        if (response.IsNeedNotifyUsers)
+        {
+            await _chatHubContext
+                .Clients
+                .Users(response.UserIds)
+                .SendAsync(ChatHubMethod.ChannelResponse, response.DirectChannel);
+        }
+
+        return Ok(response.DirectChannel?.Id);
+    }
+
+    [HttpGet("member-images"), Authorize]
+    public async Task<IActionResult> GetMemberImages(
+        [FromQuery] ChannelControllerMemberImagesRequest request
+    )
+    {
+        ChannelServiceMemberImagesResponse response = await _channelService.MemberImagesAsync(
+            new ChannelServiceMemberImagesRequest() { ChannelId = request.ChannelId }
         );
 
         return Ok(response);

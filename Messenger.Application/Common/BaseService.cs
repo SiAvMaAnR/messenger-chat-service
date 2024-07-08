@@ -1,5 +1,6 @@
 ﻿using MessengerX.Application.Common;
 using MessengerX.Domain.Common;
+using MessengerX.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace MessengerX.Application.Services.Common;
@@ -15,4 +16,6 @@ public abstract class BaseService(
     protected readonly IUnitOfWork _unitOfWork = unitOfWork;
     protected readonly IAppSettings _appSettings = appSettings;
     protected readonly UserIdentity _userIdentity = new(context.HttpContext?.User);
+    protected int UserId =>
+        _userIdentity.Id ?? throw new OperationNotAllowedException("Failed to get user id");
 }

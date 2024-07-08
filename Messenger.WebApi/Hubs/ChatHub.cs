@@ -1,8 +1,11 @@
 ﻿using Messenger.WebApi.Hubs.Common;
 using MessengerX.Application.Services.ChannelService;
+using MessengerX.Application.Services.ChannelService.Models;
 using MessengerX.Application.Services.ChatService;
 using MessengerX.Application.Services.ChatService.Models;
+using MessengerX.WebApi.Hubs.Models.Chat;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Messenger.WebApi.Hubs;
 
@@ -22,10 +25,52 @@ public class ChatHub(IChatService chatService, IChannelService channelService) :
         await base.OnDisconnectedAsync(exception);
     }
 
-    public async Task SendMessageAsync(int channelId, string message)
+    [Authorize]
+    public async Task ChannelAsync(ChatHubChannelRequest request)
     {
-        await _chatService.SendMessageAsync(
-            new ChatServiceSendMessageRequest() { ChannelId = channelId, Message = message }
+        ChannelServiceAccountChannelResponse response = await _channelService.AccountChannelAsync(
+            new ChannelServiceAccountChannelRequest() { Id = request.ChannelId }
         );
+
+        await Clients.Caller.SendAsync(ChatHubMethod.ChannelResponse, response);
+    }
+
+    [Authorize]
+    public async Task SendMessageAsync(ChatHubSendMessageRequest request)
+    {
+        ChatServiceSendMessageResponse response = await _chatService.SendMessageAsync(
+            new ChatServiceSendMessageRequest()
+            {
+                ChannelId = request.ChannelId,
+                Message = request.Message
+            }
+        );
+
+        await Clients
+            .Users(response.UserIds)
+            .SendAsync(ChatHubMethod.SendMessageResponse, response.Message);
+    }
+
+    [Authorize]
+    public async Task ReadMessageAsync(ChatHubReadMessageRequest request)
+    {
+        ChatServiceReadMessageResponse response = await _chatService.ReadMessageAsync(
+            new ChatServiceReadMessageRequest()
+            {
+                ChannelId = request.ChannelId,
+                MessageId = request.MessageId
+            }
+        );
+
+        await Clients
+            .Users(response.UserIds)
+            .SendAsync(ChatHubMethod.ReadMessageResponse, response.ReadMessageIds);
+
+        await Clients
+            .Caller
+            .SendAsync(
+                ChatHubMethod.ReadChannelResponse,
+                new { request.ChannelId, response.UnreadMessagesCount }
+            );
     }
 }

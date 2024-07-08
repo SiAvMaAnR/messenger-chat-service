@@ -1,5 +1,6 @@
 ﻿using MessengerX.Application.Services.AccountService;
 using MessengerX.Application.Services.AccountService.Models;
+using MessengerX.WebApi.Controllers.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,41 @@ public class AccountController : ControllerBase
         AccountServiceUploadImageResponse response = await _accountService.UploadImageAsync(
             new AccountServiceUploadImageRequest() { File = file }
         );
+
+        return Ok(response);
+    }
+
+    [HttpGet("accounts/{id:int}/image"), Authorize]
+    public async Task<IActionResult> GetAccountImage([FromRoute] int id)
+    {
+        AccountServiceAccountImageResponse response = await _accountService.GetAccountImageAsync(
+            new AccountServiceAccountImageRequest() { Id = id }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpGet("accounts"), Authorize]
+    public async Task<IActionResult> GetAccounts(
+        [FromQuery] AccountControllerAccountsRequest request
+    )
+    {
+        AccountServiceAccountsResponse response = await _accountService.AccountsAsync(
+            new AccountServiceAccountsRequest()
+            {
+                Pagination = request.Pagination,
+                IsLoadImage = request.IsLoadImage,
+                SearchField = request.SearchField
+            }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpGet("profile"), Authorize]
+    public async Task<IActionResult> Profile()
+    {
+        AccountServiceProfileResponse response = await _accountService.GetProfileAsync();
 
         return Ok(response);
     }

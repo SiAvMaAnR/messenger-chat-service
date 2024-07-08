@@ -5,10 +5,23 @@ public static class AppEnvironment
     internal const string Production = "Production";
     internal const string Development = "Development";
 
-    public static string? GetConnectionString(IConfiguration config)
+    public static string GetDBConnectionString(IConfiguration config)
     {
-        string dbHost = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
+        string? connectionString = config.GetConnectionString("DBConnection");
 
-        return config.GetConnectionString("DefaultConnection")?.Replace("$DB_HOST", dbHost);
+        if (connectionString == null)
+            throw new Exception("Connection string is not correct (DB)");
+
+        return connectionString;
+    }
+
+    public static string GetRedisConnectionString(IConfiguration config)
+    {
+        string? connectionString = config.GetConnectionString("RedisConnection");
+
+        if (connectionString == null)
+            throw new Exception("Connection string is not correct (Redis)");
+
+        return connectionString;
     }
 }

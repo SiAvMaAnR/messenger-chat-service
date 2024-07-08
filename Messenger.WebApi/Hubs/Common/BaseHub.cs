@@ -2,4 +2,7 @@
 
 namespace Messenger.WebApi.Hubs.Common;
 
-public class BaseHub : Hub { }
+public class BaseHub : Hub
+{
+    public BaseHub() { }
+}

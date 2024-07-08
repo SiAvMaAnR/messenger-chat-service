@@ -18,12 +18,15 @@ public static class ServicePaginator
         where TEntity : BaseEntity
     {
         int itemCount = collection.Count();
+        int skip = pagination?.Skip ?? 0;
         int pageSize = pagination?.PageSize ?? itemCount;
         int pageNumber = pagination?.PageNumber ?? 0;
         int pagesCount = pageSize > 0 ? (int)Math.Ceiling((float)itemCount / pageSize) : 0;
 
         IEnumerable<TEntity>? pagedCollection =
-            pagination != null ? collection.Skip(pageNumber * pageSize).Take(pageSize) : collection;
+            pagination != null
+                ? collection.Skip(pageNumber * pageSize + skip).Take(pageSize)
+                : collection;
 
         var meta = new MetaResponse()
         {

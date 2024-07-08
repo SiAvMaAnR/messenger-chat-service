@@ -14,6 +14,7 @@ public partial class Account : IAggregateRoot
     public void UpdateActivityStatus(string activityStatus)
     {
         ActivityStatus = activityStatus;
+        LastOnlineAt = DateTime.Now;
     }
 
     public void UpdateImage(string? image)

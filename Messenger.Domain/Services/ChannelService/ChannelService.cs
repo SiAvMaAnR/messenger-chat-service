@@ -11,15 +11,15 @@ public class ChannelBS : DomainService
     public ChannelBS(IAppSettings appSettings, IUnitOfWork unitOfWork)
         : base(appSettings, unitOfWork) { }
 
-    public async Task CreateDirectChannelAsync(int? firstAccountId, int? secondAccountId)
+    public async Task<Channel> CreateDirectChannelAsync(int firstAccountId, int secondAccountId)
     {
         Account? firstAccount = await _unitOfWork
             .Account
-            .GetAsync(new AccountByIdSpec(firstAccountId));
+            .GetAsync(new AccountByIdSpec(firstAccountId, true));
 
         Account? secondAccount = await _unitOfWork
             .Account
-            .GetAsync(new AccountByIdSpec(secondAccountId));
+            .GetAsync(new AccountByIdSpec(secondAccountId, true));
 
         if (firstAccount == null || secondAccount == null)
             throw new NotExistsException("Account not found");
@@ -42,12 +42,18 @@ public class ChannelBS : DomainService
 
         await _unitOfWork.Channel.AddAsync(channel);
         await _unitOfWork.SaveChangesAsync();
+
+        return channel;
     }
 
-    public async Task CreatePrivateChannelAsync(int? accountId, string channelName)
+    public async Task<Channel> CreatePrivateChannelAsync(
+        int accountId,
+        string channelName,
+        IEnumerable<int> members
+    )
     {
         Account myAccount =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId, true))
             ?? throw new NotExistsException("Account not found");
 
         if (await _unitOfWork.Channel.AnyAsync(channel => channel.Name == channelName))
@@ -57,14 +63,26 @@ public class ChannelBS : DomainService
 
         channel.AddAccount(myAccount);
 
+        IEnumerable<Account> accounts = await _unitOfWork
+            .Account
+            .GetAllAsync(new AccountsByIdsSpec(members));
+
+        channel.AddAccounts(accounts.ToList());
+
         await _unitOfWork.Channel.AddAsync(channel);
         await _unitOfWork.SaveChangesAsync();
+
+        return channel;
     }
 
-    public async Task CreatePublicChannelAsync(int? accountId, string channelName)
+    public async Task<Channel> CreatePublicChannelAsync(
+        int accountId,
+        string channelName,
+        IEnumerable<int> members
+    )
     {
         Account myAccount =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId, true))
             ?? throw new NotExistsException("Account not found");
 
         if (await _unitOfWork.Channel.AnyAsync(channel => channel.Name == channelName))
@@ -74,14 +92,22 @@ public class ChannelBS : DomainService
 
         channel.AddAccount(myAccount);
 
+        IEnumerable<Account> accounts = await _unitOfWork
+            .Account
+            .GetAllAsync(new AccountsByIdsSpec(members));
+
+        channel.AddAccounts(accounts.ToList());
+
         await _unitOfWork.Channel.AddAsync(channel);
         await _unitOfWork.SaveChangesAsync();
+
+        return channel;
     }
 
-    public async Task ConnectToChannelAsync(int? accountId, int channelId)
+    public async Task ConnectToChannelAsync(int accountId, int channelId)
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId))
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(accountId, true))
             ?? throw new NotExistsException("Account not found");
 
         Channel channel =
@@ -108,17 +134,39 @@ public class ChannelBS : DomainService
     }
 
     public async Task<IEnumerable<Channel>> AccountChannelsAsync(
-        int? accountId,
-        string? searchField
+        int accountId,
+        string? searchField,
+        string? channelType
     )
     {
         IEnumerable<Channel>? channels = await _unitOfWork
             .Channel
-            .GetAllAsync(new AccountChannelsSpec(accountId, searchField));
+            .GetAllAsync(new AccountChannelsSpec(accountId, searchField, channelType));
 
         if (channels == null)
             throw new NotExistsException("Channels not exists");
 
         return channels;
+    }
+
+    public async Task<Channel> AccountChannelAsync(int accountId, int channelId)
+    {
+        Channel? channel = await _unitOfWork
+            .Channel
+            .GetAsync(new AccountChannelSpec(accountId, channelId));
+
+        if (channel == null)
+            throw new NotExistsException("Channel not exists");
+
+        return channel;
+    }
+
+    public async Task<Channel?> AccountDirectChannelAsync(int accountId, int partnerId)
+    {
+        Channel? channel = await _unitOfWork
+            .Channel
+            .GetAsync(new AccountDirectChannelSpec(accountId, partnerId));
+
+        return channel;
     }
 }

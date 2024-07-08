@@ -1,7 +1,9 @@
-﻿using MessengerX.Application.Services.AccountService.Models;
+﻿using MessengerX.Application.Services.AccountService.Adapters;
+using MessengerX.Application.Services.AccountService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Entities.Accounts;
+using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
 using MessengerX.Persistence.Extensions;
@@ -29,7 +31,7 @@ public class AccountService : BaseService, IAccountService
     )
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(_userIdentity.Id))
+            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(UserId, true))
             ?? throw new NotExistsException("Account not found");
 
         string imagePath = _appSettings.FilePath.Image;
@@ -48,7 +50,7 @@ public class AccountService : BaseService, IAccountService
     public async Task<AccountServiceImageResponse> GetImageAsync()
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(_userIdentity.Id))
+            await _accountBS.GetAccountByIdAsync(UserId)
             ?? throw new NotExistsException("Account not found");
 
         byte[]? image = await FileManager.ReadToBytesAsync(account.Image);
@@ -61,14 +63,59 @@ public class AccountService : BaseService, IAccountService
     )
     {
         Account account =
-            await _unitOfWork.Account.GetAsync(new AccountByIdSpec(_userIdentity.Id))
+            await _accountBS.GetAccountByIdAsync(UserId)
             ?? throw new NotExistsException("Account not found");
 
-        account.UpdateActivityStatus(request.ActivityStatus);
-
-        _unitOfWork.Account.Update(account);
-        await _unitOfWork.SaveChangesAsync();
+        await _accountBS.UpdateActivityStatusAsync(account, request.ActivityStatus);
 
         return new AccountServiceUpdateStatusResponse() { IsSuccess = true };
+    }
+
+    public async Task<AccountServiceAccountsResponse> AccountsAsync(
+        AccountServiceAccountsRequest request
+    )
+    {
+        IEnumerable<Account> accounts = await _accountBS.GetAccountsAsync(
+            UserId,
+            request.SearchField
+        );
+
+        PaginatorResponse<Account> paginatedData = accounts.Pagination(request.Pagination);
+
+        var adaptedAccounts = paginatedData
+            .Collection
+            .Select(account => new AccountServiceAccountAdapter(account))
+            .ToList();
+
+        if (request.IsLoadImage)
+            await Task.WhenAll(adaptedAccounts.Select(account => account.LoadImageAsync()));
+
+        return new AccountServiceAccountsResponse()
+        {
+            Meta = paginatedData.Meta,
+            Accounts = adaptedAccounts
+        };
+    }
+
+    public async Task<AccountServiceProfileResponse> GetProfileAsync()
+    {
+        Account user =
+            await _accountBS.GetAccountByIdAsync(UserId)
+            ?? throw new NotExistsException("User not found");
+
+        return new AccountServiceProfileResponse()
+        {
+            Login = user.Login,
+            Email = user.Email,
+            Role = user.Role,
+            Birthday = (user as User)?.Birthday
+        };
+    }
+
+    public async Task<AccountServiceAccountImageResponse> GetAccountImageAsync(
+        AccountServiceAccountImageRequest request
+    )
+    {
+        return await Task.FromResult(new AccountServiceAccountImageResponse() { });
     }
 }

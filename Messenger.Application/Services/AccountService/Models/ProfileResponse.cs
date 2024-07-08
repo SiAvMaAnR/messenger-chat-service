@@ -1,6 +1,6 @@
-﻿namespace MessengerX.Application.Services.UserService.Models;
+﻿namespace MessengerX.Application.Services.AccountService.Models;
 
-public class UserServiceProfileResponse
+public class AccountServiceProfileResponse
 {
     public required string Login { get; set; }
     public required string Email { get; set; }

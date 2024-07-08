@@ -3,7 +3,6 @@ using MessengerX.Application.Services.AdminService.Adapters;
 using MessengerX.Application.Services.AdminService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Admins;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
@@ -34,9 +33,7 @@ public class AdminService : BaseService, IAdminService
     {
         IEnumerable<User> users = await _userBS.GetUsersAsync();
 
-        PaginatorResponse<User> paginatedData = users
-            .OrderBy(user => user.Id)
-            .Pagination(request.Pagination);
+        PaginatorResponse<User> paginatedData = users.Pagination(request.Pagination);
 
         var adaptedUsers = paginatedData
             .Collection
@@ -70,26 +67,12 @@ public class AdminService : BaseService, IAdminService
         };
     }
 
-    public async Task<AdminServiceProfileResponse> GetProfileAsync()
-    {
-        Admin admin =
-            await _adminBS.GetAdminByIdAsync(_userIdentity.Id)
-            ?? throw new NotExistsException("Admin not found");
-
-        return new AdminServiceProfileResponse()
-        {
-            Login = admin.Login,
-            Email = admin.Email,
-            Role = admin.Role,
-        };
-    }
-
     public async Task<AdminServiceBlockUserResponse> BlockUserAsync(
         AdminServiceBlockUserRequest request
     )
     {
         User user =
-            await _userBS.GetUserByIdAsync(request.UserId)
+            await _userBS.GetUserByIdAsync(request.UserId, true)
             ?? throw new NotExistsException("User not found");
 
         await _userBS.BlockUserAsync(user);
@@ -102,7 +85,7 @@ public class AdminService : BaseService, IAdminService
     )
     {
         User user =
-            await _userBS.GetUserByIdAsync(request.UserId)
+            await _userBS.GetUserByIdAsync(request.UserId, true)
             ?? throw new NotExistsException("User not found");
 
         await _userBS.UnblockUserAsync(user);

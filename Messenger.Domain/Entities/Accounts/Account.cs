@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using MessengerX.Domain.Entities.RefreshTokens;
 using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.Domain.Entities.Messages;
+using MessengerX.Domain.Entities.RefreshTokens;
+using MessengerX.Domain.Shared.Constants.Common;
 
 namespace MessengerX.Domain.Entities.Accounts;
 
@@ -23,6 +23,7 @@ public partial class Account : BaseEntity
     public string Role { get; protected set; } = AccountRole.Public;
     public string? Image { get; set; }
     public string ActivityStatus { get; set; } = AccountStatus.Offline;
+    public DateTime LastOnlineAt { get; set; }
     public ICollection<RefreshToken> RefreshTokens { get; private set; } = [];
 
     [JsonIgnore]

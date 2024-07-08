@@ -1,4 +1,4 @@
-﻿using MessengerX.Application.Other.AuthOptions;
+﻿using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Persistence.DBContext;
 using MessengerX.WebApi.ApiConfigurations.Other;
 using MessengerX.WebApi.Common;
@@ -14,7 +14,7 @@ public static partial class ServiceManagerExtension
         IConfiguration config
     )
     {
-        string? connection = AppEnvironment.GetConnectionString(config);
+        string? connection = AppEnvironment.GetDBConnectionString(config);
 
         serviceCollection.AddOptions();
         serviceCollection.AddDbContext<EFContext>(options => options.UseSqlServer(connection));
@@ -30,6 +30,7 @@ public static partial class ServiceManagerExtension
         serviceCollection.AddSwaggerGen(options => options.Config());
         serviceCollection.AddDataProtection();
         serviceCollection.AddSignalR();
+        serviceCollection.AddHttpClient();
 
         return serviceCollection;
     }

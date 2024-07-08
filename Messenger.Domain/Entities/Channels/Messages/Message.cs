@@ -14,7 +14,7 @@ public partial class Message : BaseEntity, ISoftDelete
     }
 
     public string? Text { get; set; }
-    public DateTime? ModifiedDate { get; set; }
+    public DateTime? ModifiedAt { get; set; }
     public bool IsRead { get; private set; } = false;
     public bool IsDeleted { get; private set; } = false;
 

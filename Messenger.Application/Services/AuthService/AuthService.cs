@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using MessengerX.Application.Other.AuthOptions;
 using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.Common;
 using MessengerX.Domain.Common;
@@ -9,6 +8,7 @@ using MessengerX.Domain.Entities.Users;
 using MessengerX.Domain.Exceptions;
 using MessengerX.Domain.Services;
 using MessengerX.Domain.Shared.Models;
+using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Notifications.Common;
 using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
@@ -165,7 +165,7 @@ public class AuthService : BaseService, IAuthService
             throw new OperationNotAllowedException("Reset token has expired");
 
         Account account =
-            await _accountBS.GetAccountByIdAsync(resetToken.Id)
+            await _accountBS.GetAccountByIdAsync(resetToken.Id, true)
             ?? throw new NotExistsException("Account not exists");
 
         await _authBS.UpdatePasswordAsync(account, request.Password);
