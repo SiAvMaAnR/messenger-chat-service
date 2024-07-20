@@ -10,7 +10,8 @@ public class AppSettings(
     IOptions<RoutePathSettings> routePathSettings,
     IOptions<FilePathSettings> filePathSettings,
     IOptions<ClientSettings> clientSettings,
-    IOptions<AuthSettings> authSettings
+    IOptions<AuthSettings> authSettings,
+    IOptions<MesBrokerSettings> mesBrokerSettings
 ) : IAppSettings
 {
     public CommonSettings Common { get; } = commonSettings.Value;
@@ -19,4 +20,5 @@ public class AppSettings(
     public FilePathSettings FilePath { get; } = filePathSettings.Value;
     public ClientSettings Client { get; } = clientSettings.Value;
     public AuthSettings Auth { get; } = authSettings.Value;
+    public MesBrokerSettings MesBroker { get; } = mesBrokerSettings.Value;
 }

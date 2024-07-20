@@ -10,4 +10,5 @@ public interface IAppSettings
     FilePathSettings FilePath { get; }
     ClientSettings Client { get; }
     AuthSettings Auth { get; }
+    MesBrokerSettings MesBroker { get; }
 }

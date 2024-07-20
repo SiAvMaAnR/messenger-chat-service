@@ -6,6 +6,7 @@ using MessengerX.Application.Services.ChatService;
 using MessengerX.Application.Services.UserService;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Services;
+using MessengerX.Infrastructure.RabbitMQ;
 using MessengerX.Persistence.UnitOfWork;
 
 namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
@@ -17,6 +18,7 @@ public static partial class ServiceManagerExtension
     )
     {
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+        serviceCollection.AddScoped<IRabbitMQService, RabbitMQService>();
 
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IAccountService, AccountService>();

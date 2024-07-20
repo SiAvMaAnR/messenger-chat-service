@@ -9,23 +9,15 @@ public static partial class ServiceManagerExtension
         IConfiguration config
     )
     {
-        Dictionary<string, IConfigurationSection> configurations =
-            new()
-            {
-                { "commonSettings", config.GetSection(CommonSettings.Path) },
-                { "authSettings", config.GetSection(AuthSettings.Path) },
-                { "clientSettings", config.GetSection(ClientSettings.Path) },
-                { "routePathSettings", config.GetSection(RoutePathSettings.Path) },
-                { "filePathSettings", config.GetSection(FilePathSettings.Path) },
-                { "smtpSettings", config.GetSection(SmtpSettings.Path) },
-            };
-
-        serviceCollection.Configure<CommonSettings>(configurations["commonSettings"]);
-        serviceCollection.Configure<AuthSettings>(configurations["authSettings"]);
-        serviceCollection.Configure<ClientSettings>(configurations["clientSettings"]);
-        serviceCollection.Configure<RoutePathSettings>(configurations["routePathSettings"]);
-        serviceCollection.Configure<FilePathSettings>(configurations["filePathSettings"]);
-        serviceCollection.Configure<SmtpSettings>(configurations["smtpSettings"]);
+        serviceCollection.Configure<CommonSettings>(config.GetSection(CommonSettings.Path));
+        serviceCollection.Configure<AuthSettings>(config.GetSection(AuthSettings.Path));
+        serviceCollection.Configure<ClientSettings>(config.GetSection(ClientSettings.Path));
+        serviceCollection.Configure<RoutePathSettings>(config.GetSection(RoutePathSettings.Path));
+        serviceCollection.Configure<FilePathSettings>(config.GetSection(FilePathSettings.Path));
+        serviceCollection.Configure<SmtpSettings>(config.GetSection(SmtpSettings.Path));
+        serviceCollection.Configure<MesBrokerSettings>(
+            config.GetSection(MesBrokerSettings.Path)
+        );
 
         return serviceCollection;
     }
