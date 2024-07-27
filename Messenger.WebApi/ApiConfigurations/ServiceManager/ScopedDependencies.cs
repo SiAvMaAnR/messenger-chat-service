@@ -18,7 +18,8 @@ public static partial class ServiceManagerExtension
     )
     {
         serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
-        serviceCollection.AddScoped<IRabbitMQService, RabbitMQService>();
+        serviceCollection.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
+        serviceCollection.AddScoped<IRabbitMQConsumer, RabbitMQConsumer>();
 
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IAccountService, AccountService>();

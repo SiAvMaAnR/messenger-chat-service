@@ -15,9 +15,7 @@ public static partial class ServiceManagerExtension
         serviceCollection.Configure<RoutePathSettings>(config.GetSection(RoutePathSettings.Path));
         serviceCollection.Configure<FilePathSettings>(config.GetSection(FilePathSettings.Path));
         serviceCollection.Configure<SmtpSettings>(config.GetSection(SmtpSettings.Path));
-        serviceCollection.Configure<MesBrokerSettings>(
-            config.GetSection(MesBrokerSettings.Path)
-        );
+        serviceCollection.Configure<RMQSettings>(config.GetSection(RMQSettings.Path));
 
         return serviceCollection;
     }

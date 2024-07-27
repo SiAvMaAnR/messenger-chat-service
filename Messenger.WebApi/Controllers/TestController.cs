@@ -1,4 +1,4 @@
-using MessengerX.Infrastructure.RabbitMQ;
+﻿using MessengerX.Infrastructure.RabbitMQ;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessengerX.WebApi.Controllers;
@@ -7,25 +7,32 @@ namespace MessengerX.WebApi.Controllers;
 [ApiController]
 public class TestController : ControllerBase
 {
-    private readonly IRabbitMQService _rabbitMQService;
+    private readonly IRabbitMQProducer _rabbitMQProducer;
 
-    public TestController(IRabbitMQService rabbitMQService)
+    public TestController(IRabbitMQProducer rabbitMQProducer)
     {
-        _rabbitMQService = rabbitMQService;
+        _rabbitMQProducer = rabbitMQProducer;
     }
 
     [HttpGet("rabbit-mq")]
-    public IActionResult TestRabbitMQ()
+    public async Task<IActionResult> TestRabbitMQ()
     {
-        _rabbitMQService.SendMessage(
+        string? result = await _rabbitMQProducer.Emit<string>(
+            RMQ.Queue.Ai,
+            RMQ.Pattern.CreateMessage,
             new
             {
-                message = new { content = "content", role = "role" },
-                apiKey = new { model = "GigaChat", content = "key" },
-                messages = new List<object>()
+                message = new { content = "Кто такой цицерон?", role = "user" },
+                apiKey = new
+                {
+                    model = "GigaChat",
+                    // content = "NzIwYjVhNWQtODFjNC00MzFlLWFhNGEtY2ZkNjMyYWUxZWEwOjBkYTlkOTJmLTQ5ZGItNDNkMS1hOTFjLTFlZmVmMTMxOTE5Ng==",
+                },
+                temperature = 0.6,
+                messages = new List<object>(),
             }
         );
 
-        return Ok();
+        return Ok(result);
     }
 }
