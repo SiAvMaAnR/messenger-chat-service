@@ -1,6 +1,6 @@
 ﻿namespace MessengerX.WebApi.Controllers.Models.Admin;
 
-public class AdminControllerUserRequest
+public class UserControllerUserRequest
 {
     public bool IsLoadImage { get; set; }
 }

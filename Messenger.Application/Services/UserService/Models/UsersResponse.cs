@@ -1,8 +1,8 @@
 ﻿using MessengerX.Domain.Shared.Models;
 
-namespace MessengerX.Application.Services.AdminService.Models;
+namespace MessengerX.Application.Services.UserService.Models;
 
-public class AdminServiceUserResponseData
+public class UserServiceUserResponseData
 {
     public int Id { get; set; }
     public string? Login { get; set; }
@@ -16,8 +16,8 @@ public class AdminServiceUserResponseData
     public DateTime? UpdatedAt { get; set; }
 }
 
-public class AdminServiceUsersResponse
+public class UserServiceUsersResponse
 {
     public MetaResponse? Meta { get; set; }
-    public IEnumerable<AdminServiceUserResponseData>? Users { get; set; }
+    public IEnumerable<UserServiceUserResponseData>? Users { get; set; }
 }

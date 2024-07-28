@@ -1,6 +1,6 @@
-﻿namespace MessengerX.Application.Services.AdminService.Models;
+﻿namespace MessengerX.Application.Services.UserService.Models;
 
-public class AdminServiceUserResponse
+public class UserServiceUserResponse
 {
     public int Id { get; set; }
     public required string Login { get; set; }

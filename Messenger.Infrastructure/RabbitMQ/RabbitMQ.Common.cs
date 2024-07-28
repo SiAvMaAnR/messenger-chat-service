@@ -25,6 +25,18 @@ public static class RabbitMQ
 
         return Encoding.UTF8.GetBytes(adaptedMessage);
     }
+
+    public static TResponse? Deserialize<TResponse>(string content)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<TResponse>(content);
+        }
+        catch (Exception)
+        {
+            throw new JsonException($"Failed deserialization. JSON: {content}");
+        }
+    }
 }
 
 public static class RMQ

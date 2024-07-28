@@ -1,14 +1,14 @@
-﻿using MessengerX.Application.Services.AdminService.Models;
+﻿using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Entities.Users;
 using MessengerX.Persistence.Extensions;
 
-namespace MessengerX.Application.Services.AdminService.Adapters;
+namespace MessengerX.Application.Services.UserService.Adapters;
 
-public class AdminServiceUserAdapter : AdminServiceUserResponseData
+public class UserServiceUserAdapter : UserServiceUserResponseData
 {
     private readonly string? _imagePath;
 
-    public AdminServiceUserAdapter(User user)
+    public UserServiceUserAdapter(User user)
     {
         _imagePath = user.Image;
 

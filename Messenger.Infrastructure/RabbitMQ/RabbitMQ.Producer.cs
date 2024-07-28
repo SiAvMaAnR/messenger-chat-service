@@ -10,9 +10,11 @@ public class RabbitMQProducer : IRabbitMQProducer
 {
     private readonly IConnection _connection;
     private readonly IModel _channel;
+    private readonly IAppSettings _appSettings;
 
     public RabbitMQProducer(IAppSettings appSettings)
     {
+        _appSettings = appSettings;
         _connection = RabbitMQ.CreateConnection(appSettings);
         _channel = _connection.CreateModel();
     }
@@ -82,16 +84,14 @@ public class RabbitMQProducer : IRabbitMQProducer
             body: body
         );
 
-        // в env 10000
-        var delayTask = Task.Delay(10000);
+        var delayTask = Task.Delay(_appSettings.RMQ.Timeout);
         Task completedTask = await Task.WhenAny(tcs.Task, delayTask);
 
-        // Error
         if (completedTask == delayTask)
-            throw new TimeoutException("The request timed out.");
+            throw new TimeoutException("The request timed out");
 
         string result = await tcs.Task;
 
-        return JsonSerializer.Deserialize<TResponse>(result);
+        return RabbitMQ.Deserialize<TResponse>(result);
     }
 }

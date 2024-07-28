@@ -1,9 +1,8 @@
 ﻿using MessengerX.Application.Services.AccountService;
-using MessengerX.Application.Services.AdminService;
+using MessengerX.Application.Services.UserService;
 using MessengerX.Application.Services.AuthService;
 using MessengerX.Application.Services.ChannelService;
 using MessengerX.Application.Services.ChatService;
-using MessengerX.Application.Services.UserService;
 using MessengerX.Domain.Common;
 using MessengerX.Domain.Services;
 using MessengerX.Infrastructure.RabbitMQ;
@@ -24,7 +23,7 @@ public static partial class ServiceManagerExtension
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IAccountService, AccountService>();
         serviceCollection.AddScoped<IAuthService, AuthService>();
-        serviceCollection.AddScoped<IAdminService, AdminService>();
+        serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<IChannelService, ChannelService>();
         serviceCollection.AddScoped<IChatService, ChatService>();
 

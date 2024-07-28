@@ -3,6 +3,7 @@ using MessengerX.Application.Services.AuthService.Models;
 using MessengerX.Application.Services.UserService;
 using MessengerX.Application.Services.UserService.Models;
 using MessengerX.Domain.Shared.Constants.Common;
+using MessengerX.WebApi.Controllers.Models.Admin;
 using MessengerX.WebApi.Controllers.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +66,53 @@ public class UserController : ControllerBase
     {
         UserServiceUpdateResponse response = await _userService.UpdateAsync(
             new UserServiceUpdateRequest() { Login = request.Login, Birthday = request.Birthday }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpGet("users"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
+    public async Task<IActionResult> GetUsers([FromQuery] UserControllerUsersRequest request)
+    {
+        UserServiceUsersResponse response = await _userService.UsersAsync(
+            new UserServiceUsersRequest()
+            {
+                Pagination = request.Pagination,
+                IsLoadImage = request.IsLoadImage
+            }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpGet("users/{id:int}"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
+    public async Task<IActionResult> GetUser(
+        [FromQuery] UserControllerUserRequest request,
+        [FromRoute] int id
+    )
+    {
+        UserServiceUserResponse response = await _userService.UserAsync(
+            new UserServiceUserRequest() { Id = id, IsLoadImage = request.IsLoadImage }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpPost("block-user"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
+    public async Task<IActionResult> BlockUser([FromBody] UserControllerBlockUserRequest request)
+    {
+        UserServiceBlockUserResponse response = await _userService.BlockUserAsync(
+            new UserServiceBlockUserRequest() { UserId = request.Id }
+        );
+
+        return Ok(response);
+    }
+
+    [HttpPost("unblock-user"), Authorize(Policy = AuthPolicy.OnlyAdmin)]
+    public async Task<IActionResult> UnblockUser([FromBody] UserControllerBlockUserRequest request)
+    {
+        UserServiceUnblockUserResponse response = await _userService.UnblockUserAsync(
+            new UserServiceUnblockUserRequest() { UserId = request.Id }
         );
 
         return Ok(response);

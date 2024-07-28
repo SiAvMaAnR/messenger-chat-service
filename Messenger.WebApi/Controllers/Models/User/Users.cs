@@ -1,8 +1,8 @@
 ﻿using MessengerX.Domain.Shared.Models;
 
-namespace MessengerX.Application.Services.AdminService.Models;
+namespace MessengerX.WebApi.Controllers.Models.Admin;
 
-public class AdminServiceUsersRequest
+public class UserControllerUsersRequest
 {
     public Pagination? Pagination { get; set; }
     public bool IsLoadImage { get; set; }

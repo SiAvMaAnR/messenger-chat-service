@@ -1,6 +1,6 @@
 ﻿namespace MessengerX.WebApi.Controllers.Models.Admin;
 
-public class AdminControllerBlockUserRequest
+public class UserControllerBlockUserRequest
 {
     public int Id { get; set; }
 }

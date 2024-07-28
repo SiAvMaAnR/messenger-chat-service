@@ -1,4 +1,5 @@
-﻿using MessengerX.Infrastructure.RabbitMQ;
+﻿using MessengerX.Domain.Shared.Models;
+using MessengerX.Infrastructure.RabbitMQ;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessengerX.WebApi.Controllers;
@@ -17,7 +18,7 @@ public class TestController : ControllerBase
     [HttpGet("rabbit-mq")]
     public async Task<IActionResult> TestRabbitMQ()
     {
-        string? result = await _rabbitMQProducer.Emit<string>(
+        AIMessage? result = await _rabbitMQProducer.Emit<AIMessage>(
             RMQ.Queue.Ai,
             RMQ.Pattern.CreateMessage,
             new
@@ -26,7 +27,7 @@ public class TestController : ControllerBase
                 apiKey = new
                 {
                     model = "GigaChat",
-                    // content = "NzIwYjVhNWQtODFjNC00MzFlLWFhNGEtY2ZkNjMyYWUxZWEwOjBkYTlkOTJmLTQ5ZGItNDNkMS1hOTFjLTFlZmVmMTMxOTE5Ng==",
+                    content = "NzIwYjVhNWQtODFjNC00MzFlLWFhNGEtY2ZkNjMyYWUxZWEwOjBkYTlkOTJmLTQ5ZGItNDNkMS1hOTFjLTFlZmVmMTMxOTE5Ng==",
                 },
                 temperature = 0.6,
                 messages = new List<object>(),
