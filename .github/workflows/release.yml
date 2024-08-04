@@ -1,0 +1,23 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish step
+        run: bash ./.github/scripts/exec-publish.sh
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: publish
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy step
+        run: bash ./.github/scripts/exec-deploy.sh

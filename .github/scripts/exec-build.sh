@@ -1,1 +1,5 @@
-echo "build"
+dotnet build
+
+dotnet format
+
+dotnet test
