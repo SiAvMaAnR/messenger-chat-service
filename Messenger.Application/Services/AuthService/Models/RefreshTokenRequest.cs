@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Application.Services.AuthService.Models;
+﻿namespace Messenger.Application.Services.AuthService.Models;
 
 public class AuthServiceRefreshTokenRequest
 {

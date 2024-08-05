@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Shared.Models;
+﻿using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.Application.Services.UserService.Models;
+namespace Messenger.Application.Services.UserService.Models;
 
 public class UserServiceUserResponseData
 {

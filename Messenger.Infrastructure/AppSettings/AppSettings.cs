@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Common;
-using MessengerX.Domain.Shared.Settings;
+﻿using Messenger.Domain.Common;
+using Messenger.Domain.Shared.Settings;
 using Microsoft.Extensions.Options;
 
-namespace MessengerX.Infrastructure.AppSettings;
+namespace Messenger.Infrastructure.AppSettings;
 
 public class AppSettings(
     IOptions<CommonSettings> commonSettings,

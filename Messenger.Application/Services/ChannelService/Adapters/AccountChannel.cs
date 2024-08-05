@@ -1,11 +1,11 @@
-﻿using MessengerX.Application.Services.ChannelService.Models;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Entities.Messages;
-using MessengerX.Domain.Shared.Constants.Common;
-using MessengerX.Persistence.Extensions;
+﻿using Messenger.Application.Services.ChannelService.Models;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.Channels;
+using Messenger.Domain.Entities.Messages;
+using Messenger.Domain.Shared.Constants.Common;
+using Messenger.Persistence.Extensions;
 
-namespace MessengerX.Application.Services.ChatService.Adapters;
+namespace Messenger.Application.Services.ChatService.Adapters;
 
 public class ChannelServiceAccountChannelListAdapter : ChannelServiceAccountChannelResponseData
 {

@@ -1,10 +1,10 @@
 ﻿using System.Text;
 using System.Text.Json;
-using MessengerX.Domain.Common;
+using Messenger.Domain.Common;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace MessengerX.Infrastructure.RabbitMQ;
+namespace Messenger.Infrastructure.RabbitMQ;
 
 public class RabbitMQProducer : IRabbitMQProducer
 {

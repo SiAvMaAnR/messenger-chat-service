@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
-using MessengerX.Domain.Entities;
-using MessengerX.Domain.Specification;
-using MessengerX.Persistence.DBContext;
+using Messenger.Domain.Entities;
+using Messenger.Domain.Specification;
+using Messenger.Persistence.DBContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace MessengerX.Persistence.Repositories.Common;
+namespace Messenger.Persistence.Repositories.Common;
 
 public class BaseRepository<TEntity> : IAsyncRepository<TEntity>
     where TEntity : BaseEntity

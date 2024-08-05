@@ -1,7 +1,7 @@
-﻿using MessengerX.Application.Services.AccountService.Models;
-using MessengerX.Application.Services.Common;
+﻿using Messenger.Application.Services.AccountService.Models;
+using Messenger.Application.Services.Common;
 
-namespace MessengerX.Application.Services.AccountService;
+namespace Messenger.Application.Services.AccountService;
 
 public interface IAccountService : IBaseService
 {

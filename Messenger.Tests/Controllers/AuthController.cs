@@ -1,6 +1,6 @@
-﻿using MessengerX.Application.Services.AuthService;
-using MessengerX.WebApi.Controllers;
-using MessengerX.WebApi.Controllers.Models.Auth;
+﻿using Messenger.Application.Services.AuthService;
+using Messenger.WebApi.Controllers;
+using Messenger.WebApi.Controllers.Models.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Messenger.Tests.Controllers;

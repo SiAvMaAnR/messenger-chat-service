@@ -1,3 +1,3 @@
-﻿namespace MessengerX.Domain.Entities.RefreshTokens;
+﻿namespace Messenger.Domain.Entities.RefreshTokens;
 
 public interface IRefreshTokenRepository : IAsyncRepository<RefreshToken> { }

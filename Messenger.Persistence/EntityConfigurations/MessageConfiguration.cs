@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Entities.Messages;
+﻿using Messenger.Domain.Entities.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MessengerX.Persistence.EntityConfigurations;
+namespace Messenger.Persistence.EntityConfigurations;
 
 internal class MessageConfiguration : IEntityTypeConfiguration<Message>
 {

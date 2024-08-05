@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Shared.Models;
-using MessengerX.Infrastructure.RabbitMQ;
+﻿using Messenger.Domain.Shared.Models;
+using Messenger.Infrastructure.RabbitMQ;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MessengerX.WebApi.Controllers;
+namespace Messenger.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Common;
+﻿using Messenger.Domain.Common;
 
-namespace MessengerX.Infrastructure.RabbitMQ;
+namespace Messenger.Infrastructure.RabbitMQ;
 
 public class RabbitMQConsumer : IRabbitMQConsumer
 {

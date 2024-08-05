@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace MessengerX.WebApi.Middlewares;
+namespace Messenger.WebApi.Middlewares;
 
 public class TimingMiddleware
 {

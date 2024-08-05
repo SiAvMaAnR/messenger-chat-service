@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Entities.RefreshTokens;
+﻿using Messenger.Domain.Entities.RefreshTokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MessengerX.Persistence.EntityConfigurations;
+namespace Messenger.Persistence.EntityConfigurations;
 
 internal class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
 {

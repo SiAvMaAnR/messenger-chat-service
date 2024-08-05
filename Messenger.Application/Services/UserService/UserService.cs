@@ -1,21 +1,21 @@
 ﻿using System.Text.Json;
-using MessengerX.Application.Services.Common;
-using MessengerX.Application.Services.UserService.Adapters;
-using MessengerX.Application.Services.UserService.Models;
-using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Services;
-using MessengerX.Domain.Shared.Models;
-using MessengerX.Notifications.Common;
-using MessengerX.Notifications.Email;
-using MessengerX.Notifications.Email.Models;
-using MessengerX.Notifications.NotificationTemplates;
-using MessengerX.Persistence.Extensions;
+using Messenger.Application.Services.Common;
+using Messenger.Application.Services.UserService.Adapters;
+using Messenger.Application.Services.UserService.Models;
+using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Users;
+using Messenger.Domain.Exceptions;
+using Messenger.Domain.Services;
+using Messenger.Domain.Shared.Models;
+using Messenger.Notifications.Common;
+using Messenger.Notifications.Email;
+using Messenger.Notifications.Email.Models;
+using Messenger.Notifications.NotificationTemplates;
+using Messenger.Persistence.Extensions;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 
-namespace MessengerX.Application.Services.UserService;
+namespace Messenger.Application.Services.UserService;
 
 public class UserService : BaseService, IUserService
 {

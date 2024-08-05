@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Infrastructure.RabbitMQ;
+﻿namespace Messenger.Infrastructure.RabbitMQ;
 
 public interface IRabbitMQProducer
 {

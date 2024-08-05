@@ -1,9 +1,9 @@
-﻿using MessengerX.Application.Common;
-using MessengerX.Domain.Common;
-using MessengerX.Domain.Exceptions;
+﻿using Messenger.Application.Common;
+using Messenger.Domain.Common;
+using Messenger.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 
-namespace MessengerX.Application.Services.Common;
+namespace Messenger.Application.Services.Common;
 
 public interface IBaseService { }
 

@@ -1,9 +1,9 @@
-﻿using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Services;
-using MessengerX.Domain.Shared.Models;
-using MessengerX.Persistence.DBContext;
+﻿using Messenger.Domain.Entities.Users;
+using Messenger.Domain.Services;
+using Messenger.Domain.Shared.Models;
+using Messenger.Persistence.DBContext;
 
-namespace MessengerX.Persistence.Seeds.DefaultUsers;
+namespace Messenger.Persistence.Seeds.DefaultUsers;
 
 internal static partial class DefaultUsersSeed
 {

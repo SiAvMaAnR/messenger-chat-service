@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Shared.Models;
+﻿using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.Application.Services.ChannelService.Models;
+namespace Messenger.Application.Services.ChannelService.Models;
 
 public class ChannelServicePublicChannelsRequest
 {

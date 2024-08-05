@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Shared.Constants.Common;
+﻿using Messenger.Domain.Shared.Constants.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace MessengerX.WebApi.ApiBuilder.Other;
+namespace Messenger.WebApi.ApiBuilder.Other;
 
 public static class PolicyConfigExtension
 {

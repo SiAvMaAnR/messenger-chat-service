@@ -1,14 +1,14 @@
 ﻿using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.RefreshTokens;
-using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Shared.Constants.Common;
-using MessengerX.Domain.Shared.Models;
+using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.RefreshTokens;
+using Messenger.Domain.Exceptions;
+using Messenger.Domain.Shared.Constants.Common;
+using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.Domain.Services;
+namespace Messenger.Domain.Services;
 
 public class AuthBS : DomainService
 {

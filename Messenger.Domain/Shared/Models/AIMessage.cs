@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace MessengerX.Domain.Shared.Models;
+namespace Messenger.Domain.Shared.Models;
 
 public class AIMessage
 {

@@ -1,10 +1,10 @@
-﻿using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Shared.Constants.Common;
+﻿using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.Channels;
+using Messenger.Domain.Exceptions;
+using Messenger.Domain.Shared.Constants.Common;
 
-namespace MessengerX.Domain.Services;
+namespace Messenger.Domain.Services;
 
 public class ChannelBS : DomainService
 {

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
-using MessengerX.Domain.Entities;
+using Messenger.Domain.Entities;
 
-namespace MessengerX.Domain.Specification;
+namespace Messenger.Domain.Specification;
 
 public interface ISingleSpecification<TEntity>
     where TEntity : BaseEntity

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
-using MessengerX.Domain.Specification;
+using Messenger.Domain.Specification;
 
-namespace MessengerX.Domain.Entities;
+namespace Messenger.Domain.Entities;
 
 public interface IAsyncRepository<TEntity>
     where TEntity : BaseEntity

@@ -1,7 +1,7 @@
-﻿using MessengerX.Application.Services.ChannelService.Models;
-using MessengerX.Application.Services.Common;
+﻿using Messenger.Application.Services.ChannelService.Models;
+using Messenger.Application.Services.Common;
 
-namespace MessengerX.Application.Services.ChannelService;
+namespace Messenger.Application.Services.ChannelService;
 
 public interface IChannelService : IBaseService
 {

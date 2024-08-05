@@ -1,10 +1,10 @@
-﻿using MessengerX.Application.Services.ChatService;
-using MessengerX.Application.Services.ChatService.Models;
-using MessengerX.WebApi.Controllers.Models.Chat;
+﻿using Messenger.Application.Services.ChatService;
+using Messenger.Application.Services.ChatService.Models;
+using Messenger.WebApi.Controllers.Models.Chat;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MessengerX.WebApi.Controllers;
+namespace Messenger.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

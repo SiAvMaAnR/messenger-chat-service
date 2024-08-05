@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Shared.Models;
+﻿using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.Application.Services.AccountService.Models;
+namespace Messenger.Application.Services.AccountService.Models;
 
 public class AccountServiceAccountsRequest
 {

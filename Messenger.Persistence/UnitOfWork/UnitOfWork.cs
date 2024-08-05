@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Common;
+﻿using Messenger.Domain.Common;
 
-namespace MessengerX.Persistence.UnitOfWork;
+namespace Messenger.Persistence.UnitOfWork;
 
 public partial class UnitOfWork : IUnitOfWork
 {

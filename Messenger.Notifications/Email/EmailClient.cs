@@ -1,11 +1,11 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
-using MessengerX.Notifications.Common;
-using MessengerX.Notifications.Email.Models;
+using Messenger.Notifications.Common;
+using Messenger.Notifications.Email.Models;
 using MimeKit;
 using MimeKit.Text;
 
-namespace MessengerX.Notifications.Email;
+namespace Messenger.Notifications.Email;
 
 public interface IEmailClient : INotificationClient { }
 

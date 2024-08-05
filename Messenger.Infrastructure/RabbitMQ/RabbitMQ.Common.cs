@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using System.Text.Json;
-using MessengerX.Domain.Common;
+using Messenger.Domain.Common;
 using RabbitMQ.Client;
 
-namespace MessengerX.Infrastructure.RabbitMQ;
+namespace Messenger.Infrastructure.RabbitMQ;
 
 public static class RabbitMQ
 {

@@ -1,7 +1,7 @@
-﻿using MessengerX.Domain.Shared.Settings;
+﻿using Messenger.Domain.Shared.Settings;
 using NReco.Logging.File;
 
-namespace MessengerX.WebApi.ApiBuilder.LoggingBuilder;
+namespace Messenger.WebApi.ApiBuilder.LoggingBuilder;
 
 public static partial class LoggingBuilderExtension
 {

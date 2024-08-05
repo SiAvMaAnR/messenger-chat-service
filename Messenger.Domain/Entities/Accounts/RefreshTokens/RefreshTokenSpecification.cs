@@ -1,7 +1,7 @@
-﻿using MessengerX.Domain.Entities.RefreshTokens;
-using MessengerX.Domain.Specification;
+﻿using Messenger.Domain.Entities.RefreshTokens;
+using Messenger.Domain.Specification;
 
-namespace MessengerX.Domain.Entities.Accounts;
+namespace Messenger.Domain.Entities.Accounts;
 
 public class RefreshTokenByTokenSpec : Specification<RefreshToken>
 {

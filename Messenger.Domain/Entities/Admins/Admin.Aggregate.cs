@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Domain.Entities.Admins;
+﻿namespace Messenger.Domain.Entities.Admins;
 
 public partial class Admin : IAggregateRoot
 {

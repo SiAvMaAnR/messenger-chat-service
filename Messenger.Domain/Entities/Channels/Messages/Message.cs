@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Channels;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.Channels;
 
-namespace MessengerX.Domain.Entities.Messages;
+namespace Messenger.Domain.Entities.Messages;
 
 [Table("Messages")]
 public partial class Message : BaseEntity, ISoftDelete

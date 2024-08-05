@@ -1,14 +1,14 @@
-﻿using MessengerX.Application.Services.AccountService;
-using MessengerX.Application.Services.UserService;
-using MessengerX.Application.Services.AuthService;
-using MessengerX.Application.Services.ChannelService;
-using MessengerX.Application.Services.ChatService;
-using MessengerX.Domain.Common;
-using MessengerX.Domain.Services;
-using MessengerX.Infrastructure.RabbitMQ;
-using MessengerX.Persistence.UnitOfWork;
+﻿using Messenger.Application.Services.AccountService;
+using Messenger.Application.Services.UserService;
+using Messenger.Application.Services.AuthService;
+using Messenger.Application.Services.ChannelService;
+using Messenger.Application.Services.ChatService;
+using Messenger.Domain.Common;
+using Messenger.Domain.Services;
+using Messenger.Infrastructure.RabbitMQ;
+using Messenger.Persistence.UnitOfWork;
 
-namespace MessengerX.WebApi.ApiBuilder.ServiceManager;
+namespace Messenger.WebApi.ApiBuilder.ServiceManager;
 
 public static partial class ServiceManagerExtension
 {

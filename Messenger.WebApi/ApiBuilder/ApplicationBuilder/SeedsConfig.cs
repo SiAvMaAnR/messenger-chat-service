@@ -1,7 +1,7 @@
-﻿using MessengerX.Persistence.DBContext;
-using MessengerX.Persistence.Seeds;
+﻿using Messenger.Persistence.DBContext;
+using Messenger.Persistence.Seeds;
 
-namespace MessengerX.WebApi.ApiBuilder.ApplicationBuilder;
+namespace Messenger.WebApi.ApiBuilder.ApplicationBuilder;
 
 public static partial class ApplicationBuilderExtension
 {

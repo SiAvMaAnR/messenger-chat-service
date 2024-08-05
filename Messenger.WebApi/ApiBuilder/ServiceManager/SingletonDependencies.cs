@@ -1,9 +1,9 @@
-﻿using MessengerX.Domain.Common;
-using MessengerX.Infrastructure.AppSettings;
-using MessengerX.WebApi.Common;
+﻿using Messenger.Domain.Common;
+using Messenger.Infrastructure.AppSettings;
+using Messenger.WebApi.Common;
 using StackExchange.Redis;
 
-namespace MessengerX.WebApi.ApiBuilder.ServiceManager;
+namespace Messenger.WebApi.ApiBuilder.ServiceManager;
 
 public static partial class ServiceManagerExtension
 {

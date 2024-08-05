@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Entities;
+﻿using Messenger.Domain.Entities;
 
-namespace MessengerX.Domain.Specification;
+namespace Messenger.Domain.Specification;
 
 public class DefaultSpec<TEntity> : Specification<TEntity>
     where TEntity : BaseEntity

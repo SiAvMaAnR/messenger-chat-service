@@ -1,8 +1,8 @@
-﻿using MessengerX.Application.Services.UserService.Models;
-using MessengerX.Domain.Entities.Users;
-using MessengerX.Persistence.Extensions;
+﻿using Messenger.Application.Services.UserService.Models;
+using Messenger.Domain.Entities.Users;
+using Messenger.Persistence.Extensions;
 
-namespace MessengerX.Application.Services.UserService.Adapters;
+namespace Messenger.Application.Services.UserService.Adapters;
 
 public class UserServiceUserAdapter : UserServiceUserResponseData
 {

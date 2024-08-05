@@ -1,6 +1,6 @@
-﻿using MessengerX.WebApi.Common;
+﻿using Messenger.WebApi.Common;
 
-namespace MessengerX.WebApi.ApiBuilder.ApplicationBuilder;
+namespace Messenger.WebApi.ApiBuilder.ApplicationBuilder;
 
 public static partial class ApplicationBuilderExtension
 {

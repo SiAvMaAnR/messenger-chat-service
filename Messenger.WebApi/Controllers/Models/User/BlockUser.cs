@@ -1,4 +1,4 @@
-﻿namespace MessengerX.WebApi.Controllers.Models.Admin;
+﻿namespace Messenger.WebApi.Controllers.Models.Admin;
 
 public class UserControllerBlockUserRequest
 {

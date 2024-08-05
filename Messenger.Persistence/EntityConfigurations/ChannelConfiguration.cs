@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Entities.Channels;
+﻿using Messenger.Domain.Entities.Channels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MessengerX.Persistence.EntityConfigurations;
+namespace Messenger.Persistence.EntityConfigurations;
 
 internal class ChannelConfiguration : IEntityTypeConfiguration<Channel>
 {

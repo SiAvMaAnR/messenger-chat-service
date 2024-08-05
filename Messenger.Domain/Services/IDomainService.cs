@@ -1,3 +1,3 @@
-﻿namespace MessengerX.Domain.Services;
+﻿namespace Messenger.Domain.Services;
 
 public interface IDomainService { }

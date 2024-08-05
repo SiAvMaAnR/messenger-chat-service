@@ -1,7 +1,7 @@
-﻿using MessengerX.Application.Services.AuthService.Models;
-using MessengerX.Application.Services.Common;
+﻿using Messenger.Application.Services.AuthService.Models;
+using Messenger.Application.Services.Common;
 
-namespace MessengerX.Application.Services.AuthService;
+namespace Messenger.Application.Services.AuthService;
 
 public interface IAuthService : IBaseService
 {

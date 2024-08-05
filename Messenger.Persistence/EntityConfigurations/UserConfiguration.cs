@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Entities.Users;
+﻿using Messenger.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace MessengerX.Persistence.EntityConfigurations;
+namespace Messenger.Persistence.EntityConfigurations;
 
 internal class UserConfiguration : IEntityTypeConfiguration<User>
 {

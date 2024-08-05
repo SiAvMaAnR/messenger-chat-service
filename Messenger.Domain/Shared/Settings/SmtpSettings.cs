@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Domain.Shared.Settings;
+﻿namespace Messenger.Domain.Shared.Settings;
 
 public class SmtpSettings
 {

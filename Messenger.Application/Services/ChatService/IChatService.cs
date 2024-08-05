@@ -1,7 +1,7 @@
-﻿using MessengerX.Application.Services.ChatService.Models;
-using MessengerX.Application.Services.Common;
+﻿using Messenger.Application.Services.ChatService.Models;
+using Messenger.Application.Services.Common;
 
-namespace MessengerX.Application.Services.ChatService;
+namespace Messenger.Application.Services.ChatService;
 
 public interface IChatService : IBaseService
 {

@@ -1,9 +1,9 @@
-﻿using MessengerX.Persistence.DBContext;
-using MessengerX.Persistence.Seeds.DefaultUsers;
+﻿using Messenger.Persistence.DBContext;
+using Messenger.Persistence.Seeds.DefaultUsers;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 
-namespace MessengerX.Persistence.Seeds;
+namespace Messenger.Persistence.Seeds;
 
 public static class SeedsInitiator
 {

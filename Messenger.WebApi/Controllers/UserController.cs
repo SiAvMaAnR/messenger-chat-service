@@ -1,14 +1,14 @@
-﻿using MessengerX.Application.Services.AuthService;
-using MessengerX.Application.Services.AuthService.Models;
-using MessengerX.Application.Services.UserService;
-using MessengerX.Application.Services.UserService.Models;
-using MessengerX.Domain.Shared.Constants.Common;
-using MessengerX.WebApi.Controllers.Models.Admin;
-using MessengerX.WebApi.Controllers.Models.User;
+﻿using Messenger.Application.Services.AuthService;
+using Messenger.Application.Services.AuthService.Models;
+using Messenger.Application.Services.UserService;
+using Messenger.Application.Services.UserService.Models;
+using Messenger.Domain.Shared.Constants.Common;
+using Messenger.WebApi.Controllers.Models.Admin;
+using Messenger.WebApi.Controllers.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MessengerX.WebApi.Controllers;
+namespace Messenger.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

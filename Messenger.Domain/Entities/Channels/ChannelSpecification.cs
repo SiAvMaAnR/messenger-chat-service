@@ -1,7 +1,7 @@
-﻿using MessengerX.Domain.Shared.Constants.Common;
-using MessengerX.Domain.Specification;
+﻿using Messenger.Domain.Shared.Constants.Common;
+using Messenger.Domain.Specification;
 
-namespace MessengerX.Domain.Entities.Channels;
+namespace Messenger.Domain.Entities.Channels;
 
 public class PublicChannelsSpec : Specification<Channel>
 {

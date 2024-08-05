@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Specification;
+﻿using Messenger.Domain.Specification;
 
-namespace MessengerX.Domain.Entities.Admins;
+namespace Messenger.Domain.Entities.Admins;
 
 public class AdminByIdSpec : Specification<Admin>
 {

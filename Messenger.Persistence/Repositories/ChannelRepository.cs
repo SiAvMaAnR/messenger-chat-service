@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Entities.Channels;
-using MessengerX.Persistence.DBContext;
-using MessengerX.Persistence.Repositories.Common;
+﻿using Messenger.Domain.Entities.Channels;
+using Messenger.Persistence.DBContext;
+using Messenger.Persistence.Repositories.Common;
 
-namespace MessengerX.Persistence.Repositories;
+namespace Messenger.Persistence.Repositories;
 
 public class ChannelRepository : BaseRepository<Channel>, IChannelRepository
 {

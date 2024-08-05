@@ -1,4 +1,4 @@
-﻿namespace MessengerX.WebApi.Controllers.Models.Channel;
+﻿namespace Messenger.WebApi.Controllers.Models.Channel;
 
 public class ChannelControllerCreatePrivateChannelRequest
 {

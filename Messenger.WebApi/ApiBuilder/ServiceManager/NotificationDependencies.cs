@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Shared.Settings;
-using MessengerX.Notifications.Email;
-using MessengerX.Notifications.Email.Models;
+﻿using Messenger.Domain.Shared.Settings;
+using Messenger.Notifications.Email;
+using Messenger.Notifications.Email.Models;
 
-namespace MessengerX.WebApi.ApiBuilder.ServiceManager;
+namespace Messenger.WebApi.ApiBuilder.ServiceManager;
 
 public static partial class ServiceManagerExtension
 {
