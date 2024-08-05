@@ -8,7 +8,7 @@ using MessengerX.Domain.Services;
 using MessengerX.Infrastructure.RabbitMQ;
 using MessengerX.Persistence.UnitOfWork;
 
-namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
+namespace MessengerX.WebApi.ApiBuilder.ServiceManager;
 
 public static partial class ServiceManagerExtension
 {

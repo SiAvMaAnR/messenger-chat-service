@@ -2,7 +2,7 @@
 using MessengerX.Notifications.Email;
 using MessengerX.Notifications.Email.Models;
 
-namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
+namespace MessengerX.WebApi.ApiBuilder.ServiceManager;
 
 public static partial class ServiceManagerExtension
 {

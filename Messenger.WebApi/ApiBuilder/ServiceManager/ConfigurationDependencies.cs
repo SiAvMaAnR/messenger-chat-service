@@ -1,6 +1,6 @@
 ﻿using MessengerX.Domain.Shared.Settings;
 
-namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
+namespace MessengerX.WebApi.ApiBuilder.ServiceManager;
 
 public static partial class ServiceManagerExtension
 {

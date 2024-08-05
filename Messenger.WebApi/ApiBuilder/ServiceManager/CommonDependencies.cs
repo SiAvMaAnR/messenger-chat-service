@@ -1,11 +1,11 @@
 ﻿using MessengerX.Infrastructure.AuthOptions;
 using MessengerX.Persistence.DBContext;
-using MessengerX.WebApi.ApiConfigurations.Other;
+using MessengerX.WebApi.ApiBuilder.Other;
 using MessengerX.WebApi.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
-namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
+namespace MessengerX.WebApi.ApiBuilder.ServiceManager;
 
 public static partial class ServiceManagerExtension
 {

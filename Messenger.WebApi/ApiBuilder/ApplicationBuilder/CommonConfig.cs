@@ -1,7 +1,7 @@
 ﻿using MessengerX.Domain.Shared.Constants.Common;
 using MessengerX.WebApi.Middlewares;
 
-namespace MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
+namespace MessengerX.WebApi.ApiBuilder.ApplicationBuilder;
 
 public static partial class ApplicationBuilderExtension
 {

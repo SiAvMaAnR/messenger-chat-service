@@ -1,6 +1,6 @@
-﻿using MessengerX.WebApi.ApiConfigurations.ApplicationBuilder;
-using MessengerX.WebApi.ApiConfigurations.LoggingBuilder;
-using MessengerX.WebApi.ApiConfigurations.ServiceManager;
+﻿using MessengerX.WebApi.ApiBuilder.ApplicationBuilder;
+using MessengerX.WebApi.ApiBuilder.LoggingBuilder;
+using MessengerX.WebApi.ApiBuilder.ServiceManager;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;

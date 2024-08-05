@@ -3,7 +3,7 @@ using MessengerX.Infrastructure.AppSettings;
 using MessengerX.WebApi.Common;
 using StackExchange.Redis;
 
-namespace MessengerX.WebApi.ApiConfigurations.ServiceManager;
+namespace MessengerX.WebApi.ApiBuilder.ServiceManager;
 
 public static partial class ServiceManagerExtension
 {
