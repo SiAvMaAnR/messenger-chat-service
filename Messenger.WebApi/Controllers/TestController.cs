@@ -36,4 +36,10 @@ public class TestController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("check")]
+    public IActionResult Check()
+    {
+        return Ok("OK");
+    }
 }
