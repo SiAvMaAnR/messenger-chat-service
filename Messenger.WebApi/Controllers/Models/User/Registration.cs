@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using MessengerX.Domain.Shared.Constants.Validation;
+using Messenger.Domain.Shared.Constants.Validation;
 
-namespace MessengerX.WebApi.Controllers.Models.User;
+namespace Messenger.WebApi.Controllers.Models.User;
 
 public class UserControllerRegistrationRequest
 {

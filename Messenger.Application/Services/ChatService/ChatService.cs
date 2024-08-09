@@ -1,12 +1,12 @@
-﻿using MessengerX.Application.Services.ChatService.Adapters;
-using MessengerX.Application.Services.ChatService.Models;
-using MessengerX.Application.Services.Common;
-using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Messages;
-using MessengerX.Domain.Services;
+﻿using Messenger.Application.Services.ChatService.Adapters;
+using Messenger.Application.Services.ChatService.Models;
+using Messenger.Application.Services.Common;
+using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Messages;
+using Messenger.Domain.Services;
 using Microsoft.AspNetCore.Http;
 
-namespace MessengerX.Application.Services.ChatService;
+namespace Messenger.Application.Services.ChatService;
 
 public class ChatService : BaseService, IChatService
 {

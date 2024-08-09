@@ -1,15 +1,15 @@
-﻿using MessengerX.Application.Services.ChannelService.Models;
-using MessengerX.Application.Services.ChatService.Adapters;
-using MessengerX.Application.Services.Common;
-using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Services;
-using MessengerX.Persistence.Extensions;
+﻿using Messenger.Application.Services.ChannelService.Models;
+using Messenger.Application.Services.ChatService.Adapters;
+using Messenger.Application.Services.Common;
+using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.Channels;
+using Messenger.Domain.Exceptions;
+using Messenger.Domain.Services;
+using Messenger.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;
 
-namespace MessengerX.Application.Services.ChannelService;
+namespace Messenger.Application.Services.ChannelService;
 
 public class ChannelService : BaseService, IChannelService
 {

@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Domain.Entities;
+﻿namespace Messenger.Domain.Entities;
 
 public interface ISoftDelete
 {

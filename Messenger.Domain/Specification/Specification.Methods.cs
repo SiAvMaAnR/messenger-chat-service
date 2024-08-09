@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
-using MessengerX.Domain.Shared.Models;
+using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.Domain.Specification;
+namespace Messenger.Domain.Specification;
 
 public abstract partial class Specification<TEntity>
 {

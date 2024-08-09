@@ -1,13 +1,13 @@
 ﻿using Messenger.WebApi.Hubs;
 using Messenger.WebApi.Hubs.Common;
-using MessengerX.Application.Services.ChannelService;
-using MessengerX.Application.Services.ChannelService.Models;
-using MessengerX.WebApi.Controllers.Models.Channel;
+using Messenger.Application.Services.ChannelService;
+using Messenger.Application.Services.ChannelService.Models;
+using Messenger.WebApi.Controllers.Models.Channel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace MessengerX.WebApi.Controllers;
+namespace Messenger.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

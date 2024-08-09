@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Application.Services.UserService.Models;
+﻿namespace Messenger.Application.Services.UserService.Models;
 
 public class UserServiceUpdateResponse
 {

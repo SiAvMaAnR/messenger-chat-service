@@ -1,7 +1,7 @@
-﻿using MessengerX.Application.Services.ChatService.Models;
-using MessengerX.Domain.Entities.Messages;
+﻿using Messenger.Application.Services.ChatService.Models;
+using Messenger.Domain.Entities.Messages;
 
-namespace MessengerX.Application.Services.ChatService.Adapters;
+namespace Messenger.Application.Services.ChatService.Adapters;
 
 public class ChatServiceMessageAdapter : ChatServiceMessageResponseData
 {

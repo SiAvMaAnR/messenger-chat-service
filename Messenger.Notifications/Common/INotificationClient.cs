@@ -1,6 +1,6 @@
-﻿using MessengerX.Notifications.Email.Models;
+﻿using Messenger.Notifications.Email.Models;
 
-namespace MessengerX.Notifications.Common;
+namespace Messenger.Notifications.Common;
 
 public interface INotificationClient
 {

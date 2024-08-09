@@ -1,10 +1,10 @@
-﻿using MessengerX.Application.Services.AccountService;
-using MessengerX.Application.Services.AccountService.Models;
-using MessengerX.WebApi.Controllers.Models.Account;
+﻿using Messenger.Application.Services.AccountService;
+using Messenger.Application.Services.AccountService.Models;
+using Messenger.WebApi.Controllers.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MessengerX.WebApi.Controllers;
+namespace Messenger.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

@@ -1,7 +1,7 @@
-﻿using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Admins;
+﻿using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Admins;
 
-namespace MessengerX.Domain.Services;
+namespace Messenger.Domain.Services;
 
 public class AdminBS : DomainService
 {

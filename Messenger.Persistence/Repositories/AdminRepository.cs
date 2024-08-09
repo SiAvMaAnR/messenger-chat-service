@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Entities.Admins;
-using MessengerX.Persistence.DBContext;
-using MessengerX.Persistence.Repositories.Common;
+﻿using Messenger.Domain.Entities.Admins;
+using Messenger.Persistence.DBContext;
+using Messenger.Persistence.Repositories.Common;
 
-namespace MessengerX.Persistence.Repositories;
+namespace Messenger.Persistence.Repositories;
 
 public class AdminRepository : BaseRepository<Admin>, IAdminRepository
 {

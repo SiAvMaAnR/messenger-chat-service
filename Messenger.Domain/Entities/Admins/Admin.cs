@@ -1,7 +1,7 @@
-﻿using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Shared.Constants.Common;
+﻿using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Shared.Constants.Common;
 
-namespace MessengerX.Domain.Entities.Admins;
+namespace Messenger.Domain.Entities.Admins;
 
 public partial class Admin : Account
 {

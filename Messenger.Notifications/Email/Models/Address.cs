@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Notifications.Email.Models;
+﻿namespace Messenger.Notifications.Email.Models;
 
 public class EmailAddress
 {

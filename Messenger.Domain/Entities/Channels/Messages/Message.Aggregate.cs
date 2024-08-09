@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Entities.Accounts;
+﻿using Messenger.Domain.Entities.Accounts;
 
-namespace MessengerX.Domain.Entities.Messages;
+namespace Messenger.Domain.Entities.Messages;
 
 public partial class Message : IAggregateRoot
 {

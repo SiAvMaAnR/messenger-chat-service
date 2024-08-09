@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Shared.Models;
+﻿using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.WebApi.Controllers.Models.Channel;
+namespace Messenger.WebApi.Controllers.Models.Channel;
 
 public class ChannelControllerPublicChannelsRequest
 {

@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Domain.Exceptions.Common;
+﻿namespace Messenger.Domain.Exceptions.Common;
 
 public class ExceptionArgs
 {

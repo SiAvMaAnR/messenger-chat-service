@@ -3,10 +3,10 @@
 .config/*
 .meta/*
 
-**/appsettings.Production.json
 **/*.log
 **/bin/*
 **/obj/*
 
+**/*.env
 **/Uploads/*
 **/tasks.md

@@ -1,4 +1,4 @@
-﻿namespace MessengerX.WebApi.Common;
+﻿namespace Messenger.WebApi.Common;
 
 public static class AppEnvironment
 {

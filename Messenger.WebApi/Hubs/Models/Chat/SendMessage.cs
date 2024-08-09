@@ -1,4 +1,4 @@
-﻿namespace MessengerX.WebApi.Hubs.Models.Chat;
+﻿namespace Messenger.WebApi.Hubs.Models.Chat;
 
 public class ChatHubSendMessageRequest
 {

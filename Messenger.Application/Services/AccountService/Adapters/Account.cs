@@ -1,9 +1,9 @@
-﻿using MessengerX.Application.Services.AccountService.Models;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Users;
-using MessengerX.Persistence.Extensions;
+﻿using Messenger.Application.Services.AccountService.Models;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.Users;
+using Messenger.Persistence.Extensions;
 
-namespace MessengerX.Application.Services.AccountService.Adapters;
+namespace Messenger.Application.Services.AccountService.Adapters;
 
 public class AccountServiceAccountAdapter : AccountServiceAccountResponseData
 {

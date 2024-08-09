@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Shared.Models;
+﻿using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.Application.Services.ChatService.Models;
+namespace Messenger.Application.Services.ChatService.Models;
 
 public class ChatServiceMessagesRequest
 {

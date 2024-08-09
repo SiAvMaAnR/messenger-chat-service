@@ -1,6 +1,6 @@
-﻿using MessengerX.Notifications.Common;
+﻿using Messenger.Notifications.Common;
 
-namespace MessengerX.Notifications.NotificationTemplates;
+namespace Messenger.Notifications.NotificationTemplates;
 
 public static partial class NotificationTemplate
 {
@@ -8,7 +8,7 @@ public static partial class NotificationTemplate
     {
         return new EmailTemplate()
         {
-            Subject = $"MessengerX",
+            Subject = $"Messenger",
             Content = $"<p>Confirmation link:</p> {link}"
         };
     }

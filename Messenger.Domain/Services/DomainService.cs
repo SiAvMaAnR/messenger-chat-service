@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Common;
+﻿using Messenger.Domain.Common;
 
-namespace MessengerX.Domain.Services;
+namespace Messenger.Domain.Services;
 
 public abstract class DomainService(IAppSettings appSettings, IUnitOfWork unitOfWork) : IDomainService
 {

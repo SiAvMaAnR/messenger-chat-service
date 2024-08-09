@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Entities.Messages;
-using MessengerX.Domain.Entities.RefreshTokens;
+﻿using Messenger.Domain.Entities.Channels;
+using Messenger.Domain.Entities.Messages;
+using Messenger.Domain.Entities.RefreshTokens;
 
-namespace MessengerX.Domain.Entities.Accounts;
+namespace Messenger.Domain.Entities.Accounts;
 
 public partial class Account : IAggregateRoot
 {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using MessengerX.Domain.Shared.Constants.Validation;
+using Messenger.Domain.Shared.Constants.Validation;
 
-namespace MessengerX.WebApi.Controllers.Models.Auth;
+namespace Messenger.WebApi.Controllers.Models.Auth;
 
 public class AuthControllerRevokeTokenRequest
 {

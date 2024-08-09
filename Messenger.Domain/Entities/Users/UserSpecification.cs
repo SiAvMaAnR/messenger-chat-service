@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Specification;
+﻿using Messenger.Domain.Specification;
 
-namespace MessengerX.Domain.Entities.Users;
+namespace Messenger.Domain.Entities.Users;
 
 public class UserByIdSpec : Specification<User>
 {

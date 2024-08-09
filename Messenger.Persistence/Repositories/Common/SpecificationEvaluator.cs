@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Entities;
-using MessengerX.Domain.Specification;
+﻿using Messenger.Domain.Entities;
+using Messenger.Domain.Specification;
 using Microsoft.EntityFrameworkCore;
 
-namespace MessengerX.Persistence.Repositories.Common;
+namespace Messenger.Persistence.Repositories.Common;
 
 public static class SpecificationEvaluator
 {

@@ -1,15 +1,15 @@
-﻿using MessengerX.Application.Services.AccountService.Adapters;
-using MessengerX.Application.Services.AccountService.Models;
-using MessengerX.Application.Services.Common;
-using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Services;
-using MessengerX.Persistence.Extensions;
+﻿using Messenger.Application.Services.AccountService.Adapters;
+using Messenger.Application.Services.AccountService.Models;
+using Messenger.Application.Services.Common;
+using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.Users;
+using Messenger.Domain.Exceptions;
+using Messenger.Domain.Services;
+using Messenger.Persistence.Extensions;
 using Microsoft.AspNetCore.Http;
 
-namespace MessengerX.Application.Services.AccountService;
+namespace Messenger.Application.Services.AccountService;
 
 public class AccountService : BaseService, IAccountService
 {

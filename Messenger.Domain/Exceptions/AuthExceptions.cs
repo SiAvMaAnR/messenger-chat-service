@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Exceptions.Common;
+﻿using Messenger.Domain.Exceptions.Common;
 
-namespace MessengerX.Domain.Exceptions;
+namespace Messenger.Domain.Exceptions;
 
 public class FailedToCreatePasswordException : BusinessException
 {

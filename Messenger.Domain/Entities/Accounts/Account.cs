@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Entities.Messages;
-using MessengerX.Domain.Entities.RefreshTokens;
-using MessengerX.Domain.Shared.Constants.Common;
+using Messenger.Domain.Entities.Channels;
+using Messenger.Domain.Entities.Messages;
+using Messenger.Domain.Entities.RefreshTokens;
+using Messenger.Domain.Shared.Constants.Common;
 
-namespace MessengerX.Domain.Entities.Accounts;
+namespace Messenger.Domain.Entities.Accounts;
 
 [Table("Accounts")]
 public partial class Account : BaseEntity

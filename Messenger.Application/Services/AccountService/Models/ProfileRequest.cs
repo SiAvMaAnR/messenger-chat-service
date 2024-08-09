@@ -1,3 +1,3 @@
-﻿namespace MessengerX.Application.Services.AccountService.Models;
+﻿namespace Messenger.Application.Services.AccountService.Models;
 
 public class AccountServiceProfileRequest { }

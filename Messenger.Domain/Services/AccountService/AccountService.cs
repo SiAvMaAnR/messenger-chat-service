@@ -1,8 +1,8 @@
-﻿using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Exceptions;
+﻿using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Exceptions;
 
-namespace MessengerX.Domain.Services;
+namespace Messenger.Domain.Services;
 
 public class AccountBS : DomainService
 {

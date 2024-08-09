@@ -1,22 +1,22 @@
 ﻿using System.Text.Json;
-using MessengerX.Application.Services.AuthService.Models;
-using MessengerX.Application.Services.Common;
-using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.RefreshTokens;
-using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Services;
-using MessengerX.Domain.Shared.Models;
-using MessengerX.Infrastructure.AuthOptions;
-using MessengerX.Notifications.Common;
-using MessengerX.Notifications.Email;
-using MessengerX.Notifications.Email.Models;
-using MessengerX.Notifications.NotificationTemplates;
+using Messenger.Application.Services.AuthService.Models;
+using Messenger.Application.Services.Common;
+using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.RefreshTokens;
+using Messenger.Domain.Entities.Users;
+using Messenger.Domain.Exceptions;
+using Messenger.Domain.Services;
+using Messenger.Domain.Shared.Models;
+using Messenger.Infrastructure.AuthOptions;
+using Messenger.Notifications.Common;
+using Messenger.Notifications.Email;
+using Messenger.Notifications.Email.Models;
+using Messenger.Notifications.NotificationTemplates;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 
-namespace MessengerX.Application.Services.AuthService;
+namespace Messenger.Application.Services.AuthService;
 
 public class AuthService : BaseService, IAuthService
 {

@@ -1,8 +1,8 @@
-﻿using MessengerX.Application.Services.ChannelService.Models;
-using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Entities.Messages;
-using MessengerX.Persistence.Extensions;
+﻿using Messenger.Application.Services.ChannelService.Models;
+using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.Channels;
+using Messenger.Domain.Entities.Messages;
+using Messenger.Persistence.Extensions;
 
 public class ChannelServiceDirectChannelAdapter : ChannelServiceDirectChannel
 {

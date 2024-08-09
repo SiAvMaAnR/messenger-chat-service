@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Notifications", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Tests", "Messenger.Tests\Messenger.Tests.csproj", "{B6C294EA-1E5F-42DF-9652-5D060712AFB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Utils", "Messenger.Utils\Messenger.Utils.csproj", "{36DE3220-14E5-45B9-B676-4C5067CEF43C}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

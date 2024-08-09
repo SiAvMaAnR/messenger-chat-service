@@ -1,9 +1,9 @@
-﻿using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Shared.Models;
+﻿using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Users;
+using Messenger.Domain.Exceptions;
+using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.Domain.Services;
+namespace Messenger.Domain.Services;
 
 public class UserBS : DomainService
 {

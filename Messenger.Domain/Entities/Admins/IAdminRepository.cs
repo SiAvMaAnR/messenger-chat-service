@@ -1,3 +1,3 @@
-﻿namespace MessengerX.Domain.Entities.Admins;
+﻿namespace Messenger.Domain.Entities.Admins;
 
 public interface IAdminRepository : IAsyncRepository<Admin> { }

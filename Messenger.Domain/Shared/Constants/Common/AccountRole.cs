@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Domain.Shared.Constants.Common;
+﻿namespace Messenger.Domain.Shared.Constants.Common;
 
 public static class AccountRole
 {

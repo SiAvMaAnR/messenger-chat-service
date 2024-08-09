@@ -1,16 +1,24 @@
 services:
-  backend-aspnet:
+  chat-service:
     image: samarkinivan/chat-service:latest
     container_name: chat-service
     restart: on-failure
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__RedisConnection: "localhost:6379"
+      ConnectionStrings__DBConnection: "Data Source=localhost,1433;Initial Catalog=Messenger;User Id=sa;Password=SecretPassword161;TrustServerCertificate=True"
+      Common__SecretKey: "secret_key_88002353535_161"
+      Smtp__Email: "samarkin20022002@gmail.com"
+      Smtp__Password: "dasirmpudrndcqsj"
+      Smtp__Host: "smtp.gmail.com"
+      Smtp__Port: 587
+      Client__BaseUrl: "http://localhost:3000"
     ports:
       - "8080:8080"
     depends_on:
       - database-mssql
-      - rabbitmq
       - redis
+    network_mode: host
     volumes:
       - ./.meta/server/uploads:/Messenger.Persistence/Uploads
 
@@ -27,17 +35,11 @@ services:
       MSSQL_PASSWORD: password
     ports:
       - "1433:1433"
+    network_mode: host
     volumes:
       - ./.meta/mssql/data:/var/opt/mssql/data
       - ./.meta/mssql/log:/var/opt/mssql/log
       - ./.meta/mssql/secrets:/var/opt/mssql/secrets
-
-  rabbitmq:
-    image: rabbitmq:latest
-    container_name: chat-service-rabbit-mq
-    restart: on-failure
-    ports:
-      - 5672:5672
 
   redis:
     image: redis:latest
@@ -46,9 +48,10 @@ services:
     ports:
       - "6379:6379"
     environment:
-      REDIS_PASSWORD: password
+      REDIS_PASSWORD: "password"
       REDIS_PORT: 6379
       REDIS_DATABASES: 16
+    network_mode: host
     volumes:
       - ./.meta/redis/data:/root/redis
       - ./.meta/redis/conf:/usr/local/etc/redis/redis.conf

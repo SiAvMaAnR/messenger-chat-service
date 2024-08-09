@@ -1,19 +1,21 @@
 ﻿using System.Text.Json;
-using MessengerX.Application.Services.Common;
-using MessengerX.Application.Services.UserService.Models;
-using MessengerX.Domain.Common;
-using MessengerX.Domain.Entities.Users;
-using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Services;
-using MessengerX.Domain.Shared.Models;
-using MessengerX.Notifications.Common;
-using MessengerX.Notifications.Email;
-using MessengerX.Notifications.Email.Models;
-using MessengerX.Notifications.NotificationTemplates;
+using Messenger.Application.Services.Common;
+using Messenger.Application.Services.UserService.Adapters;
+using Messenger.Application.Services.UserService.Models;
+using Messenger.Domain.Common;
+using Messenger.Domain.Entities.Users;
+using Messenger.Domain.Exceptions;
+using Messenger.Domain.Services;
+using Messenger.Domain.Shared.Models;
+using Messenger.Notifications.Common;
+using Messenger.Notifications.Email;
+using Messenger.Notifications.Email.Models;
+using Messenger.Notifications.NotificationTemplates;
+using Messenger.Persistence.Extensions;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 
-namespace MessengerX.Application.Services.UserService;
+namespace Messenger.Application.Services.UserService;
 
 public class UserService : BaseService, IUserService
 {
@@ -113,5 +115,69 @@ public class UserService : BaseService, IUserService
         await _userBS.UpdateAsync(user, request.Login, request.Birthday);
 
         return new UserServiceUpdateResponse() { IsSuccess = true };
+    }
+
+    public async Task<UserServiceUsersResponse> UsersAsync(UserServiceUsersRequest request)
+    {
+        IEnumerable<User> users = await _userBS.GetUsersAsync();
+
+        PaginatorResponse<User> paginatedData = users.Pagination(request.Pagination);
+
+        var adaptedUsers = paginatedData
+            .Collection
+            .Select(user => new UserServiceUserAdapter(user))
+            .ToList();
+
+        if (request.IsLoadImage)
+            await Task.WhenAll(adaptedUsers.Select(user => user.LoadImageAsync()));
+
+        return new UserServiceUsersResponse() { Meta = paginatedData.Meta, Users = adaptedUsers };
+    }
+
+    public async Task<UserServiceUserResponse> UserAsync(UserServiceUserRequest request)
+    {
+        User user =
+            await _userBS.GetUserByIdAsync(request.Id)
+            ?? throw new NotExistsException("User not exists");
+
+        byte[]? image = request.IsLoadImage ? await FileManager.ReadToBytesAsync(user.Image) : null;
+
+        return new UserServiceUserResponse()
+        {
+            Id = user.Id,
+            Login = user.Login,
+            Email = user.Email,
+            Role = user.Role,
+            Image = image,
+            Birthday = user.Birthday,
+            CreatedAt = user.CreatedAt,
+            UpdatedAt = user.UpdatedAt
+        };
+    }
+
+    public async Task<UserServiceBlockUserResponse> BlockUserAsync(
+        UserServiceBlockUserRequest request
+    )
+    {
+        User user =
+            await _userBS.GetUserByIdAsync(request.UserId, true)
+            ?? throw new NotExistsException("User not found");
+
+        await _userBS.BlockUserAsync(user);
+
+        return new UserServiceBlockUserResponse() { IsSuccess = true };
+    }
+
+    public async Task<UserServiceUnblockUserResponse> UnblockUserAsync(
+        UserServiceUnblockUserRequest request
+    )
+    {
+        User user =
+            await _userBS.GetUserByIdAsync(request.UserId, true)
+            ?? throw new NotExistsException("User not found");
+
+        await _userBS.UnblockUserAsync(user);
+
+        return new UserServiceUnblockUserResponse() { IsSuccess = true };
     }
 }

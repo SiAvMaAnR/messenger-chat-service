@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Shared.Settings;
+﻿using Messenger.Domain.Shared.Settings;
 
-namespace MessengerX.Domain.Common;
+namespace Messenger.Domain.Common;
 
 public interface IAppSettings
 {
@@ -10,4 +10,5 @@ public interface IAppSettings
     FilePathSettings FilePath { get; }
     ClientSettings Client { get; }
     AuthSettings Auth { get; }
+    RMQSettings RMQ { get; }
 }

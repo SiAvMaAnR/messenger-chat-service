@@ -1,6 +1,6 @@
-﻿using MessengerX.Domain.Shared.Models;
+﻿using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.WebApi.Controllers.Models.Account;
+namespace Messenger.WebApi.Controllers.Models.Account;
 
 public class AccountControllerAccountsRequest
 {

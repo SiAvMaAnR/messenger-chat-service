@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
-using MessengerX.Domain.Entities;
-using MessengerX.Domain.Shared.Models;
+using Messenger.Domain.Entities;
+using Messenger.Domain.Shared.Models;
 
-namespace MessengerX.Domain.Specification;
+namespace Messenger.Domain.Specification;
 
 public abstract partial class Specification<TEntity> : ISpecification<TEntity>
     where TEntity : BaseEntity

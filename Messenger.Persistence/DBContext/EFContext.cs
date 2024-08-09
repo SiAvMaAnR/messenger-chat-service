@@ -1,13 +1,13 @@
-﻿using MessengerX.Domain.Entities.Accounts;
-using MessengerX.Domain.Entities.Admins;
-using MessengerX.Domain.Entities.Channels;
-using MessengerX.Domain.Entities.Messages;
-using MessengerX.Domain.Entities.RefreshTokens;
-using MessengerX.Domain.Entities.Users;
-using MessengerX.Persistence.EntityConfigurations;
+﻿using Messenger.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.Admins;
+using Messenger.Domain.Entities.Channels;
+using Messenger.Domain.Entities.Messages;
+using Messenger.Domain.Entities.RefreshTokens;
+using Messenger.Domain.Entities.Users;
+using Messenger.Persistence.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace MessengerX.Persistence.DBContext;
+namespace Messenger.Persistence.DBContext;
 
 public class EFContext : DbContext
 {

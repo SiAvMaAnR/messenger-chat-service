@@ -1,10 +1,10 @@
-﻿using MessengerX.Domain.Exceptions;
-using MessengerX.Domain.Exceptions.Common;
-using MessengerX.WebApi.Common;
+﻿using Messenger.Domain.Exceptions;
+using Messenger.Domain.Exceptions.Common;
+using Messenger.WebApi.Common;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MessengerX.WebApi.Controllers;
+namespace Messenger.WebApi.Controllers;
 
 [ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]

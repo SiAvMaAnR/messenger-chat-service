@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using MessengerX.Domain.Entities.Accounts;
+using Messenger.Domain.Entities.Accounts;
 
-namespace MessengerX.Domain.Entities.RefreshTokens;
+namespace Messenger.Domain.Entities.RefreshTokens;
 
 [Table("RefreshTokens")]
 public partial class RefreshToken : BaseEntity

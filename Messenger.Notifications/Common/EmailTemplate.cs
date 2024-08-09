@@ -1,4 +1,4 @@
-﻿namespace MessengerX.Notifications.Common;
+﻿namespace Messenger.Notifications.Common;
 
 public class EmailTemplate
 {
